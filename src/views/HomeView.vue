@@ -1,18 +1,17 @@
 <template>
   <div>
-    <h1>Estamos en HOME /</h1>
-    <h1>{{ this.$route.path }}</h1>
-
+    <h1>Bienvenidos a Tocatu</h1>
     <div>
-      <span>Solo se tiene que ver en home</span>
-      <router-link :to="{ name: 'Home' }">Home</router-link> |
-      <router-link :to="{ name: 'Login' }">Login</router-link>
+      <RouterLink :to="{ name: 'Home' }">Home</RouterLink> |
+      <RouterLink :to="{ name: 'Login' }">Login</RouterLink>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+import { RouterLink } from 'vue-router';
+
+export default { components: { RouterLink } }
 </script>
 
 <style></style>
