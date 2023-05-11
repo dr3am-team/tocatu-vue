@@ -1,16 +1,38 @@
 <template>
-  <div v-if="this.$route.path !== '/'">
-    <Input />
-    <a href="/">Volver a home</a>
-    <h1>Estamos en LOGIN</h1>
-    <h1>{{ this.$route.path }}</h1>
+  <div>
+    <label for="user">
+      User: <input name="user" type="text" v-model="user.nickname" /> 
+    </label>
+    <label for="password">   
+       Password: <input name="password" type="password" v-model="user.password"/> 
+    </label>
+    <button @click="login">Login</button>
+
+    
   </div>
 </template>
 
 <script>
-import Input from '../components/InputComponent.vue'
+import { useLoginStore } from '../stores/login'
 export default {
-  components: { Input }
+  components: { useLoginStore },
+  setup() {
+        const {loginStore} = useLoginStore();
+        return { loginStore }
+    },
+    data() {
+        return {
+            user: { nickname: '', password: '' }
+        }
+    },
+    methods: {
+      login(){
+        const {nickname, password} = this.user
+      if(nickname == "ea" && password == "eaea"){
+        this.loginStore({nickname: nickname, permissions: []})
+      }
+      }
+    }
 }
 </script>
 
