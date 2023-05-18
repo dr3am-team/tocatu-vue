@@ -29,7 +29,8 @@ export default {
       login(){
         const {nickname, password} = this.user
       if(nickname == "ea" && password == "eaea"){
-        this.loginStore({nickname: nickname, permissions: []})
+        this.loginStore({nickname: nickname, permissions: ['banda']})
+        this.$router.push("/")
       }
       }
     }
