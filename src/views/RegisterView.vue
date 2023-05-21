@@ -29,7 +29,7 @@
 
 
 <script>
-import ButtonComponent from '/home/flvckz/tocatu-vue/src/components/ButtonComponent.vue'
+import ButtonComponent from '../components/ButtonComponent.vue'
 
 export default {
   components: { ButtonComponent },
