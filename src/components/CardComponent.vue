@@ -4,14 +4,17 @@
     <div class="content">
       <h3 class="title">{{ title }}</h3>
       <p class="text">{{ text }}</p>
-      <button class="button">{{ buttonText }}</button>
+      <button-component button-text="Unirme">{{ buttonText }}</button-component>
     </div>
   </div>
 </template>
 
 <script>
+import ButtonComponent from './ButtonComponent.vue'
+
 export default {
   name: 'CardComponent',
+  components: { ButtonComponent },
   props: {
     imageUrl: {
       type: String,
@@ -60,15 +63,5 @@ export default {
 .text {
   /* Styles for the card text */
   margin-bottom: 16px;
-}
-
-.button {
-  /* Styles for the card button */
-  background-color: #3490dc;
-  color: #fff;
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 </style>
