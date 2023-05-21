@@ -20,9 +20,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .button {
-  padding: 1rem 2.5rem;
+  margin-top: 10px;
+  padding: 10px 15px;
   text-align: center;
   font-size: 16px;
   text-transform: uppercase;
@@ -30,12 +31,14 @@ export default {
   background: #ea4c89;
   border: none;
   color: #fff;
-  font-weight: bold;
-  letter-spacing: 1px;
   border-radius: 5px;
-  box-shadow: 0px 4px 16px #e82d75;
-}
-.danger {
-  background: red;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  &.danger {
+    background: red;
+  }
 }
 </style>

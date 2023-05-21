@@ -1,38 +1,37 @@
 <template>
-  <div>
-    <label for="style">Username <input type="text" v-model="generalData.username" /></label>
-    <label for="style">Mail <input type="mail" v-model="generalData.mail" /></label>
-    <label for="style">Password <input type="password" v-model="generalData.password" /></label>
-
-    <label for="account-type">Choose your fighter:</label>
-    <select id="account-type" v-model="typeSelected" @click="select">
-      <option selected disable hidden>Choose your fighter</option>
-      <option v-for="type in accountType" :key="type.value" :value="type.value">
-        {{ type.label }}
-      </option>
-    </select>
+  <form class="container">
+    <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" />
+    <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" />
+    <InputComponent type="password" v-model="generalData.password" label="Password" />
+    <label class="select-label" for="">
+      Tipo de usuario
+      <select class="select" id="account-type" v-model="typeSelected" @click="select">
+        <option v-for="type in accountType" :key="type.value" :value="type.value">
+          {{ type.label }}
+        </option>
+      </select>
+    </label>
 
     <div v-if="typeSelected == 'band'">
-      <label for="bandName">Name of your band <input type="text" v-model="band.name" /></label>
-      <label for="style">Style of your band <input type="text" v-model="band.style" /></label>
+      <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" />
+      <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" />
     </div>
 
     <div v-if="typeSelected == 'bar'">
-      <label for="barName">Name of your bar <input type="text" v-model="bar.name" /></label>
-      <label for="address"> Address of your bar <input type="text" v-model="bar.address" /></label>
-      <label for="capacity">Capacity of your bar <input type="text" v-model="bar.capacity" /></label>
+      <InputComponent type="text" v-model="bar.name" label="Nombre de tu bar" />
+      <InputComponent type="text" v-model="bar.address" label="Dirección" />
+      <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
-    <button-component @click="register" button-text="Registrarse" button-class="danger"></button-component>
-  </div>
+
+    <ButtonComponent @click="register" buttonText="Registrarse" customStyle="20px" />
+  </form>
 </template>
-
-
 
 <script>
 import ButtonComponent from '../components/ButtonComponent.vue'
-
+import InputComponent from '../components/InputComponent.vue'
 export default {
-  components: { ButtonComponent },
+  components: { InputComponent, ButtonComponent },
   mounted() {
     const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
     this.users = usersLocalStorage ?? [] //nullish coalesing
@@ -73,4 +72,24 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.container {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  margin: 0 auto;
+
+  .select-label {
+    display: flex;
+    justify-content: space-between;
+    .select {
+      padding: 5px 10px;
+      width: 70%;
+      option {
+        padding: 5px 0px;
+      }
+    }
+  }
+}
+</style>
