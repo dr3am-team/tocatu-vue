@@ -22,13 +22,17 @@
       <label for="address"> Address of your bar <input type="text" v-model="bar.address" /></label>
       <label for="capacity">Capacity of your bar <input type="text" v-model="bar.capacity" /></label>
     </div>
-    <button @click="register">Register</button>
+    <button-component @click="register" button-text="Registrarse" button-class="danger"></button-component>
   </div>
 </template>
 
+
+
 <script>
+import ButtonComponent from '/home/flvckz/tocatu-vue/src/components/ButtonComponent.vue'
+
 export default {
-  components: {},
+  components: { ButtonComponent },
   mounted() {
     const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
     this.users = usersLocalStorage ?? [] //nullish coalesing
