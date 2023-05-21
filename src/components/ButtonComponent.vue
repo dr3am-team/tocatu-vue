@@ -15,9 +15,6 @@ export default {
     buttonClass: {
       type: String,
       default: ''
-    },
-    customStyle: {
-      type: String
     }
   }
 }
