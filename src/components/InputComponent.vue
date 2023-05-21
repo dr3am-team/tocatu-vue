@@ -1,7 +1,12 @@
 <template>
-  <label for="">
+  <label :for="label">
     {{ label }}
-    <input :value="modelValue" :type="type" @input="$emit('update:modelValue', $event.target.value)" />
+    <input
+      :value="modelValue"
+      :type="type"
+      @input="$emit('update:modelValue', $event.target.value)"
+      :placeholder="placeholder"
+    />
   </label>
 </template>
 
@@ -18,6 +23,9 @@ export default {
       default: 'Label',
       required: true
     },
+    placeholder: {
+      type: String
+    },
     modelValue: {
       type: String
     }
@@ -26,4 +34,15 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+label {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0px;
+  width: 100%;
+  input {
+    padding: 5px 10px;
+    width: 70%;
+  }
+}
+</style>

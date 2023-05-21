@@ -1,15 +1,16 @@
 <template>
-  <div>
+  <form class="container">
     <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" />
-    <InputComponent type="text" v-model="generalData.mail" label="Mail" />
+    <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" />
     <InputComponent type="password" v-model="generalData.password" label="Password" />
-    <label for="account-type">Elegí el tipo de usuario:</label>
-    <select id="account-type" v-model="typeSelected" @click="select">
-      <option selected>Choose your fighter</option>
-      <option v-for="type in accountType" :key="type.value" :value="type.value">
-        {{ type.label }}
-      </option>
-    </select>
+    <label class="select-label" for="">
+      Tipo de usuario
+      <select class="select" id="account-type" v-model="typeSelected" @click="select">
+        <option v-for="type in accountType" :key="type.value" :value="type.value">
+          {{ type.label }}
+        </option>
+      </select>
+    </label>
 
     <div v-if="typeSelected == 'band'">
       <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" />
@@ -21,8 +22,9 @@
       <InputComponent type="text" v-model="bar.address" label="Dirección" />
       <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
-    <button-component @click="register" button-text="Registrarse" button-class="danger"></button-component>
-  </div>
+
+    <ButtonComponent @click="register" buttonText="Registrarse" customStyle="20px" />
+  </form>
 </template>
 
 <script>
@@ -70,4 +72,24 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.container {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  margin: 0 auto;
+
+  .select-label {
+    display: flex;
+    justify-content: space-between;
+    .select {
+      padding: 5px 10px;
+      width: 70%;
+      option {
+        padding: 5px 0px;
+      }
+    }
+  }
+}
+</style>
