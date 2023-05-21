@@ -16,7 +16,6 @@
 import { storeToRefs } from 'pinia'
 import { RouterLink } from 'vue-router'
 import { useLoginStore } from '../stores/login'
-import Card from '../components/CardComponent.vue'
 
 export default {
   components: { RouterLink },

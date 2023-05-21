@@ -3,10 +3,16 @@ import LoginView from '../views/LoginView.vue'
 import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import EventRegisterView from '../views/EventRegisterView.vue'
+import EventListView from '../views/EventListView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
   routes: [
+    {
+      path: '/events',
+      name: 'EventListView',
+      component: EventListView
+    },
     {
       path: '/login',
       name: 'Login',
