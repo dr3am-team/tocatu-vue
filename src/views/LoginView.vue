@@ -1,22 +1,26 @@
 <template>
-  <div>
-    <label for="user"> User: <input name="user" type="text" v-model="user.username" /> </label>
-    <label for="password"> Password: <input name="password" type="password" v-model="user.password" /> </label>
-    <button @click="login">Login</button>
+  <div class="container">
+    <InputComponent type="text" v-model="user.username" label="Usuario" />
+    <InputComponent type="password" v-model="user.password" label="Contraseña" />
+    <ButtonComponent buttonText="Login" @click="login" />
+    <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
   </div>
 </template>
 
 <script>
 import { useLoginStore } from '../stores/login'
+import ButtonComponent from '../components/ButtonComponent.vue'
+import InputComponent from '../components/InputComponent.vue'
 export default {
-  components: { useLoginStore },
+  components: { ButtonComponent, InputComponent },
   setup() {
     const { loginStore } = useLoginStore()
     return { loginStore }
   },
   data() {
     return {
-      user: { username: '', password: '' }
+      user: { username: '', password: '' },
+      failedLogin: ''
     }
   },
   methods: {
@@ -29,13 +33,34 @@ export default {
 
       const user = users.find((element) => element.username === username)
       if (user && user.password == password) {
-        console.log('adentro de login')
         this.loginStore({ username: username, permissions: [user.userType] })
         this.$router.push('/')
+      } else {
+        this.failedLogin = 'Usuario o contraseña incorrectos. Intente de nuevo'
+        setTimeout(() => {
+          this.failedLogin = ''
+          this.user.username = ''
+          this.user.password = ''
+        }, 2000)
       }
     }
   }
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin: 0 auto;
+
+  .login-error {
+    border: 1px solid red;
+    padding: 10px;
+    margin-top: 10px;
+    color: red;
+    font-weight: bold;
+  }
+}
+</style>
