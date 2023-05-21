@@ -21,14 +21,15 @@
       <InputComponent type="text" v-model="bar.address" label="Dirección" />
       <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
-    <button @click="register">Register</button>
+    <button-component @click="register" button-text="Registrarse" button-class="danger"></button-component>
   </div>
 </template>
 
 <script>
+import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 export default {
-  components: { InputComponent },
+  components: { InputComponent, ButtonComponent },
   mounted() {
     const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
     this.users = usersLocalStorage ?? [] //nullish coalesing
