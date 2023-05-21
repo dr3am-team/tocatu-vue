@@ -57,6 +57,8 @@ export default {
       }
       console.log(data)
       this.users.push(data)
+
+      //Override localstorage info
       const datosEnString = JSON.stringify(this.users, null, '\t')
       window.localStorage.setItem('usuarios', datosEnString)
     },

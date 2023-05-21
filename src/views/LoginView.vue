@@ -21,12 +21,13 @@ export default {
   },
   methods: {
     login() {
+      //Input of user and passw
       const { username, password } = this.user
+
+      //Bring users from local storage
       const users = JSON.parse(window.localStorage.getItem('usuarios'))
-      console.log(users)
+
       const user = users.find((element) => element.username === username)
-      console.log('afuera de login')
-      console.log(user)
       if (user && user.password == password) {
         console.log('adentro de login')
         this.loginStore({ username: username, permissions: [user.userType] })
