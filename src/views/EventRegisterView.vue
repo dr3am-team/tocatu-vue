@@ -31,6 +31,7 @@ export default {
       this.event.barName = userLoggedIn.name
       this.event.mail = userLoggedIn.mail
 
+      userLoggedIn.events = userLoggedIn.events || []
       userLoggedIn.events.push(this.event)
 
       const datosEnString = JSON.stringify(users, null, '\t')
