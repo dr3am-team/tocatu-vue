@@ -2,11 +2,7 @@
   <div>
     <h1>Bienvenidos a Tocatu</h1>
     <div>
-      <RouterLink :to="{ name: 'Home' }">Home</RouterLink> |
-      <RouterLink v-if="!isLogin" :to="{ name: 'Login' }">Login</RouterLink> |
-      <RouterLink v-if="!isLogin" :to="{ name: 'Register' }">Register</RouterLink>
-      <RouterLink v-if="havePermissions('bar')" :to="{ name: 'EventRegister' }">Register an event</RouterLink>
-      <button v-if="isLogin" @click="logout">Logout</button>
+      <NavbarComponent :navLinks="computedNavLinks"></NavbarComponent>
     </div>
   </div>
   <div v-if="havePermissions('band')">Esto es una banda Nickname: {{ user.username }}</div>
@@ -17,9 +13,10 @@
 import { storeToRefs } from 'pinia'
 import { RouterLink } from 'vue-router'
 import { useLoginStore } from '../stores/login'
+import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
-  components: { RouterLink },
+  components: { RouterLink, NavbarComponent },
   setup() {
     const store = useLoginStore()
     const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES
@@ -30,6 +27,26 @@ export default {
     logout() {
       this.logoutStore()
       this.$router.push('/')
+    }
+  },
+  computed: {
+    computedNavLinks: function () {
+      if (this.havePermissions('bar')) {
+        return [{ route: '/eventRegister', text: 'Event Register' }]
+      } else if (this.isLogin) {
+        return [
+          { route: '/', text: 'Home' },
+          { route: '/events', text: 'Events' },
+          { route: '/logout', text: 'Logout' }
+        ]
+      } else if (!this.isLogin) {
+        return [
+          { route: '/register', text: 'Register' },
+          { route: '/login', text: 'Login' }
+        ]
+      } else {
+        return []
+      }
     }
   }
 }
