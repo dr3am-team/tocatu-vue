@@ -14,7 +14,8 @@
 
     <div v-if="typeSelected == 'band'">
       <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" />
-      <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" />
+      <!-- <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" /> -->
+      <SelectorComponent :array="styles" v-model="band.style" label="Selecciona un estilo" @selected="handleSelected" />
     </div>
 
     <div v-if="typeSelected == 'bar'">
@@ -30,8 +31,9 @@
 <script>
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
+import SelectorComponent from '../components/SelectorComponent.vue'
 export default {
-  components: { InputComponent, ButtonComponent },
+  components: { InputComponent, ButtonComponent, SelectorComponent },
   mounted() {
     const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
     this.users = usersLocalStorage ?? [] //nullish coalesing
@@ -47,7 +49,11 @@ export default {
       band: { name: '', style: '' },
       bar: { name: '', address: '', capacity: null },
       generalData: { username: '', mail: '', password: '', userType: '' },
-      users: []
+      users: [],
+      styles: [
+        { value: 'rock', label: 'Rock' },
+        { value: 'jazz', label: 'Jazz' }
+      ]
     }
   },
   methods: {
@@ -67,6 +73,10 @@ export default {
     },
     select(e) {
       this.typeSelected = e.target.value
+    },
+    handleSelected(selected) {
+      this.band.style = selected
+      console.log(selected)
     }
   }
 }
