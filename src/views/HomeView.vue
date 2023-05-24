@@ -20,15 +20,10 @@ export default {
   setup() {
     const store = useLoginStore()
     const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES
-    const { havePermissions, logoutStore } = store // ESTO TRAE FUNCIONES
-    return { user, havePermissions, isLogin, logoutStore }
+    const { havePermissions } = store // ESTO TRAE FUNCIONES
+    return { user, havePermissions, isLogin }
   },
-  methods: {
-    logout() {
-      this.logoutStore()
-      this.$router.push('/')
-    }
-  },
+  methods: {},
   computed: {
     computedNavLinks: function () {
       if (this.havePermissions('bar')) {
