@@ -2,7 +2,7 @@
   <div>
     <label for="selector">{{ label }}</label>
     <select name="selector" id="selector" v-model="selectedOption" @change="emitSelected">
-      <option v-for="option in array" :key="option.value">{{ option.label }}</option>
+      <option v-for="option in array" :key="option.value" :value="option.value">{{ option.label }}</option>
     </select>
   </div>
 </template>

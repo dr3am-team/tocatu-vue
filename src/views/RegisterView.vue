@@ -4,12 +4,13 @@
     <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" />
     <InputComponent type="password" v-model="generalData.password" label="Password" />
     <label class="select-label" for="">
-      Tipo de usuario
+      <!-- Tipo de usuario
       <select class="select" id="account-type" v-model="typeSelected" @click="select">
         <option v-for="type in accountType" :key="type.value" :value="type.value">
           {{ type.label }}
         </option>
-      </select>
+      </select> -->
+      <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
     </label>
 
     <div v-if="typeSelected == 'band'">
@@ -24,7 +25,7 @@
       <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
 
-    <ButtonComponent @click="register" buttonText="Registrarse" customStyle="20px" />
+    <ButtonComponent @click.prevent="register" buttonText="Registrarse" customStyle="20px" />
   </form>
 </template>
 
@@ -64,7 +65,6 @@ export default {
         ...(this.typeSelected == 'band' && { ...this.band }),
         ...(this.typeSelected == 'bar' && { ...this.bar })
       }
-      console.log(data)
       this.users.push(data)
 
       //Override localstorage info
@@ -72,7 +72,8 @@ export default {
       window.localStorage.setItem('usuarios', datosEnString)
     },
     select(e) {
-      this.typeSelected = e.target.value
+      console.log(e)
+      this.typeSelected = e
     },
     handleSelected(selected) {
       this.band.style = selected
