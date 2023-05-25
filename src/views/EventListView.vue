@@ -1,27 +1,52 @@
-<template>
-  <div class="card-container">
-    <CardComponent
-      image-url="https://elements-cover-images-0.imgix.net/45d65e84-71a6-43a6-b106-5d38454e758b?auto=compress%2Cformat&fit=max&w=1170&s=2c6475bd3c419ee737f43bdd2aa65182"
-      title="Gospel"
-      text="La banda del Gospel Atr"
-      button-text="Unirme"
-    />
-    <CardComponent
-      image-url="https://elements-cover-images-0.imgix.net/45d65e84-71a6-43a6-b106-5d38454e758b?auto=compress%2Cformat&fit=max&w=1170&s=2c6475bd3c419ee737f43bdd2aa65182"
-      title="Gospel"
-      text="La banda del Gospel Atr"
-      button-text="Unirme"
-    />
-  </div>
-</template>
-
 <script>
-import { RouterLink } from 'vue-router'
+import axios from 'axios'
 import CardComponent from '../components/CardComponent.vue'
+
 export default {
-  components: { RouterLink, CardComponent }
+  components: { CardComponent },
+  created() {
+    this.obtenerInformacionPokemon()
+  },
+  methods: {
+    obtenerInformacionPokemon() {
+      const nombrePokemon = 'pikachu'
+      const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`
+
+      axios
+        .get(url)
+        .then((response) => {
+          // Aquí puedes trabajar con los datos del Pokémon
+          console.log(response.data)
+          // Asigna los datos a propiedades del componente para usarlos en el template
+          // Por ejemplo:
+          this.pokemonName = response.data.name
+          this.pokemonImage = response.data.sprites.other.home.front_default
+          this.fecha = "De lunes a viernes, de 20 a 23hs"
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    }
+  },
+  data() {
+    return {
+      pokemonName: '',
+      pokemonImage: '',
+      fecha: this.fecha
+    }
+  }
 }
 </script>
+
+<template>
+  <div class="card-container">
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" fecha="fecha"/>
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha"/>
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha"/>
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha"/>
+
+  </div>
+</template>
 
 <style scoped>
 .card-container {
