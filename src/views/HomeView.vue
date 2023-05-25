@@ -3,6 +3,7 @@
     <h1>Bienvenidos a Tocatu</h1>
     <div>
       <NavbarComponent :navLinks="computedNavLinks"></NavbarComponent>
+      <EventViewList> </EventViewList>
     </div>
   </div>
   <div v-if="havePermissions('band')">Esto es una banda Nickname: {{ user.username }}</div>
@@ -11,12 +12,12 @@
 
 <script>
 import { storeToRefs } from 'pinia'
-import { RouterLink } from 'vue-router'
 import { useLoginStore } from '../stores/login'
 import NavbarComponent from '../components/NavbarComponent.vue'
+import EventViewList from './EventListView.vue'
 
 export default {
-  components: { RouterLink, NavbarComponent },
+  components: { NavbarComponent, EventViewList },
   setup() {
     const store = useLoginStore()
     const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES

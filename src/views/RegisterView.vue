@@ -3,18 +3,13 @@
     <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" />
     <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" />
     <InputComponent type="password" v-model="generalData.password" label="Password" />
-    <label class="select-label" for="">
-      Tipo de usuario
-      <select class="select" id="account-type" v-model="typeSelected" @click="select">
-        <option v-for="type in accountType" :key="type.value" :value="type.value">
-          {{ type.label }}
-        </option>
-      </select>
-    </label>
 
-    <div v-if="typeSelected == 'band'">
+    <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
+
+    <div v-if="typeSelected == 'band'" class="container">
       <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" />
-      <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" />
+      <!-- <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" /> -->
+      <SelectorComponent :array="styles" v-model="band.style" label="Selecciona un estilo" @selected="handleSelected" />
     </div>
 
     <div v-if="typeSelected == 'bar'">
@@ -23,15 +18,16 @@
       <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
 
-    <ButtonComponent @click="register" buttonText="Registrarse" customStyle="20px" />
+    <ButtonComponent @click.prevent="register" buttonText="Registrarse" customStyle="20px" />
   </form>
 </template>
 
 <script>
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
+import SelectorComponent from '../components/SelectorComponent.vue'
 export default {
-  components: { InputComponent, ButtonComponent },
+  components: { InputComponent, ButtonComponent, SelectorComponent },
   mounted() {
     const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
     this.users = usersLocalStorage ?? [] //nullish coalesing
@@ -47,7 +43,11 @@ export default {
       band: { name: '', style: '' },
       bar: { name: '', address: '', capacity: null },
       generalData: { username: '', mail: '', password: '', userType: '' },
-      users: []
+      users: [],
+      styles: [
+        { value: 'rock', label: 'Rock' },
+        { value: 'jazz', label: 'Jazz' }
+      ]
     }
   },
   methods: {
@@ -58,7 +58,6 @@ export default {
         ...(this.typeSelected == 'band' && { ...this.band }),
         ...(this.typeSelected == 'bar' && { ...this.bar })
       }
-      console.log(data)
       this.users.push(data)
 
       //Override localstorage info
@@ -66,7 +65,12 @@ export default {
       window.localStorage.setItem('usuarios', datosEnString)
     },
     select(e) {
-      this.typeSelected = e.target.value
+      console.log(e)
+      this.typeSelected = e
+    },
+    handleSelected(selected) {
+      this.band.style = selected
+      console.log(selected)
     }
   }
 }
