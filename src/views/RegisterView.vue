@@ -3,17 +3,10 @@
     <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" />
     <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" />
     <InputComponent type="password" v-model="generalData.password" label="Password" />
-    <label class="select-label" for="">
-      <!-- Tipo de usuario
-      <select class="select" id="account-type" v-model="typeSelected" @click="select">
-        <option v-for="type in accountType" :key="type.value" :value="type.value">
-          {{ type.label }}
-        </option>
-      </select> -->
-      <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
-    </label>
 
-    <div v-if="typeSelected == 'band'">
+    <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
+
+    <div v-if="typeSelected == 'band'" class="container">
       <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" />
       <!-- <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" /> -->
       <SelectorComponent :array="styles" v-model="band.style" label="Selecciona un estilo" @selected="handleSelected" />
