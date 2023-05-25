@@ -4,7 +4,7 @@
     <div class="content">
       <h3 class="title">{{ title }}</h3>
       <p class="text">{{ text }}</p>
-      <button-component button-text="Unirme">{{ buttonText }}</button-component>
+      <ButtonComponent label="Unirme" />
     </div>
   </div>
 </template>

@@ -23,7 +23,7 @@
       <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
 
-    <ButtonComponent @click="register" buttonText="Registrarse" customStyle="20px" />
+    <ButtonComponent @click="register" label="Registrarse" />
   </form>
 </template>
 

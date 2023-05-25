@@ -16,10 +16,9 @@
 </template>
 
 <script>
-import { RouterLink } from 'vue-router'
 import CardComponent from '../components/CardComponent.vue'
 export default {
-  components: { RouterLink, CardComponent }
+  components: { CardComponent }
 }
 </script>
 

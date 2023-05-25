@@ -2,7 +2,7 @@
   <div class="container">
     <InputComponent type="text" v-model="user.username" label="Usuario" />
     <InputComponent type="password" v-model="user.password" label="Contraseña" />
-    <ButtonComponent buttonText="Login" @click="login" />
+    <ButtonComponent label="Login" @click="login" />
     <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
   </div>
 </template>

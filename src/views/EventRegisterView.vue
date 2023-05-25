@@ -1,30 +1,38 @@
 <template>
-  <div>
-    <label for="style">Date <input type="date" v-model="event.date" /></label>
-    <label for="style">Name <input type="text" v-model="event.name" /></label>
+  <div class="container">
+    <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
+    <InputComponent label="Fecha" type="date" v-model="event.date" />
+    <InputComponent label="Precio" type="text" v-model="event.price" />
+    <InputComponent label="Flyer" type="file" />
   </div>
-  <button @click="register">Register</button>
+
+  <ButtonComponent label="Crear" @click="createEvent" />
 </template>
 
 <script>
 import { storeToRefs } from 'pinia'
 import { useLoginStore } from '../stores/login'
+import InputComponent from '../components/InputComponent.vue'
+import ButtonComponent from '../components/ButtonComponent.vue'
 export default {
   setup() {
     const store = useLoginStore()
     const { user } = storeToRefs(store)
     return { user }
   },
+
+  components: { InputComponent, ButtonComponent },
   data() {
     return {
       event: {}
     }
   },
   methods: {
-    register() {
+    createEvent() {
       const users = JSON.parse(window.localStorage.getItem('usuarios'))
 
       const userLoggedIn = users.find((element) => element.username === this.user.username)
+      console.log('🚀 ~ file: EventRegisterView.vue:35 ~ createEvent ~ userLoggedIn:', userLoggedIn)
 
       this.event.address = userLoggedIn.address
       this.event.capacity = userLoggedIn.capacity
@@ -41,4 +49,7 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.container {
+}
+</style>
