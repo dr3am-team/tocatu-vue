@@ -7,6 +7,7 @@
       <RouterLink v-if="!isLogin" :to="{ name: 'Register' }">Register</RouterLink>
       <RouterLink v-if="havePermissions('bar')" :to="{ name: 'EventRegister' }">Register an event</RouterLink>
       <button v-if="isLogin" @click="logout">Logout</button>
+      <EventViewList> </EventViewList>
     </div>
   </div>
   <div v-if="havePermissions('band')">Esto es una banda Nickname: {{ user.username }}</div>
@@ -17,9 +18,9 @@
 import { storeToRefs } from 'pinia'
 import { RouterLink } from 'vue-router'
 import { useLoginStore } from '../stores/login'
-
+import EventViewList from './EventListView.vue'
 export default {
-  components: { RouterLink },
+  components: { RouterLink, EventViewList },
   setup() {
     const store = useLoginStore()
     const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES
