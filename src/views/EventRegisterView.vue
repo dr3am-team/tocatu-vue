@@ -9,6 +9,7 @@
 <script>
 import { storeToRefs } from 'pinia'
 import { useLoginStore } from '../stores/login'
+import usersService from '../service/usersService'
 export default {
   setup() {
     const store = useLoginStore()
@@ -21,9 +22,9 @@ export default {
     }
   },
   methods: {
-    register() {
-      const users = JSON.parse(window.localStorage.getItem('usuarios'))
-
+    async register() {
+      //const users = JSON.parse(window.localStorage.getItem('usuarios'))
+      const users = await usersService.cargarUsuarios()
       const userLoggedIn = users.find((element) => element.username === this.user.username)
 
       this.event.address = userLoggedIn.address
@@ -33,6 +34,8 @@ export default {
 
       userLoggedIn.events = userLoggedIn.events || []
       userLoggedIn.events.push(this.event)
+
+      usersService.editUser(userLoggedIn)
 
       const datosEnString = JSON.stringify(users, null, '\t')
       window.localStorage.setItem('usuarios', datosEnString)
