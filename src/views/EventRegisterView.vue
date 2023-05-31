@@ -14,6 +14,7 @@ import { storeToRefs } from 'pinia'
 import { useLoginStore } from '../stores/login'
 import InputComponent from '../components/InputComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
+import usersService from '../service/usersService'
 export default {
   setup() {
     const store = useLoginStore()
@@ -28,11 +29,10 @@ export default {
     }
   },
   methods: {
-    createEvent() {
-      const users = JSON.parse(window.localStorage.getItem('usuarios'))
-
+    async register() {
+      //const users = JSON.parse(window.localStorage.getItem('usuarios'))
+      const users = await usersService.cargarUsuarios()
       const userLoggedIn = users.find((element) => element.username === this.user.username)
-      console.log('🚀 ~ file: EventRegisterView.vue:35 ~ createEvent ~ userLoggedIn:', userLoggedIn)
 
       this.event.address = userLoggedIn.address
       this.event.capacity = userLoggedIn.capacity
@@ -41,6 +41,8 @@ export default {
 
       userLoggedIn.events = userLoggedIn.events || []
       userLoggedIn.events.push(this.event)
+
+      usersService.editUser(userLoggedIn)
 
       const datosEnString = JSON.stringify(users, null, '\t')
       window.localStorage.setItem('usuarios', datosEnString)

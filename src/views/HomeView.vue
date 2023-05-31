@@ -35,7 +35,6 @@ export default {
       } else if (this.isLogin) {
         return [
           { route: '/', text: 'Home' },
-          { route: '/events', text: 'Events' },
           { route: '/logout', text: 'Logout' }
         ]
       } else if (!this.isLogin) {
