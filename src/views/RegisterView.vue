@@ -64,11 +64,10 @@ export default {
       console.log(data)
       await usersService.addUser(data)
 
-      // this.users.push(data)
-
-      // //Override localstorage info
-      // const datosEnString = JSON.stringify(this.users, null, '\t')
-      // window.localStorage.setItem('usuarios', datosEnString)
+      //Override localstorage info
+      const datosEnString = JSON.stringify(this.users, null, '\t')
+      window.localStorage.setItem('usuarios', datosEnString)
+      this.$router.push('/login')
     },
     select(e) {
       console.log(e)
