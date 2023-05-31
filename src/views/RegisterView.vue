@@ -63,6 +63,7 @@ export default {
       //Override localstorage info
       const datosEnString = JSON.stringify(this.users, null, '\t')
       window.localStorage.setItem('usuarios', datosEnString)
+      this.$router.push('/login')
     },
     select(e) {
       console.log(e)
