@@ -2,19 +2,20 @@
   <div class="card">
     <img :src="imageUrl" alt="Image" class="image" />
     <div class="content">
-      <h3 class="title">{{ title }}</h3>
-      <p class="text">{{ text }}</p>
-      <ButtonComponent label="Unirme" />
+      <div>
+        <h3 class="title">{{ title }}</h3>
+      </div>
+      <div>
+        <p class="fecha">{{ fecha }}</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import ButtonComponent from './ButtonComponent.vue'
-
 export default {
   name: 'CardComponent',
-  components: { ButtonComponent },
+  components: {},
   props: {
     imageUrl: {
       type: String,
@@ -24,7 +25,7 @@ export default {
       type: String,
       required: true
     },
-    text: {
+    fecha: {
       type: String,
       required: true
     },
@@ -40,17 +41,18 @@ export default {
 .card {
   /* Styles for the card container */
   width: 300px;
+  cursor: pointer;
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 2em;
 }
 
 .image {
   /* Styles for the card image */
   width: 100%;
   height: auto;
-  margin-bottom: 16px;
 }
 
 .title {
