@@ -26,12 +26,15 @@
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
+import usersService from '../service/usersService'
 export default {
   components: { InputComponent, ButtonComponent, SelectorComponent },
-  mounted() {
-    const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
-    this.users = usersLocalStorage ?? [] //nullish coalesing
-  },
+  // async mounted() {
+  //   // const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
+  //   // this.users = usersLocalStorage ?? [] //nullish coalesing
+  //   const usersMem = await usersService.cargarUsuarios()
+  //   this.users = usersMem ?? []
+  // },
   setup() {},
   data() {
     return {
@@ -51,14 +54,15 @@ export default {
     }
   },
   methods: {
-    register() {
+    async register() {
       this.generalData.userType = this.typeSelected
       const data = {
         ...this.generalData,
         ...(this.typeSelected == 'band' && { ...this.band }),
         ...(this.typeSelected == 'bar' && { ...this.bar })
       }
-      this.users.push(data)
+      console.log(data)
+      await usersService.addUser(data)
 
       //Override localstorage info
       const datosEnString = JSON.stringify(this.users, null, '\t')

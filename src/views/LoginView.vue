@@ -11,6 +11,8 @@
 import { useLoginStore } from '../stores/login'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
+import axios from 'axios'
+import usersService from '../service/usersService'
 export default {
   components: { ButtonComponent, InputComponent },
   setup() {
@@ -24,25 +26,31 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
       //Input of user and passw
       const { username, password } = this.user
 
       //Bring users from local storage
-      const users = JSON.parse(window.localStorage.getItem('usuarios'))
-
-      const user = users.find((element) => element.username === username)
-      if (user && user.password == password) {
-        this.loginStore({ username: username, permissions: [user.userType] })
-        this.$router.push('/')
-      } else {
-        this.failedLogin = 'Usuario o contraseña incorrectos. Intente de nuevo'
-        setTimeout(() => {
-          this.failedLogin = ''
-          this.user.username = ''
-          this.user.password = ''
-        }, 2000)
+      //const users = JSON.parse(window.localStorage.getItem('usuarios'))
+      try {
+        const users = await usersService.cargarUsuarios()
+        console.log(users)
+        const user = users.find((element) => element.username === username)
+        if (user && user.password == password) {
+          this.loginStore({ username: username, permissions: [user.userType] })
+          this.$router.push('/')
+        } else {
+          this.failedLogin = 'Usuario o contraseña incorrectos. Intente de nuevo'
+          setTimeout(() => {
+            this.failedLogin = ''
+            this.user.username = ''
+            this.user.password = ''
+          }, 2000)
+        }
+      } catch {
+        console.log('Error bringing users with get')
       }
+      // console.log(users)
     }
   }
 }
