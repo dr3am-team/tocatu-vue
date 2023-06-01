@@ -2,8 +2,8 @@
   <div>
     <h1>Bienvenidos a Tocatu</h1>
     <div>
-      <NavbarComponent :navLinks="computedNavLinks"></NavbarComponent>
-      <EventViewList> </EventViewList>
+      <NavbarComponent></NavbarComponent>
+      <EventViewList></EventViewList>
     </div>
   </div>
   <div v-if="havePermissions('band')">Esto es una banda Nickname: {{ user.username }}</div>
@@ -24,29 +24,7 @@ export default {
     const { havePermissions } = store // ESTO TRAE FUNCIONES
     return { user, havePermissions, isLogin }
   },
-  methods: {},
-  computed: {
-    computedNavLinks: function () {
-      if (this.havePermissions('bar')) {
-        return [
-          { route: '/eventRegister', text: 'Event Register' },
-          { route: '/logout', text: 'Logout' }
-        ]
-      } else if (this.isLogin) {
-        return [
-          { route: '/', text: 'Home' },
-          { route: '/logout', text: 'Logout' }
-        ]
-      } else if (!this.isLogin) {
-        return [
-          { route: '/register', text: 'Register' },
-          { route: '/login', text: 'Login' }
-        ]
-      } else {
-        return []
-      }
-    }
-  }
+  methods: {}
 }
 </script>
 
