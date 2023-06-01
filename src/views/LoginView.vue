@@ -2,7 +2,7 @@
   <div class="container">
     <InputComponent type="text" v-model="user.username" label="Usuario" />
     <InputComponent type="password" v-model="user.password" label="Contraseña" />
-    <ButtonComponent buttonText="Login" @click="login" />
+    <ButtonComponent label="Login" @click="login" />
     <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
   </div>
 </template>
@@ -34,7 +34,8 @@ export default {
       //const users = JSON.parse(window.localStorage.getItem('usuarios'))
       try {
         const users = await usersService.cargarUsuarios()
-        console.log(users)
+        console.log('🚀 ~ file: LoginView.vue:37 ~ login ~ users:', users)
+
         const user = users.find((element) => element.username === username)
         if (user && user.password == password) {
           this.loginStore({ username: username, permissions: [user.userType] })

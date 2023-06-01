@@ -13,10 +13,9 @@
 </template>
 
 <script>
-
 export default {
   name: 'CardComponent',
-  components: { },
+  components: {},
   props: {
     imageUrl: {
       type: String,

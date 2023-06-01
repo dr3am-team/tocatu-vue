@@ -18,7 +18,7 @@
       <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
 
-    <ButtonComponent @click.prevent="register" buttonText="Registrarse" customStyle="20px" />
+    <ButtonComponent @click.prevent="register" label="Registrarse" customStyle="20px" />
   </form>
 </template>
 
