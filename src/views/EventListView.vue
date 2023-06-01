@@ -1,9 +1,10 @@
 <script>
 import axios from 'axios'
 import CardComponent from '../components/CardComponent.vue'
+import DetailedCardComponent from '../components/DetailedCardComponent.vue'
 
 export default {
-  components: { CardComponent },
+  components: { CardComponent, DetailedCardComponent },
   created() {
     this.obtenerInformacionPokemon()
   },
@@ -21,7 +22,7 @@ export default {
           // Por ejemplo:
           this.pokemonName = response.data.name
           this.pokemonImage = response.data.sprites.other.home.front_default
-          this.fecha = "De lunes a viernes, de 20 a 23hs"
+          this.fecha = 'De lunes a viernes, de 20 a 23hs'
         })
         .catch((error) => {
           console.error(error)
@@ -40,11 +41,11 @@ export default {
 
 <template>
   <div class="card-container">
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" fecha="fecha"/>
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha"/>
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha"/>
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha"/>
-
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" fecha="fecha" />
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+    <DetailedCardComponent :imageUrl="pokemonImage" title="Ea" description="asda  sasd dASD" />
   </div>
 </template>
 
