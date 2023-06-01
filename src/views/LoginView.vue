@@ -34,7 +34,8 @@ export default {
       //const users = JSON.parse(window.localStorage.getItem('usuarios'))
       try {
         const users = await usersService.cargarUsuarios()
-        console.log(users)
+        console.log('🚀 ~ file: LoginView.vue:37 ~ login ~ users:', users)
+
         const user = users.find((element) => element.username === username)
         if (user && user.password == password) {
           this.loginStore({ username: username, permissions: [user.userType] })

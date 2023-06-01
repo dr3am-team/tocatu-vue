@@ -1,12 +1,18 @@
 <template>
+  <NavbarComponent />
   <div class="container">
     <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
     <InputComponent label="Fecha" type="date" v-model="event.date" />
-    <InputComponent label="Precio" type="text" v-model="event.price" />
+    <InputComponent label="Hora" type="time" v-model="event.date" />
+    <InputComponent label="Precio" type="number" v-model="event.price" />
     <InputComponent label="Flyer" type="file" />
+    <label class="label" for="descripcion">
+      Descripción del Evento
+      <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
+    </label>
+    <SelectorComponent />
+    <ButtonComponent label="Crear" @click.prevent="createEvent" />
   </div>
-
-  <ButtonComponent label="Crear" @click="createEvent" />
 </template>
 
 <script>
@@ -14,7 +20,9 @@ import { storeToRefs } from 'pinia'
 import { useLoginStore } from '../stores/login'
 import InputComponent from '../components/InputComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
+import NavbarComponent from '../components/NavbarComponent.vue'
 import usersService from '../service/usersService'
+
 export default {
   setup() {
     const store = useLoginStore()
@@ -22,15 +30,17 @@ export default {
     return { user }
   },
 
-  components: { InputComponent, ButtonComponent },
+  components: { InputComponent, ButtonComponent, NavbarComponent },
   data() {
     return {
-      event: {}
+      event: {
+        price: null,
+        date: ''
+      }
     }
   },
   methods: {
     async register() {
-      //const users = JSON.parse(window.localStorage.getItem('usuarios'))
       const users = await usersService.cargarUsuarios()
       const userLoggedIn = users.find((element) => element.username === this.user.username)
 
@@ -38,6 +48,8 @@ export default {
       this.event.capacity = userLoggedIn.capacity
       this.event.barName = userLoggedIn.name
       this.event.mail = userLoggedIn.mail
+      this.event.price = event.price
+      this.event.date = event.date
 
       userLoggedIn.events = userLoggedIn.events || []
       userLoggedIn.events.push(this.event)
@@ -51,7 +63,24 @@ export default {
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 .container {
+  width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  .label {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0px;
+    width: 100%;
+
+    textarea {
+      padding: 5px 10px;
+      width: 70%;
+    }
+  }
 }
 </style>

@@ -17,12 +17,10 @@ export default {
   },
   props: {
     array: {
-      type: Array,
-      required: true
+      type: Array
     },
     label: {
-      type: String,
-      required: true
+      type: String
     }
   },
   methods: {
