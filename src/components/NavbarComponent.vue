@@ -1,7 +1,7 @@
 <template>
   <nav>
     <ul>
-      <li v-for="(link, index) in navLinks" :key="index">
+      <li v-for="(link, index) in computedNavLinks" :key="index">
         <RouterLink :to="link.route" @click="handleLinkClick(link)">{{ link.text }}</RouterLink>
       </li>
     </ul>
@@ -10,18 +10,37 @@
 
 <script>
 import { useLoginStore } from '../stores/login'
+import { storeToRefs } from 'pinia'
 
 export default {
   name: 'NavbarComponent',
   setup() {
     const store = useLoginStore()
-    const { logoutStore } = store
-    return { logoutStore }
+    const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES
+    const { havePermissions, logoutStore } = store // ESTO TRAE FUNCIONES
+    return { user, havePermissions, isLogin, logoutStore }
   },
-  props: {
-    navLinks: {
-      type: Array,
-      required: true
+  computed: {
+    computedNavLinks: function () {
+      if (this.havePermissions('bar')) {
+        return [
+          { route: '/', text: 'Home' },
+          { route: '/eventRegister', text: 'Event Register' },
+          { route: '/logout', text: 'Logout' }
+        ]
+      } else if (this.isLogin) {
+        return [
+          { route: '/', text: 'Home' },
+          { route: '/logout', text: 'Logout' }
+        ]
+      } else if (!this.isLogin) {
+        return [
+          { route: '/register', text: 'Register' },
+          { route: '/login', text: 'Login' }
+        ]
+      } else {
+        return []
+      }
     }
   },
   methods: {
