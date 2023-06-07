@@ -17,7 +17,6 @@
       <InputComponent type="text" v-model="bar.address" label="Dirección" />
       <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
     </div>
-
     <ButtonComponent @click.prevent="register" label="Registrarse" customStyle="20px" />
   </form>
 </template>
@@ -30,8 +29,8 @@ import usersService from '../service/usersService'
 export default {
   components: { InputComponent, ButtonComponent, SelectorComponent },
   // async mounted() {
-  //   // const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
-  //   // this.users = usersLocalStorage ?? [] //nullish coalesing
+  //    const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
+  //    this.users = usersLocalStorage ?? [] //nullish coalesing
   //   const usersMem = await usersService.cargarUsuarios()
   //   this.users = usersMem ?? []
   // },

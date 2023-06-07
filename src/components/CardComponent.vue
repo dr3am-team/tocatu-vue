@@ -37,16 +37,20 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .card {
   /* Styles for the card container */
   width: 300px;
   cursor: pointer;
-  border: 1px solid #ccc;
+  border: 2px solid var(--prussian-blue);
   border-radius: 4px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin: 2em;
+  transition: box-shadow 100ms ease-in-out;
+
+  &:hover {
+    box-shadow: 0 2px 4px var(--prussian-blue);
+  }
 }
 
 .image {
