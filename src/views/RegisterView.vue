@@ -75,7 +75,6 @@ export default {
     },
     handleSelected(selected) {
       this.band.style = selected
-      console.log(selected)
     }
   }
 }
