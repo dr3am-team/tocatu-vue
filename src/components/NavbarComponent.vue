@@ -32,12 +32,12 @@ export default {
         ]
       } else if (this.isLogin) {
         return [{ route: '/logout', text: 'Logout' }]
-      } else if (!this.isLogin) {
+      } else if (!this.isLogin && this.$route.path === '/') {
         return [
           { route: '/register', text: 'Register' },
           { route: '/login', text: 'Login' }
         ]
-      } else {
+      } else if ((!this.isLogin && this.$router === '/register') || (!this.isLogin && this.$router === '/login')) {
         return []
       }
     }
