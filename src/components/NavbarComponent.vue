@@ -1,6 +1,9 @@
 <template>
   <nav>
-    <ul>
+    <ul class="container">
+      <li>
+        <RouterLink to="/"><img src="../assets/img/tocatuLogo.png" alt="Logo" /></RouterLink>
+      </li>
       <li v-for="(link, index) in computedNavLinks" :key="index">
         <RouterLink :to="link.route" @click="handleLinkClick(link)">{{ link.text }}</RouterLink>
       </li>
@@ -24,15 +27,11 @@ export default {
     computedNavLinks: function () {
       if (this.havePermissions('bar')) {
         return [
-          { route: '/', text: 'Home' },
           { route: '/eventRegister', text: 'Event Register' },
           { route: '/logout', text: 'Logout' }
         ]
       } else if (this.isLogin) {
-        return [
-          { route: '/', text: 'Home' },
-          { route: '/logout', text: 'Logout' }
-        ]
+        return [{ route: '/logout', text: 'Logout' }]
       } else if (!this.isLogin) {
         return [
           { route: '/register', text: 'Register' },
@@ -75,5 +74,14 @@ a {
   color: #fff;
   text-decoration: none;
   font-weight: bold;
+}
+
+img {
+  width: 50px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
 }
 </style>
