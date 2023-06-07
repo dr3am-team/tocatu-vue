@@ -1,4 +1,5 @@
 <template>
+  <NavbarComponent></NavbarComponent>
   <form class="container">
     <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" />
     <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" />
@@ -27,8 +28,9 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
 import usersService from '../service/usersService'
+import NavbarComponent from '../components/NavbarComponent.vue'
 export default {
-  components: { InputComponent, ButtonComponent, SelectorComponent },
+  components: { InputComponent, ButtonComponent, SelectorComponent, NavbarComponent },
   // async mounted() {
   //   // const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
   //   // this.users = usersLocalStorage ?? [] //nullish coalesing

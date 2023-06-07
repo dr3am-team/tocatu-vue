@@ -1,4 +1,5 @@
 <template>
+  <NavbarComponent></NavbarComponent>
   <div class="container">
     <InputComponent type="text" v-model="user.username" label="Usuario" />
     <InputComponent type="password" v-model="user.password" label="Contraseña" />
@@ -13,8 +14,9 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import axios from 'axios'
 import usersService from '../service/usersService'
+import NavbarComponent from '../components/NavbarComponent.vue'
 export default {
-  components: { ButtonComponent, InputComponent },
+  components: { ButtonComponent, InputComponent, NavbarComponent },
   setup() {
     const { loginStore } = useLoginStore()
     return { loginStore }
