@@ -1,17 +1,20 @@
 <template>
   <NavbarComponent />
-  <div class="container">
-    <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
-    <InputComponent label="Fecha" type="date" v-model="event.date" />
-    <InputComponent label="Hora" type="time" v-model="event.date" />
-    <InputComponent label="Precio" type="number" v-model="event.price" />
-    <InputComponent label="Flyer" type="file" />
-    <label class="label" for="descripcion">
-      Descripción del Evento
-      <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
-    </label>
-    <SelectorComponent />
-    <ButtonComponent label="Crear" @click.prevent="createEvent" />
+  <div class="super-container">
+    <div class="container">
+      <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
+      <InputComponent label="Fecha" type="date" v-model="event.date" />
+      <InputComponent label="Hora" type="time" v-model="event.date" />
+      <InputComponent label="Precio" type="number" v-model="event.price" />
+      <InputComponent label="Flyer" type="file" />
+      <label class="label" for="descripcion">
+        Descripción del Evento
+        <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
+      </label>
+      <SelectorComponent />
+      <ButtonComponent label="Crear" @click.prevent="createEvent" />
+    </div>
+    <FooterComponent></FooterComponent>
   </div>
 </template>
 
@@ -22,6 +25,7 @@ import InputComponent from '../components/InputComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import usersService from '../service/usersService'
+import FooterComponent from '../components/FooterComponent.vue'
 
 export default {
   setup() {
@@ -30,7 +34,7 @@ export default {
     return { user }
   },
 
-  components: { InputComponent, ButtonComponent, NavbarComponent },
+  components: { InputComponent, ButtonComponent, NavbarComponent, FooterComponent },
   data() {
     return {
       event: {
@@ -82,5 +86,11 @@ export default {
       width: 70%;
     }
   }
+}
+.super-container {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

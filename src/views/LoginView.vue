@@ -1,10 +1,14 @@
 <template>
   <NavbarComponent></NavbarComponent>
-  <div class="container">
-    <InputComponent type="text" v-model="user.username" label="Usuario" @keyup.enter="handleKeyPress" />
-    <InputComponent type="password" v-model="user.password" label="Contraseña" @keyup.enter="handleKeyPress" />
-    <ButtonComponent label="Login" @click="login" />
-    <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
+
+  <div class="super-container">
+    <div class="container">
+      <InputComponent type="text" v-model="user.username" label="Usuario" @keyup.enter="handleKeyPress" />
+      <InputComponent type="password" v-model="user.password" label="Contraseña" @keyup.enter="handleKeyPress" />
+      <ButtonComponent label="Login" @click="login" />
+      <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
+    </div>
+    <FooterComponent></FooterComponent>
   </div>
 </template>
 
@@ -14,9 +18,11 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import axios from 'axios'
 import usersService from '../service/usersService'
+import FooterComponent from '../components/FooterComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
+
 export default {
-  components: { ButtonComponent, InputComponent, NavbarComponent },
+  components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent },
   setup() {
     const { loginStore } = useLoginStore()
     return { loginStore }
@@ -66,7 +72,6 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  width: 500px;
   margin: 0 auto;
 
   .login-error {
@@ -76,5 +81,14 @@ export default {
     color: red;
     font-weight: bold;
   }
+}
+.super-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>

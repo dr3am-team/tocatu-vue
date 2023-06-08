@@ -1,47 +1,47 @@
 <template>
-  <NavbarComponent></NavbarComponent>
-  <form class="container">
-    <InputComponent
-      type="text"
-      v-model="generalData.username"
-      label="Nombre de usuario"
-      @keyup.enter="handleKeyPress"
-    />
-    <InputComponent
-      type="text"
-      v-model="generalData.mail"
-      label="Mail"
-      placeholder="usuario@usuario.com"
-      @keyup.enter="handleKeyPress"
-    />
-    <InputComponent type="password" v-model="generalData.password" label="Password" @keyup.enter="handleKeyPress" />
 
-    <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
+<NavbarComponent></NavbarComponent>
+  <div class="super-container">
+    <form class="container">
+      <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" @keyup.enter="handleKeyPress" />
+      <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" @keyup.enter="handleKeyPress" />
+      <InputComponent type="password" v-model="generalData.password" label="Password" @keyup.enter="handleKeyPress" />
 
-    <div v-if="typeSelected == 'band'" class="container">
-      <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" @keyup.enter="handleKeyPress" />
-      <!-- <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" /> -->
-      <SelectorComponent :array="styles" v-model="band.style" label="Selecciona un estilo" @selected="handleSelected" />
-    </div>
+      <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
 
-    <div v-if="typeSelected == 'bar'">
-      <InputComponent type="text" v-model="bar.name" label="Nombre de tu bar" @keyup.enter="handleKeyPress" />
-      <InputComponent type="text" v-model="bar.address" label="Dirección" @keyup.enter="handleKeyPress" />
-      <InputComponent type="number" v-model="bar.capacity" label="Capacidad" @keyup.enter="handleKeyPress" />
-    </div>
 
-    <ButtonComponent @click.prevent="register" label="Registrarse" customStyle="20px" />
-  </form>
+      <div v-if="typeSelected == 'band'" class="container">
+        <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" @keyup.enter="handleKeyPress" />
+        <!-- <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" @keyup.enter="handleKeyPress" /> -->
+        <SelectorComponent
+          :array="styles"
+          v-model="band.style"
+          label="Selecciona un estilo"
+          @selected="handleSelected"
+        />
+      </div>
+      <div v-if="typeSelected == 'bar'">
+        <InputComponent type="text" v-model="bar.name" label="Nombre de tu bar" @keyup.enter="handleKeyPress" />
+        <InputComponent type="text" v-model="bar.address" label="Dirección" @keyup.enter="handleKeyPress" />
+        <InputComponent type="number" v-model="bar.capacity" label="Capacidad" @keyup.enter="handleKeyPress" />
+      </div>
+
+      <ButtonComponent @click.prevent="register" label="Registrarse" customStyle="20px" />
+    </form>
+    <FooterComponent></FooterComponent>
+  </div>
 </template>
 
 <script>
 import ButtonComponent from '../components/ButtonComponent.vue'
+import FooterComponent from '../components/FooterComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
 import usersService from '../service/usersService'
 import NavbarComponent from '../components/NavbarComponent.vue'
+
 export default {
-  components: { InputComponent, ButtonComponent, SelectorComponent, NavbarComponent },
+  components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent, NavbarComponent },
   // async mounted() {
   //   // const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
   //   // this.users = usersLocalStorage ?? [] //nullish coalesing
@@ -115,5 +115,11 @@ export default {
       }
     }
   }
+}
+.super-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 </style>
