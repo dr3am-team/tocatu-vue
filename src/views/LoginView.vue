@@ -1,8 +1,8 @@
 <template>
   <NavbarComponent></NavbarComponent>
   <div class="container">
-    <InputComponent type="text" v-model="user.username" label="Usuario" />
-    <InputComponent type="password" v-model="user.password" label="Contraseña" />
+    <InputComponent type="text" v-model="user.username" label="Usuario" @keyup.enter="handleKeyPress" />
+    <InputComponent type="password" v-model="user.password" label="Contraseña" @keyup.enter="handleKeyPress" />
     <ButtonComponent label="Login" @click="login" />
     <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
   </div>
@@ -54,6 +54,9 @@ export default {
         console.log('Error bringing users with get')
       }
       // console.log(users)
+    },
+    handleKeyPress() {
+      this.login()
     }
   }
 }
