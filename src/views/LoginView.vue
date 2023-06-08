@@ -1,4 +1,5 @@
 <template>
+  <NavbarComponent></NavbarComponent>
   <div class="super-container">
     <div class="container">
       <InputComponent type="text" v-model="user.username" label="Usuario" />
@@ -7,7 +8,8 @@
       <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
     </div>
     <FooterComponent></FooterComponent>
-  </div>
+
+  
 </template>
 
 <script>
@@ -17,8 +19,10 @@ import InputComponent from '../components/InputComponent.vue'
 import axios from 'axios'
 import usersService from '../service/usersService'
 import FooterComponent from '../components/FooterComponent.vue'
+import NavbarComponent from '../components/NavbarComponent.vue'
+
 export default {
-  components: { ButtonComponent, InputComponent, FooterComponent },
+  components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent },
   setup() {
     const { loginStore } = useLoginStore()
     return { loginStore }

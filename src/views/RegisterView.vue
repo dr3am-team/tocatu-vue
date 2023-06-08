@@ -1,4 +1,5 @@
 <template>
+<NavbarComponent></NavbarComponent>
   <div class="super-container">
     <form class="container">
       <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" />
@@ -36,9 +37,10 @@ import FooterComponent from '../components/FooterComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
 import usersService from '../service/usersService'
+import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
-  components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent },
+  components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent, NavbarComponent },
   // async mounted() {
   //   // const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
   //   // this.users = usersLocalStorage ?? [] //nullish coalesing
@@ -85,7 +87,6 @@ export default {
     },
     handleSelected(selected) {
       this.band.style = selected
-      console.log(selected)
     }
   }
 }
