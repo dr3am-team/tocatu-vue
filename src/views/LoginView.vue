@@ -8,8 +8,7 @@
       <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
     </div>
     <FooterComponent></FooterComponent>
-
-  
+  </div>
 </template>
 
 <script>
