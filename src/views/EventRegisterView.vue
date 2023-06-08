@@ -88,7 +88,7 @@ export default {
   }
 }
 .super-container {
-  min-height: calc(100vh - 51px);
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
