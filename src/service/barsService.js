@@ -34,8 +34,8 @@ export default {
     try {
       const barFound = await apiClient.post('/login', bar)
       return barFound.data
-    } catch {
-      throw 'Error loggin in bar'
+    } catch (error) {
+      throw error
     }
   }
 }

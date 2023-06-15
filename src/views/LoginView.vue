@@ -42,13 +42,14 @@ export default {
       //const users = JSON.parse(window.localStorage.getItem('usuarios'))
       try {
         const bar = await barsService.loginBar(this.user)
-        console.log(bar)
         if (bar) {
           this.loginStore({ bar, permissions: [bar.userType] })
           this.$router.push('/')
         }
-        console.log(bar)
-      } catch {}
+      } catch (error) {
+        console.log('a')
+        this.failedLogin = error.response.data.message
+      }
       // console.log(users)
     },
     handleKeyPress() {
