@@ -1,14 +1,23 @@
 <template>
-
-<NavbarComponent></NavbarComponent>
+  <NavbarComponent></NavbarComponent>
   <div class="super-container">
     <form class="container">
-      <InputComponent type="text" v-model="generalData.username" label="Nombre de usuario" @keyup.enter="handleKeyPress" />
-      <InputComponent type="text" v-model="generalData.mail" label="Mail" placeholder="usuario@usuario.com" @keyup.enter="handleKeyPress" />
+      <InputComponent
+        type="text"
+        v-model="generalData.username"
+        label="Nombre de usuario"
+        @keyup.enter="handleKeyPress"
+      />
+      <InputComponent
+        type="text"
+        v-model="generalData.mail"
+        label="Mail"
+        placeholder="usuario@usuario.com"
+        @keyup.enter="handleKeyPress"
+      />
       <InputComponent type="password" v-model="generalData.password" label="Password" @keyup.enter="handleKeyPress" />
 
       <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
-
 
       <div v-if="typeSelected == 'band'" class="container">
         <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" @keyup.enter="handleKeyPress" />
@@ -37,7 +46,7 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import FooterComponent from '../components/FooterComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
-import usersService from '../service/usersService'
+import usersService from '../service/barsService'
 import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
