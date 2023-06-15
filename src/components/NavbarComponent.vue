@@ -27,14 +27,14 @@ export default {
     computedNavLinks: function () {
       if (this.havePermissions('bar')) {
         return [
-          { route: '/eventRegister', text: 'Event Register' },
+          { route: '/eventRegister', text: 'Crear evento' },
           { route: '/logout', text: 'Logout' }
         ]
       } else if (this.isLogin) {
         return [{ route: '/logout', text: 'Logout' }]
       } else if (!this.isLogin && this.$route.path === '/') {
         return [
-          { route: '/register', text: 'Register' },
+          { route: '/register', text: 'Registrarse' },
           { route: '/login', text: 'Login' }
         ]
       } else if ((!this.isLogin && this.$router === '/register') || (!this.isLogin && this.$router === '/login')) {
@@ -56,7 +56,7 @@ export default {
 <style scoped>
 /* Estilos de la barra de navegación */
 nav {
-  background-color: #c0c3c5;
+  background-color: var(--prussian-blue);
   color: #fff;
   padding: 1rem;
 }

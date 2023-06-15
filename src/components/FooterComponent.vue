@@ -28,17 +28,17 @@ export default {
 
 <style scoped>
 footer {
-  background-color: lightblue;
-  padding: 15px;
+  background-color: var(--prussian-blue);
+  padding: 10px 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: white;
 }
-.follow-us {
-  margin-right: 200px;
-}
+
 i {
   margin-right: 30px;
-  font-size: 30px;
+  font-size: 20px;
+  color: white;
 }
 </style>
