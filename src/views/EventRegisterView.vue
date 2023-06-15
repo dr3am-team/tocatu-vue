@@ -24,7 +24,7 @@ import { useLoginStore } from '../stores/login'
 import InputComponent from '../components/InputComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
-import usersService from '../service/usersService'
+import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
 
 export default {
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     async register() {
-      const users = await usersService.cargarUsuarios()
+      const users = await barsService.cargarUsuarios()
       const userLoggedIn = users.find((element) => element.username === this.user.username)
 
       this.event.address = userLoggedIn.address
@@ -58,7 +58,7 @@ export default {
       userLoggedIn.events = userLoggedIn.events || []
       userLoggedIn.events.push(this.event)
 
-      usersService.editUser(userLoggedIn)
+      barsService.editUser(userLoggedIn)
 
       const datosEnString = JSON.stringify(users, null, '\t')
       window.localStorage.setItem('usuarios', datosEnString)

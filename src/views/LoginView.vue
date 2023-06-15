@@ -17,7 +17,7 @@ import { useLoginStore } from '../stores/login'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import axios from 'axios'
-import usersService from '../service/usersService'
+import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 
@@ -41,23 +41,14 @@ export default {
       //Bring users from local storage
       //const users = JSON.parse(window.localStorage.getItem('usuarios'))
       try {
-        const users = await usersService.cargarUsuarios()
-        console.log('🚀 ~ file: LoginView.vue:37 ~ login ~ users:', users)
-
-        const user = users.find((element) => element.username === username)
-        if (user && user.password == password) {
-          this.loginStore({ username: username, permissions: [user.userType] })
+        const bar = await barsService.loginBar(this.user)
+        if (bar) {
+          this.loginStore({ bar, permissions: [bar.userType] })
           this.$router.push('/')
-        } else {
-          this.failedLogin = 'Usuario o contraseña incorrectos. Intente de nuevo'
-          setTimeout(() => {
-            this.failedLogin = ''
-            this.user.username = ''
-            this.user.password = ''
-          }, 2000)
         }
-      } catch {
-        console.log('Error bringing users with get')
+      } catch (error) {
+        console.log('a')
+        this.failedLogin = error.response.data.message
       }
       // console.log(users)
     },
