@@ -18,7 +18,9 @@ export default {
   },
   async addBar(bar) {
     try {
-      await apiClient.post('/', bar)
+      const barCreated = await apiClient.post('/', bar)
+      console.log(barCreated)
+      return barCreated
     } catch {
       throw 'error adding bar'
     }

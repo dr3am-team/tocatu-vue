@@ -47,6 +47,7 @@ import InputComponent from '../components/InputComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
 import usersService from '../service/barsService'
 import NavbarComponent from '../components/NavbarComponent.vue'
+import barsService from '../service/barsService'
 
 export default {
   components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent, NavbarComponent },
@@ -82,16 +83,21 @@ export default {
         ...(this.typeSelected == 'band' && { ...this.band }),
         ...(this.typeSelected == 'bar' && { ...this.bar })
       }
-      console.log(data)
-      await usersService.addUser(data)
-
-      //Override localstorage info
-      const datosEnString = JSON.stringify(this.users, null, '\t')
-      window.localStorage.setItem('usuarios', datosEnString)
-      this.$router.push('/login')
+      try {
+        let response
+        if (this.generalData.userType == 'bar') {
+          response = await barsService.addBar(data)
+        } else if (this.generalData.userType == 'band') {
+          response = await bandsService.addBand(data)
+        }
+        if (response.status == 200) {
+          this.$router.push('/login')
+        }
+      } catch (error) {
+        console.log('Error creating' + this.generalData.userType + error)
+      }
     },
     select(e) {
-      console.log(e)
       this.typeSelected = e
     },
     handleSelected(selected) {
