@@ -22,6 +22,7 @@ import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
+import bandsService from '../service/bandsService.js'
 
 export default {
   components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent, SelectorComponent },
@@ -49,15 +50,27 @@ export default {
       //Bring users from local storage
       //const users = JSON.parse(window.localStorage.getItem('usuarios'))
       console.log(this.typeSelected)
-      try {
-        const bar = await barsService.loginBar(this.user)
-        console.log(this.typeSelected)
-        if (bar) {
-          this.loginStore({ bar, permissions: [bar.userType] })
-          this.$router.push('/')
+      if (this.typeSelected == 'bar') {
+        try {
+          const bar = await barsService.loginBar(this.user)
+          if (bar) {
+            this.loginStore({ bar, permissions: [bar.userType] })
+            this.$router.push('/')
+          }
+        } catch (error) {
+          this.failedLogin = error.response.data.message
         }
-      } catch (error) {
-        this.failedLogin = error.response.data.message
+      }
+      if (this.typeSelected == 'band') {
+        try {
+          const band = await bandsService.loginBand(this.user)
+          if (band) {
+            this.loginStore({ band, permissions: [band.userType] })
+            this.$router.push('/')
+          }
+        } catch (error) {
+          this.failedLogin = error.response.data.message
+        }
       }
       // console.log(users)
     },
