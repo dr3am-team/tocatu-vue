@@ -62,7 +62,8 @@ export default {
     return {
       accountType: [
         { label: 'Banda', value: 'band' },
-        { label: 'Bar', value: 'bar' }
+        { label: 'Bar', value: 'bar' },
+        { label: 'Espectador', value: 'viewer' }
       ],
       typeSelected: '',
       band: { name: '', style: '' },
@@ -116,18 +117,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-
-  .select-label {
-    display: flex;
-    justify-content: space-between;
-    .select {
-      padding: 5px 10px;
-      width: 70%;
-      option {
-        padding: 5px 0px;
-      }
-    }
-  }
+  width: 600px;
 }
 .super-container {
   min-height: 100vh;

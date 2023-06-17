@@ -11,10 +11,11 @@
 </template>
 
 <script>
+import dayjs from 'dayjs'
 export default {
   data() {
     return {
-      footerText: 'Copyright Tocatu Inc. 2023'
+      footerText: `Copyright Tocatu Inc. ${dayjs().year()}`
     }
   },
   mounted() {

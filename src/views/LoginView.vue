@@ -36,7 +36,8 @@ export default {
 
       accountType: [
         { label: 'Banda', value: 'band' },
-        { label: 'Bar', value: 'bar' }
+        { label: 'Bar', value: 'bar' },
+        { label: 'Espectador', value: 'viewer' }
       ],
       typeSelected: ''
     }
@@ -59,7 +60,6 @@ export default {
       } catch (error) {
         this.failedLogin = error.response.data.message
       }
-      // console.log(users)
     },
     handleKeyPress() {
       this.login()
@@ -75,7 +75,8 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
+  margin: 20px auto;
+  width: 600px;
 
   .login-error {
     border: 1px solid red;
@@ -87,8 +88,6 @@ export default {
 }
 .super-container {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

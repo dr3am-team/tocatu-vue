@@ -1,10 +1,18 @@
+<template>
+  <div class="card-container">
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+  </div>
+</template>
+
 <script>
 import axios from 'axios'
 import CardComponent from '../components/CardComponent.vue'
-import DetailedCardComponent from '../components/DetailedCardComponent.vue'
 
 export default {
-  components: { CardComponent, DetailedCardComponent },
+  components: { CardComponent },
   created() {
     this.obtenerInformacionPokemon()
   },
@@ -39,20 +47,13 @@ export default {
 }
 </script>
 
-<template>
-  <div class="card-container">
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" fecha="fecha" />
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
-    <DetailedCardComponent :imageUrl="pokemonImage" title="Ea" description="asda  sasd dASD" />
-  </div>
-</template>
-
 <style scoped>
 .card-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  overflow: hidden;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  overflow: auto;
 }
 </style>

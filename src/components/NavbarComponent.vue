@@ -1,5 +1,5 @@
 <template>
-  <nav class="container">
+  <nav class="navbar-container">
     <ul class="link-list">
       <li>
         <RouterLink to="/"><img src="../assets/img/tocatuLogo.png" alt="Logo" /></RouterLink>
@@ -56,9 +56,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 /* Estilos de la barra de navegación */
-.container {
+.navbar-container {
   background-color: var(--cerulean);
   color: var(--white);
   padding: 1rem;

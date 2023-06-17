@@ -4,7 +4,7 @@
     <div class="container">
       <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
       <InputComponent label="Fecha" type="date" v-model="event.date" />
-      <InputComponent label="Hora" type="time" v-model="event.date" />
+      <InputComponent label="Hora" type="time" v-model="event.time" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
       <InputComponent label="Flyer" type="file" />
       <label class="label" for="descripcion">
