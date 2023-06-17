@@ -3,7 +3,7 @@
     {{ label }}
 
     <input
-      :value="type == 'date' ? this.date : modelValue"
+      :value="modelValue"
       :type="type"
       @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder"

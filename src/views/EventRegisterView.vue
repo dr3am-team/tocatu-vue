@@ -2,7 +2,7 @@
   <NavbarComponent />
   <div class="super-container">
     <div class="container">
-      <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
+      <InputComponent label="Nombre del Evento" type="text" v-model="event.title" />
       <InputComponent label="Fecha" type="date" v-model="event.date" />
       <InputComponent label="Hora" type="time" v-model="event.time" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
@@ -11,8 +11,7 @@
         Descripción del Evento
         <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
       </label>
-      <SelectorComponent />
-      <ButtonComponent label="Crear" @click.prevent="createEvent" />
+      <ButtonComponent label="Crear" @click.prevent="register" />
     </div>
     <FooterComponent></FooterComponent>
   </div>
@@ -26,6 +25,7 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
+import eventsService from '../service/eventsService.js'
 
 export default {
   setup() {
@@ -38,13 +38,19 @@ export default {
   data() {
     return {
       event: {
-        price: null,
-        date: ''
+        price: null
       }
     }
   },
   methods: {
     async register() {
+      //del bar: capacity, address
+      this.event.address = this.user.bar.address
+      this.event.capacity = this.user.bar.capacity
+      this.event.barName = this.user.bar.name
+      const eventCreated = await eventsService.addEvent(this.event, this.user.bar.username)
+    },
+    async registerr() {
       const users = await barsService.cargarUsuarios()
       const userLoggedIn = users.find((element) => element.username === this.user.username)
 
