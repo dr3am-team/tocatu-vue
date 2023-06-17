@@ -30,11 +30,10 @@
         />
       </div>
       <div v-if="typeSelected == 'bar'">
-        <InputComponent type="text" v-model="bar.name" label="Nombre de tu bar" @keyup.enter="handleKeyPress" />
-        <InputComponent type="text" v-model="bar.address" label="Dirección" @keyup.enter="handleKeyPress" />
-        <InputComponent type="number" v-model="bar.capacity" label="Capacidad" @keyup.enter="handleKeyPress" />
+        <InputComponent type="text" v-model="bar.name" label="Nombre de tu bar" />
+        <InputComponent type="text" v-model="bar.address" label="Dirección" />
+        <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
       </div>
-
       <ButtonComponent @click.prevent="register" label="Registrarse" customStyle="20px" />
     </form>
     <FooterComponent></FooterComponent>
@@ -52,8 +51,8 @@ import NavbarComponent from '../components/NavbarComponent.vue'
 export default {
   components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent, NavbarComponent },
   // async mounted() {
-  //   // const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
-  //   // this.users = usersLocalStorage ?? [] //nullish coalesing
+  //    const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
+  //    this.users = usersLocalStorage ?? [] //nullish coalesing
   //   const usersMem = await usersService.cargarUsuarios()
   //   this.users = usersMem ?? []
   // },

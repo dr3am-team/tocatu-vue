@@ -56,8 +56,8 @@ export default {
 <style scoped>
 /* Estilos de la barra de navegación */
 nav {
-  background-color: #c0c3c5;
-  color: #fff;
+  background-color: var(--cerulean);
+  color: var(--white);
   padding: 1rem;
 }
 

@@ -28,7 +28,7 @@ export default {
   font-size: 16px;
   text-transform: uppercase;
   cursor: pointer;
-  background: #ea4c89;
+  background: var(--cerulean);
   border: none;
   color: #fff;
   border-radius: 5px;
