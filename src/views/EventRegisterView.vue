@@ -2,7 +2,7 @@
   <NavbarComponent />
   <div class="super-container">
     <div class="container">
-      <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
+      <InputComponent label="Nombre del Evento" type="text" v-model="event.title" />
       <InputComponent label="Fecha" type="date" v-model="event.date" />
       <InputComponent label="Hora" type="time" v-model="event.time" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
@@ -11,7 +11,6 @@
         Descripción del Evento
         <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
       </label>
-      <SelectorComponent />
       <ButtonComponent label="Crear" @click.prevent="register" />
     </div>
     <FooterComponent></FooterComponent>
@@ -26,6 +25,7 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
+import eventsService from '../service/eventsService.js'
 
 export default {
   setup() {
@@ -47,8 +47,8 @@ export default {
       //del bar: capacity, address
       this.event.address = this.user.bar.address
       this.event.capacity = this.user.bar.capacity
-      //console.log(this.event)
-      console.log(this.event)
+      this.event.barName = this.user.bar.name
+      const eventCreated = await eventsService.addEvent(this.event, this.user.bar.username)
     },
     async registerr() {
       const users = await barsService.cargarUsuarios()
