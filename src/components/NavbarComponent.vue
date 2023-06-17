@@ -30,7 +30,7 @@ export default {
     computedNavLinks: function () {
       if (this.havePermissions('bar')) {
         return [
-          { route: '/eventRegister', text: 'Crear evento' },
+          { route: '/registrar-evento', text: 'Crear evento' },
           { route: '/logout', text: 'Logout' }
         ]
       } else if (this.isLogin) {

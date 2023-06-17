@@ -32,7 +32,7 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/eventRegister',
+      path: '/registrar-evento',
       name: 'EventRegister',
       // component: () => import('../views/HomeView.vue')
       component: EventRegisterView
