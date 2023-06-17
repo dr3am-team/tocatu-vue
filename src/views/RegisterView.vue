@@ -62,7 +62,7 @@ export default {
   data() {
     return {
       accountType: [
-        { label: 'Band', value: 'band' },
+        { label: 'Banda', value: 'band' },
         { label: 'Bar', value: 'bar' }
       ],
       typeSelected: '',

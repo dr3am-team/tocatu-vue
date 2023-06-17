@@ -3,6 +3,7 @@
 
   <div class="super-container">
     <div class="container">
+      <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
       <InputComponent type="text" v-model="user.username" label="Usuario" @keyup.enter="handleKeyPress" />
       <InputComponent type="password" v-model="user.password" label="Contraseña" @keyup.enter="handleKeyPress" />
       <ButtonComponent label="Login" @click="login" />
@@ -19,10 +20,11 @@ import InputComponent from '../components/InputComponent.vue'
 import axios from 'axios'
 import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
+import SelectorComponent from '../components/SelectorComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 
 export default {
-  components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent },
+  components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent, SelectorComponent },
   setup() {
     const { loginStore } = useLoginStore()
     return { loginStore }
@@ -30,7 +32,13 @@ export default {
   data() {
     return {
       user: { username: '', password: '' },
-      failedLogin: ''
+      failedLogin: '',
+
+      accountType: [
+        { label: 'Banda', value: 'band' },
+        { label: 'Bar', value: 'bar' }
+      ],
+      typeSelected: ''
     }
   },
   methods: {
@@ -40,20 +48,24 @@ export default {
 
       //Bring users from local storage
       //const users = JSON.parse(window.localStorage.getItem('usuarios'))
+      console.log(this.typeSelected)
       try {
         const bar = await barsService.loginBar(this.user)
+        console.log(this.typeSelected)
         if (bar) {
           this.loginStore({ bar, permissions: [bar.userType] })
           this.$router.push('/')
         }
       } catch (error) {
-        console.log('a')
         this.failedLogin = error.response.data.message
       }
       // console.log(users)
     },
     handleKeyPress() {
       this.login()
+    },
+    select(e) {
+      this.typeSelected = e
     }
   }
 }
