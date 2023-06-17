@@ -24,21 +24,24 @@ export default {
     return { user, havePermissions, isLogin, logoutStore }
   },
   computed: {
-    computedNavLinks: function () {
-      if (this.havePermissions('bar')) {
+    computedNavLinks() {
+      if (!this.isLogin) {
+        if (this.$route.path === '/') {
+          return [
+            { route: '/register', text: 'Registrarse' },
+            { route: '/login', text: 'Login' }
+          ]
+        } else if (this.$route.path === '/register' || this.$route.path === '/login') {
+          return []
+        }
+        return []
+      } else if (this.havePermissions('bar')) {
         return [
           { route: '/eventRegister', text: 'Crear evento' },
           { route: '/logout', text: 'Logout' }
         ]
-      } else if (this.isLogin) {
+      } else {
         return [{ route: '/logout', text: 'Logout' }]
-      } else if (!this.isLogin && this.$route.path === '/') {
-        return [
-          { route: '/register', text: 'Registrarse' },
-          { route: '/login', text: 'Login' }
-        ]
-      } else if ((!this.isLogin && this.$router === '/register') || (!this.isLogin && this.$router === '/login')) {
-        return []
       }
     }
   },
