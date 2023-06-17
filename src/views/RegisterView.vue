@@ -48,6 +48,7 @@ import SelectorComponent from '../components/SelectorComponent.vue'
 import usersService from '../service/barsService'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import barsService from '../service/barsService'
+import bandsService from '../service/bandsService'
 
 export default {
   components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent, NavbarComponent },
