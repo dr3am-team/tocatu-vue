@@ -1,9 +1,11 @@
 <template>
   <div class="container">
-    <label for="selector" class="select-label">{{ label }}</label>
-    <select name="selector" id="selector" v-model="selectedOption" @change="emitSelected" class="select">
-      <option v-for="option in array" :key="option.value" :value="option.value">{{ option.label }}</option>
-    </select>
+    <label for="selector" class="select-label"
+      >{{ label }}
+      <select name="selector" id="selector" v-model="selectedOption" @change="emitSelected" class="select">
+        <option v-for="option in array" :key="option.value" :value="option.value">{{ option.label }}</option>
+      </select>
+    </label>
   </div>
 </template>
 
@@ -33,21 +35,20 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  font-size: 16px;
   display: flex;
-  flex-direction: column;
-  width: 600px;
+  justify-content: space-between;
+  flex-grow: 0;
+  font-size: 16px;
   margin: 0 auto;
 
   .select-label {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     .select {
       padding: 5px 10px;
+      height: 30px;
       width: 70%;
-      option {
-        padding: 5px 0px;
-      }
     }
   }
 }

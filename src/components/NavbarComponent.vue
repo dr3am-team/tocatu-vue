@@ -1,12 +1,15 @@
 <template>
-  <nav>
-    <ul class="container">
+  <nav class="navbar-container">
+    <ul class="link-list">
       <li>
         <RouterLink to="/"><img src="../assets/img/tocatuLogo.png" alt="Logo" /></RouterLink>
+        <span>Tocatu</span>
       </li>
-      <li v-for="(link, index) in computedNavLinks" :key="index">
-        <RouterLink :to="link.route" @click="handleLinkClick(link)">{{ link.text }}</RouterLink>
-      </li>
+      <div class="navbar-links">
+        <li v-for="(link, index) in computedNavLinks" :key="index">
+          <RouterLink :to="link.route" @click="handleLinkClick(link)">{{ link.text }}</RouterLink>
+        </li>
+      </div>
     </ul>
   </nav>
 </template>
@@ -34,7 +37,7 @@ export default {
         return [{ route: '/logout', text: 'Logout' }]
       } else if (!this.isLogin && this.$route.path === '/') {
         return [
-          { route: '/register', text: 'Registrarse' },
+          { route: '/registrarse', text: 'Registrarse' },
           { route: '/login', text: 'Login' }
         ]
       } else if ((!this.isLogin && this.$router === '/register') || (!this.isLogin && this.$router === '/login')) {
@@ -53,35 +56,43 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* Estilos de la barra de navegación */
-nav {
+.navbar-container {
   background-color: var(--cerulean);
   color: var(--white);
   padding: 1rem;
-}
 
-ul {
-  list-style: none;
-  display: flex;
-}
+  .link-list {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
 
-li {
-  margin-right: 1rem;
-}
+    li {
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
 
-a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-}
+      span {
+        margin-left: 10px;
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
 
-img {
-  width: 50px;
-}
+      a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: bold;
+      }
 
-.container {
-  display: flex;
-  align-items: center;
+      img {
+        width: 50px;
+      }
+    }
+
+    .navbar-links {
+      display: flex;
+    }
+  }
 }
 </style>

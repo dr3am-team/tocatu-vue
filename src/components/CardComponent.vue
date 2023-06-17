@@ -45,9 +45,8 @@ export default {
   border: 2px solid var(--prussian-blue);
   border-radius: 4px;
   padding: 16px;
-  margin: 2em;
   transition: box-shadow 100ms ease-in-out;
-
+  margin: 0 auto;
   &:hover {
     box-shadow: 0 2px 4px var(--prussian-blue);
   }
