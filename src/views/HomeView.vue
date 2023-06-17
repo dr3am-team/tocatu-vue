@@ -1,14 +1,8 @@
 <template>
   <div>
-    <h1>Bienvenidos a Tocatu</h1>
-    <div>
-      <NavbarComponent></NavbarComponent>
-      <EventViewList></EventViewList>
-    </div>
+    <NavbarComponent></NavbarComponent>
+    <EventViewList></EventViewList>
   </div>
-  <div v-if="havePermissions('band')">Esto es una banda Nickname: {{ user.username }}</div>
-  <div v-if="havePermissions('bar')">Esto es un bar Nickname: {{ user.username }}</div>
-
   <div class="footer">
     <FooterComponent></FooterComponent>
   </div>
