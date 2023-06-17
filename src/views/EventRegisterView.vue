@@ -4,7 +4,7 @@
     <div class="container">
       <InputComponent label="Nombre del Evento" type="text" v-model="event.name" />
       <InputComponent label="Fecha" type="date" v-model="event.date" />
-      <InputComponent label="Hora" type="time" v-model="event.date" />
+      <InputComponent label="Hora" type="time" v-model="event.time" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
       <InputComponent label="Flyer" type="file" />
       <label class="label" for="descripcion">
@@ -12,7 +12,7 @@
         <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
       </label>
       <SelectorComponent />
-      <ButtonComponent label="Crear" @click.prevent="createEvent" />
+      <ButtonComponent label="Crear" @click.prevent="register" />
     </div>
     <FooterComponent></FooterComponent>
   </div>
@@ -38,13 +38,19 @@ export default {
   data() {
     return {
       event: {
-        price: null,
-        date: ''
+        price: null
       }
     }
   },
   methods: {
     async register() {
+      //del bar: capacity, address
+      this.event.address = this.user.bar.address
+      this.event.capacity = this.user.bar.capacity
+      //console.log(this.event)
+      console.log(this.event)
+    },
+    async registerr() {
       const users = await barsService.cargarUsuarios()
       const userLoggedIn = users.find((element) => element.username === this.user.username)
 
