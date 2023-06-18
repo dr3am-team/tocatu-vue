@@ -6,12 +6,17 @@
         illum explicabo atque unde harum illo ratione voluptatum in aperiam autem? Eos expedita explicabo assumenda
         aperiam."
   />
+  <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
+  <ButtonComponent label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+  <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
 </template>
 <script>
 import eventsService from '../service/eventsService'
 import DetailedCardComponent from '../components/DetailedCardComponent.vue'
+import ButtonComponent from '../components/ButtonComponent.vue'
+import axios from 'axios'
 export default {
-  components: { DetailedCardComponent },
+  components: { DetailedCardComponent, ButtonComponent },
   mounted() {
     this.getEventDetails()
   },
@@ -31,6 +36,13 @@ export default {
       }
 
       console.log(this.event)
+    },
+    async joinToEvent() {
+      try {
+        this.event = await eventsService.editEvent(this.user.band) //sin terminar
+      } catch (error) {
+        console.error(error)
+      }
     }
   }
 }
