@@ -6,16 +6,29 @@
         illum explicabo atque unde harum illo ratione voluptatum in aperiam autem? Eos expedita explicabo assumenda
         aperiam."
   />
+  <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
+  <ButtonComponent label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+  <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
 </template>
 <script>
-import eventsService from '../service/eventsService'
+import eventsService from '../service/eventsService.js'
 import DetailedCardComponent from '../components/DetailedCardComponent.vue'
+import ButtonComponent from '../components/ButtonComponent.vue'
+import axios from 'axios'
+import { useLoginStore } from '../stores/login'
+import { storeToRefs } from 'pinia'
+import bandsService from '../service/bandsService'
 export default {
-  components: { DetailedCardComponent },
+  components: { DetailedCardComponent, ButtonComponent },
   mounted() {
     this.getEventDetails()
   },
-
+  setup() {
+    const store = useLoginStore()
+    const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES
+    const { havePermissions, logoutStore } = store // ESTO TRAE FUNCIONES
+    return { user, havePermissions, isLogin, logoutStore }
+  },
   data() {
     return {
       event: {}
@@ -27,10 +40,16 @@ export default {
       try {
         this.event = await eventsService.getEventById(this.$route.params.id)
       } catch (error) {
-        console.error(error)
+        console.log(error)
       }
-
-      console.log(this.event)
+    },
+    async joinToEvent() {
+      try {
+        await eventsService.editEvent(this.event._id, { bandId: this.user.band._id })
+        await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
