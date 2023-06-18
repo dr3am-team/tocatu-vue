@@ -6,32 +6,39 @@
         <h3 class="title">{{ title }}</h3>
       </div>
       <div>
-        <p class="fecha">{{ fecha }}</p>
+        <p class="fecha">{{ dateToLocalTime }}</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+dayjs.extend(utc)
 export default {
   name: 'CardComponent',
   components: {},
   props: {
     imageUrl: {
       type: String,
-      required: true
+      required: true,
+      default:
+        'https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg'
     },
     title: {
       type: String,
       required: true
     },
-    fecha: {
+    date: {
       type: String,
       required: true
-    },
-    buttonText: {
-      type: String,
-      required: true
+    }
+  },
+
+  computed: {
+    dateToLocalTime() {
+      return dayjs(this.date).utc().local().format('DD/MM/YY | H:mm')
     }
   }
 }

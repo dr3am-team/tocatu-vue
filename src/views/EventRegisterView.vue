@@ -9,7 +9,14 @@
       <InputComponent label="Flyer" type="file" />
       <label class="label" for="descripcion">
         Descripción del Evento
-        <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
+        <textarea
+          name="descripcion"
+          id=""
+          cols="30"
+          rows="10"
+          v-model="event.description"
+          placeholder="Descripción del evento"
+        ></textarea>
       </label>
       <ButtonComponent label="Crear" @click.prevent="register" />
     </div>
@@ -34,40 +41,46 @@ export default {
     return { user }
   },
 
+  //Devuelve te manda al login si no hay permisos (se ejecuta al montarse el componente)
+  mounted() {
+    if (!this.user.permissions.find((e) => e === 'bar')) {
+      this.$router.push('/login')
+    }
+  },
   components: { InputComponent, ButtonComponent, NavbarComponent, FooterComponent },
   data() {
     return {
       event: {
-        price: null
+        title: '',
+        price: 0,
+        capacity: 0,
+        barName: '',
+        description: '',
+        date: ''
       }
     }
   },
   methods: {
     async register() {
-      //del bar: capacity, address
+      // const MANDATORY_PROPS = ['time', 'price', 'date', 'description', 'title', 'capacity']
+
+      const { username } = this.user.bar
       this.event.address = this.user.bar.address
       this.event.capacity = this.user.bar.capacity
       this.event.barName = this.user.bar.name
-      const eventCreated = await eventsService.addEvent(this.event, this.user.bar.username)
+      console.log()
+      if (this.checkEmptyFields(this.event)) {
+        const eventCreated = await eventsService.addEvent(this.event, username)
+        this.clearEventData()
+      }
     },
-    async registerr() {
-      const users = await barsService.cargarUsuarios()
-      const userLoggedIn = users.find((element) => element.username === this.user.username)
 
-      this.event.address = userLoggedIn.address
-      this.event.capacity = userLoggedIn.capacity
-      this.event.barName = userLoggedIn.name
-      this.event.mail = userLoggedIn.mail
-      this.event.price = event.price
-      this.event.date = event.date
+    clearEventData() {
+      this.event = {}
+    },
 
-      userLoggedIn.events = userLoggedIn.events || []
-      userLoggedIn.events.push(this.event)
-
-      barsService.editUser(userLoggedIn)
-
-      const datosEnString = JSON.stringify(users, null, '\t')
-      window.localStorage.setItem('usuarios', datosEnString)
+    checkEmptyFields(event) {
+      return !!(event.date && event.price && event.description && event.title)
     }
   }
 }

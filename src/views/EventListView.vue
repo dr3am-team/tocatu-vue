@@ -1,47 +1,29 @@
 <template>
   <div class="card-container">
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
-    <CardComponent :image-url="pokemonImage" :title="pokemonName" :fecha="fecha" />
+    <div v-for="event in events" :key="event._id">
+      <CardComponent :image-url="event.flyer" :title="event.title" :date="event.date" />
+    </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import CardComponent from '../components/CardComponent.vue'
+import eventsService from '../service/eventsService.js'
 
 export default {
   components: { CardComponent },
   created() {
-    this.obtenerInformacionPokemon()
+    this.getEvents()
   },
   methods: {
-    obtenerInformacionPokemon() {
-      const nombrePokemon = 'pikachu'
-      const url = `https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`
-
-      axios
-        .get(url)
-        .then((response) => {
-          // Aquí puedes trabajar con los datos del Pokémon
-          console.log(response.data)
-          // Asigna los datos a propiedades del componente para usarlos en el template
-          // Por ejemplo:
-          this.pokemonName = response.data.name
-          this.pokemonImage = response.data.sprites.other.home.front_default
-          this.fecha = 'De lunes a viernes, de 20 a 23hs'
-        })
-        .catch((error) => {
-          console.error(error)
-        })
+    async getEvents() {
+      const events = await eventsService.getEvents()
+      this.events = events
     }
   },
   data() {
     return {
-      pokemonName: '',
-      pokemonImage: '',
-      fecha: this.fecha
+      events: []
     }
   }
 }

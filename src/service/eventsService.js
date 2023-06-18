@@ -12,18 +12,19 @@ export default {
     try {
       const response = await apiClient.get('/')
       return response.data
-    } catch {
-      throw 'error de conexion en cargar'
+    } catch (error) {
+      console.error(error.message)
     }
   },
   async addEvent(event, username) {
     const data = { event, username }
+
     try {
       const eventCreated = await apiClient.post('/', data)
-      console.log(eventCreated)
+
       return eventCreated
-    } catch {
-      throw 'error adding event'
+    } catch (error) {
+      console.error(error.message)
     }
   },
   async editEvent(event) {
@@ -38,7 +39,7 @@ export default {
       const eventFound = await apiClient.post('/login', event)
       return eventFound.data
     } catch (error) {
-      throw error
+      console.error(error.message)
     }
   }
 }
