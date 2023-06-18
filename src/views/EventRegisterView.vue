@@ -64,13 +64,12 @@ export default {
         date: '',
         flyer: ''
       },
+      editing: false,
       creationMessage: ''
     }
   },
   methods: {
     async register() {
-      // const MANDATORY_PROPS = ['time', 'price', 'date', 'description', 'title', 'capacity']
-
       const { username } = this.user.bar
       this.event.address = this.user.bar.address
       this.event.capacity = this.user.bar.capacity

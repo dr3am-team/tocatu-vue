@@ -17,6 +17,12 @@ export default {
     }
   },
 
+  /**
+   * Obtiene un evento por su ID desde la API.
+   * @param {string} _id - El ID del evento que se desea obtener.
+   * @returns {Promise<Object>} - Una promesa que se resuelve con los datos del evento.
+   * @throws {Error} - Si ocurre un error al obtener el evento.
+   */
   async getEventById(_id) {
     try {
       const response = await apiClient.get(`/${_id}`)

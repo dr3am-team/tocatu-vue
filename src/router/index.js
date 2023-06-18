@@ -5,6 +5,7 @@ import RegisterView from '../views/RegisterView.vue'
 import EventRegisterView from '../views/EventRegisterView.vue'
 import EventListView from '../views/EventListView.vue'
 import DetailsView from '../views/DetailsView.vue'
+import MyEventsView from '../views/MyEventsView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -43,6 +44,18 @@ const router = createRouter({
       name: 'DetailsView',
       // component: () => import('../views/HomeView.vue')
       component: DetailsView
+    },
+    {
+      path: '/mis-eventos',
+      name: 'MyEventsView',
+      // component: () => import('../views/HomeView.vue')
+      component: MyEventsView
+    },
+    {
+      path: '/editar/:id',
+      name: 'EventRegister',
+      // component: () => import('../views/HomeView.vue')
+      component: EventRegisterView
     }
   ]
 })

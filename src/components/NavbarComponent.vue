@@ -31,6 +31,7 @@ export default {
       if (this.havePermissions('bar')) {
         return [
           { route: '/registrar-evento', text: 'Crear evento' },
+          { route: '/mis-eventos', text: 'Mis Eventos' },
           { route: '/logout', text: 'Logout' }
         ]
       } else if (this.isLogin) {
