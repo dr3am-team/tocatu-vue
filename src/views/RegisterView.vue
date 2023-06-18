@@ -45,7 +45,7 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import FooterComponent from '../components/FooterComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
-import usersService from '../service/barsService'
+import usersService from '../service/usersService'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import barsService from '../service/barsService'
 import bandsService from '../service/bandsService'
@@ -91,7 +91,10 @@ export default {
           response = await barsService.addBar(data)
         } else if (this.generalData.userType == 'band') {
           response = await bandsService.addBand(data)
+        } else if (this.generalData.userType == 'viewer') {
+          response = await usersService.addUser(data)
         }
+
         if (response.status == 200) {
           this.$router.push('/login')
         }

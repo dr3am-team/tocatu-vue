@@ -23,6 +23,7 @@ import FooterComponent from '../components/FooterComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import bandsService from '../service/bandsService.js'
+import usersService from '../service/usersService.js'
 
 export default {
   components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent, SelectorComponent },
@@ -65,6 +66,17 @@ export default {
           const band = await bandsService.loginBand(this.user)
           if (band) {
             this.loginStore({ band, permissions: [band.userType] })
+            this.$router.push('/')
+          }
+        } catch (error) {
+          this.failedLogin = error.response.data.message
+        }
+      }
+      if (this.typeSelected == 'viewer') {
+        try {
+          const user = await usersService.loginUser(this.user)
+          if (user) {
+            this.loginStore({ user, permissions: [user.userType] })
             this.$router.push('/')
           }
         } catch (error) {
