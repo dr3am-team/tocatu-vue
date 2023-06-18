@@ -42,12 +42,8 @@ export default {
       } catch (error) {
         console.log(error)
       }
-
-      console.log(this.event)
     },
     async joinToEvent() {
-      console.log(this.event._id)
-      const eventId = {}
       try {
         await eventsService.editEvent(this.event._id, { bandId: this.user.band._id })
         await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
