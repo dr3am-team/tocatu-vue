@@ -6,14 +6,12 @@ export const useLoginStore = defineStore('login', {
 
   actions: {
     logoutStore() {
-      console.log('logout')
       this.isLogin = false
       this.user = { username: '', permissions: [] }
     },
     loginStore(user) {
       this.isLogin = true
       this.user = user
-      console.log(this.isLogin, this.user)
     },
     havePermissions(access) {
       return this.user.permissions.filter((p) => p == access).length > 0 ? true : false

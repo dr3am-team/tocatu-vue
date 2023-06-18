@@ -6,13 +6,23 @@
       <InputComponent label="Fecha" type="date" v-model="event.date" />
       <InputComponent label="Hora" type="time" v-model="event.time" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
-      <InputComponent label="Flyer" type="file" />
+      <InputComponent label="Flyer" type="file" fileTypes="image/*" @update:modelValue="handleFlyerUpdate" />
+
       <label class="label" for="descripcion">
         Descripción del Evento
-        <textarea name="descripcion" id="" cols="30" rows="10" placeholder="Descripción del evento"></textarea>
+        <textarea
+          name="descripcion"
+          id=""
+          cols="30"
+          rows="10"
+          v-model="event.description"
+          placeholder="Descripción del evento"
+        ></textarea>
       </label>
       <ButtonComponent label="Crear" @click.prevent="register" />
+      <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
+    <button @click="notify">Notify !</button>
     <FooterComponent></FooterComponent>
   </div>
 </template>
@@ -26,6 +36,8 @@ import NavbarComponent from '../components/NavbarComponent.vue'
 import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
 import eventsService from '../service/eventsService.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   setup() {
@@ -34,40 +46,65 @@ export default {
     return { user }
   },
 
+  //Devuelve te manda al login si no hay permisos (se ejecuta al montarse el componente)
+  mounted() {
+    if (!this.user.permissions.find((e) => e === 'bar')) {
+      this.$router.push('/login')
+    }
+  },
   components: { InputComponent, ButtonComponent, NavbarComponent, FooterComponent },
   data() {
     return {
       event: {
-        price: null
-      }
+        title: '',
+        price: '',
+        capacity: '',
+        barName: '',
+        description: '',
+        date: '',
+        flyer: ''
+      },
+      creationMessage: ''
     }
   },
   methods: {
     async register() {
-      //del bar: capacity, address
+      // const MANDATORY_PROPS = ['time', 'price', 'date', 'description', 'title', 'capacity']
+
+      const { username } = this.user.bar
       this.event.address = this.user.bar.address
       this.event.capacity = this.user.bar.capacity
       this.event.barName = this.user.bar.name
-      const eventCreated = await eventsService.addEvent(this.event, this.user.bar.username)
+      // const formData = new FormData()
+      // formData.append('flyer', this.event.flyer)
+
+      if (this.checkEmptyFields(this.event)) {
+        const eventCreated = await eventsService.addEvent(this.event, username)
+        if (eventCreated.status === 200) {
+          this.creationMessage = 'Evento creado correctamente'
+          setTimeout(() => {
+            this.creationMessage = ''
+          }, 3000)
+        }
+
+        this.clearEventData()
+      }
     },
-    async registerr() {
-      const users = await barsService.cargarUsuarios()
-      const userLoggedIn = users.find((element) => element.username === this.user.username)
 
-      this.event.address = userLoggedIn.address
-      this.event.capacity = userLoggedIn.capacity
-      this.event.barName = userLoggedIn.name
-      this.event.mail = userLoggedIn.mail
-      this.event.price = event.price
-      this.event.date = event.date
+    clearEventData() {
+      this.event = {}
+    },
 
-      userLoggedIn.events = userLoggedIn.events || []
-      userLoggedIn.events.push(this.event)
+    notify() {
+      toast.info('hello', { rtl: true })
+    },
 
-      barsService.editUser(userLoggedIn)
-
-      const datosEnString = JSON.stringify(users, null, '\t')
-      window.localStorage.setItem('usuarios', datosEnString)
+    checkEmptyFields(event) {
+      return !!(event.date && event.price && event.description && event.title)
+    },
+    handleFlyerUpdate(files) {
+      const [file] = files
+      this.event.flyer = file.name
     }
   }
 }
@@ -75,7 +112,7 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  width: 500px;
+  width: 600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

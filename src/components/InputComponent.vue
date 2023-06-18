@@ -1,13 +1,13 @@
 <template>
   <label :for="label">
     {{ label }}
-
     <input
-      :value="modelValue"
       :type="type"
-      @input="$emit('update:modelValue', $event.target.value)"
+      :value="modelValue"
+      @input="handleInput"
       :placeholder="placeholder"
       :min="type === 'date' ? this.date : null"
+      :accept="type === 'file' ? fileTypes : null"
     />
   </label>
 </template>
@@ -31,6 +31,9 @@ export default {
     },
     modelValue: {
       type: String
+    },
+    fileTypes: {
+      type: String
     }
   },
   data() {
@@ -39,7 +42,17 @@ export default {
     }
   },
 
-  emits: ['update:modelValue']
+  methods: {
+    handleInput(event) {
+      if (this.type === 'file') {
+        const files = event.target.files
+        this.$emit('update:modelValue', files)
+      } else {
+        const value = event.target.value
+        this.$emit('update:modelValue', value)
+      }
+    }
+  }
 }
 </script>
 
