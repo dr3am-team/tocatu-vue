@@ -27,7 +27,7 @@ export default {
   },
   async editBand(band) {
     try {
-      await apiClient.put('/', band)
+      await apiClient.put(`/${eventId}`, band)
     } catch {
       throw 'error adding band'
     }
