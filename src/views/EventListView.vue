@@ -1,7 +1,9 @@
 <template>
   <div class="card-container">
     <div v-for="event in events" :key="event._id">
-      <CardComponent :image-url="event.flyer" :title="event.title" :date="event.date" />
+      <RouterLink :to="`/detalle/${event._id}`"
+        ><CardComponent :image-url="event.flyer" :title="event.title" :date="event.date"
+      /></RouterLink>
     </div>
   </div>
 </template>

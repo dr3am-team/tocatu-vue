@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import EventRegisterView from '../views/EventRegisterView.vue'
 import EventListView from '../views/EventListView.vue'
+import DetailsView from '../views/DetailsView.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -36,6 +37,12 @@ const router = createRouter({
       name: 'EventRegister',
       // component: () => import('../views/HomeView.vue')
       component: EventRegisterView
+    },
+    {
+      path: '/detalle/:id',
+      name: 'DetailsView',
+      // component: () => import('../views/HomeView.vue')
+      component: DetailsView
     }
   ]
 })

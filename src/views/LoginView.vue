@@ -45,12 +45,9 @@ export default {
   },
   methods: {
     async login() {
-      //Input of user and passw
       const { username, password } = this.user
+      console.log(this.user)
 
-      //Bring users from local storage
-      //const users = JSON.parse(window.localStorage.getItem('usuarios'))
-      console.log(this.typeSelected)
       if (this.typeSelected == 'bar') {
         try {
           const bar = await barsService.loginBar(this.user)

@@ -16,6 +16,15 @@ export default {
       console.error(error.message)
     }
   },
+
+  async getEventById(_id) {
+    try {
+      const response = await apiClient.get(`/${_id}`)
+      return response.data
+    } catch (error) {
+      console.error(error.message)
+    }
+  },
   async addEvent(event, username) {
     const data = { event, username }
 

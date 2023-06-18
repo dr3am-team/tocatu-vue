@@ -6,7 +6,8 @@
       <InputComponent label="Fecha" type="date" v-model="event.date" />
       <InputComponent label="Hora" type="time" v-model="event.time" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
-      <InputComponent label="Flyer" type="file" />
+      <InputComponent label="Flyer" type="file" fileTypes="image/*" @update:modelValue="handleFlyerUpdate" />
+
       <label class="label" for="descripcion">
         Descripción del Evento
         <textarea
@@ -19,7 +20,9 @@
         ></textarea>
       </label>
       <ButtonComponent label="Crear" @click.prevent="register" />
+      <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
+    <button @click="notify">Notify !</button>
     <FooterComponent></FooterComponent>
   </div>
 </template>
@@ -33,6 +36,8 @@ import NavbarComponent from '../components/NavbarComponent.vue'
 import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
 import eventsService from '../service/eventsService.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   setup() {
@@ -52,12 +57,14 @@ export default {
     return {
       event: {
         title: '',
-        price: 0,
-        capacity: 0,
+        price: '',
+        capacity: '',
         barName: '',
         description: '',
-        date: ''
-      }
+        date: '',
+        flyer: ''
+      },
+      creationMessage: ''
     }
   },
   methods: {
@@ -68,9 +75,18 @@ export default {
       this.event.address = this.user.bar.address
       this.event.capacity = this.user.bar.capacity
       this.event.barName = this.user.bar.name
-      console.log()
+      // const formData = new FormData()
+      // formData.append('flyer', this.event.flyer)
+
       if (this.checkEmptyFields(this.event)) {
         const eventCreated = await eventsService.addEvent(this.event, username)
+        if (eventCreated.status === 200) {
+          this.creationMessage = 'Evento creado correctamente'
+          setTimeout(() => {
+            this.creationMessage = ''
+          }, 3000)
+        }
+
         this.clearEventData()
       }
     },
@@ -79,8 +95,16 @@ export default {
       this.event = {}
     },
 
+    notify() {
+      toast.info('hello', { rtl: true })
+    },
+
     checkEmptyFields(event) {
       return !!(event.date && event.price && event.description && event.title)
+    },
+    handleFlyerUpdate(files) {
+      const [file] = files
+      this.event.flyer = file.name
     }
   }
 }
@@ -88,7 +112,7 @@ export default {
 
 <style scoped lang="scss">
 .container {
-  width: 500px;
+  width: 600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

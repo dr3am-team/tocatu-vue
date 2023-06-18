@@ -1,12 +1,12 @@
 <template>
-  <div class="detailed-card">
-    <div class="image-container">
-      <img :src="imageUrl" alt="Image" class="image" />
-    </div>
-    <div class="content-container">
-      <h1 class="title">{{ title }}</h1>
-      <h2>Biografía</h2>
-      <p class="description">{{ description }}</p>
+  <div class="wrapper">
+    <div class="detailed-card">
+      <img class="image" :src="imageUrl" alt="Image" />
+
+      <div class="content-container">
+        <h1 class="title">{{ title }}</h1>
+        <p class="description">{{ description }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -32,34 +32,37 @@ export default {
 }
 </script>
 
-<style>
-.detailed-card {
-  display: flex;
-  align-items: flex-start;
-}
+<style lang="scss" scoped>
+.wrapper {
+  display: grid;
+  place-content: center;
+  height: 100vh;
+  .detailed-card {
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    margin: 0 auto;
 
-.image-container {
-  flex: 0 0 auto;
-  margin-right: 20px;
-}
+    .image {
+      width: 400px;
+      height: 600px;
+      object-fit: cover;
+    }
 
-.image {
-  width: 100%;
-  height: auto;
-}
+    .content-container {
+      display: flex;
+      flex-direction: column;
+      margin-left: 15px;
 
-.content-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
+      .title {
+        font-size: 60px;
+        margin-bottom: 10px;
+      }
 
-.title {
-  font-size: 60px;
-  margin-bottom: 10px;
-}
-
-.description {
-  margin-top: 10px;
+      .description {
+        margin-top: 10px;
+      }
+    }
+  }
 }
 </style>
