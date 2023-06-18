@@ -81,6 +81,7 @@ export default {
       if (this.checkEmptyFields(this.event)) {
         const eventCreated = await eventsService.addEvent(this.event, username)
         if (eventCreated.status === 200) {
+          //TODO Reemplazar por Toasfity
           this.creationMessage = 'Evento creado correctamente'
           setTimeout(() => {
             this.creationMessage = ''
