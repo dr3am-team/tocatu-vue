@@ -100,6 +100,8 @@ export default {
       if ((this.event.bandId && this.havePermissions('viewer')) || this.havePermissions('bar')) {
         if (!this.spectatorAlreadyInEvent()) {
           this.showSpectateButton = true
+        } else {
+          this.showSpectateButton = false
         }
       }
     },
