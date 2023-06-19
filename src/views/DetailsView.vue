@@ -7,9 +7,8 @@
         illum explicabo atque unde harum illo ratione voluptatum in aperiam autem? Eos expedita explicabo assumenda
         aperiam."
     />
-    <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
-    <ButtonComponent label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
-    <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
+    <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+    <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
   </div>
 </template>
 <script>
@@ -23,8 +22,10 @@ import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 export default {
   components: { DetailedCardComponent, ButtonComponent },
-  mounted() {
+  beforeMount() {
     this.getEventDetails()
+    this.checkJoinButton()
+    this.checkSpectateButton()
   },
   setup() {
     const store = useLoginStore()
@@ -34,7 +35,10 @@ export default {
   },
   data() {
     return {
-      event: {}
+      event: {},
+      showButton: false,
+      showSpectateButton: false,
+      eventEdited: {}
     }
   },
 
@@ -42,6 +46,7 @@ export default {
     async getEventDetails() {
       try {
         this.event = await eventsService.getEventById(this.$route.params.id)
+        console.log(this.event)
       } catch (error) {
         console.log(error)
       }
@@ -54,12 +59,56 @@ export default {
 
         if (eventResponse.status === 200 && bandResponse.status === 200) {
           toast.success('Te uniste correctamente al evento!', { position: 'bottom-right' })
+          this.checkJoinButton()
         } else {
           toast.error('Hubo un problema. Intentalo de nuevo', { position: 'bottom-right' })
         }
       } catch (error) {
         console.log(error)
         toast.error('Hubo un problema. Intentalo de nuevo', { position: 'bottom-right' })
+      }
+    },
+    async checkJoinButton() {
+      await this.getEventDetails()
+      if (this.event.bandId) {
+        this.showButton = false
+        return
+      }
+      if (this.havePermissions('band')) {
+        this.showButton = true
+        return
+      }
+      this.showButton = false
+    },
+    async spectateEvent() {
+      //UNIR Y TRAER ID DE USER UNIDO
+      let data = {}
+      try {
+        if (this.havePermissions('bar')) {
+          data = { viewersId: this.user.bar._id }
+        } else if (this.havePermissions('viewer')) {
+          data = { viewersId: this.user.viewer._id }
+        }
+        const eventResponse = await eventsService.editEvent(this.event._id, data)
+        this.eventEdited = eventResponse.data
+        this.checkSpectateButton()
+        // const bandResponse = await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
+      } catch (error) {}
+    },
+    async checkSpectateButton() {
+      await this.getEventDetails()
+      if ((this.event.bandId && this.havePermissions('viewer')) || this.havePermissions('bar')) {
+        if (!this.spectatorAlreadyInEvent()) {
+          this.showSpectateButton = true
+        } else {
+          this.showSpectateButton = false
+        }
+      }
+    },
+    spectatorAlreadyInEvent() {
+      const userLogged = this.user.bar?._id || this.user.viewer?._id
+      if (this.event.viewersId.includes(userLogged)) {
+        return true
       }
     }
   }
