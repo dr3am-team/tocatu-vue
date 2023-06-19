@@ -42,9 +42,9 @@ export default {
       console.error(error.message)
     }
   },
-  async editEvent(event) {
+  async editEvent(eventId, bandId) {
     try {
-      await apiClient.put('/', event)
+      await apiClient.put(`/${eventId}`, bandId)
     } catch {
       throw 'error adding event'
     }
