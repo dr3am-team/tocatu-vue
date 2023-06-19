@@ -42,9 +42,9 @@ export default {
       console.error(error.message)
     }
   },
-  async editEvent(eventId, bandId) {
+  async editEvent(eventId, data) {
     try {
-      const response = await apiClient.put(`/${eventId}`, bandId)
+      const response = await apiClient.put(`/${eventId}`, data)
       return response
     } catch {
       throw 'error adding event'
