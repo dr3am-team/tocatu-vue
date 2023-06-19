@@ -8,7 +8,7 @@
         aperiam."
     />
     <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
-    <ButtonComponent label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+    <ButtonComponent v-if="checkJoinButton()" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
     <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
   </div>
 </template>
@@ -61,6 +61,13 @@ export default {
         console.log(error)
         toast.error('Hubo un problema. Intentalo de nuevo', { position: 'bottom-right' })
       }
+    },
+    checkJoinButton() {
+      console.log(this.event.bandId)
+      if (this.event.bandId) {
+        return false
+      }
+      return true
     }
   }
 }
