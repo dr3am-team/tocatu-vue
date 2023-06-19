@@ -7,7 +7,10 @@
       </li>
       <div class="navbar-links">
         <li v-for="(link, index) in computedNavLinks" :key="index">
-          <RouterLink :to="link.route" @click="handleLinkClick(link)">{{ link.text }}</RouterLink>
+          <RouterLink :to="link.route">{{ link.text }}</RouterLink>
+        </li>
+        <li v-if="isLogin">
+          <a @click="logout">Logout</a>
         </li>
       </div>
     </ul>
@@ -17,6 +20,7 @@
 <script>
 import { useLoginStore } from '../stores/login'
 import { storeToRefs } from 'pinia'
+import { RouterLink } from 'vue-router'
 
 export default {
   name: 'NavbarComponent',
@@ -28,32 +32,41 @@ export default {
   },
   computed: {
     computedNavLinks: function () {
-      if (this.havePermissions('bar')) {
-        return [
-          { route: '/registrar-evento', text: 'Crear evento' },
-          { route: '/mis-eventos', text: 'Mis Eventos' },
-          { route: '/logout', text: 'Logout' }
-        ]
-      } else if (this.isLogin) {
-        return [{ route: '/logout', text: 'Logout' }]
-      } else if (!this.isLogin && this.$route.path === '/') {
-        return [
-          { route: '/registrarse', text: 'Registrarse' },
-          { route: '/login', text: 'Login' }
-        ]
-      } else if ((!this.isLogin && this.$router === '/register') || (!this.isLogin && this.$router === '/login')) {
-        return []
+      const conditions = [
+        {
+          check: this.havePermissions('bar'),
+          value: [
+            { route: '/registrar-evento', text: 'Crear evento' },
+            { route: '/mis-eventos', text: 'Mis Eventos' }
+          ]
+        },
+        {
+          check: !this.isLogin && this.$route.path === '/',
+          value: [
+            { route: '/registrarse', text: 'Registrarse' },
+            { route: '/login', text: 'Login' }
+          ]
+        },
+        {
+          check: !this.isLogin && (this.$route === '/register' || this.$route === '/login'),
+          value: []
+        }
+      ]
+      for (const condition of conditions) {
+        if (condition.check) {
+          return condition.value
+        }
       }
+      return []
     }
   },
   methods: {
-    handleLinkClick(link) {
-      if (link.route === '/logout') {
-        this.logoutStore()
-        this.$router.push('/')
-      }
+    logout() {
+      this.logoutStore()
+      this.$router.push('/')
     }
-  }
+  },
+  components: { RouterLink }
 }
 </script>
 
@@ -84,6 +97,8 @@ export default {
         color: #fff;
         text-decoration: none;
         font-weight: bold;
+        margin: 0px 5px;
+        cursor: pointer;
       }
 
       img {
