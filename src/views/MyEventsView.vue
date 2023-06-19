@@ -1,7 +1,7 @@
 <template>
   <section class="card-container" v-if="events.length > 0">
     <div v-for="event in events" :key="event._id">
-      <RouterLink :to="`/editar/${event._id}`">
+      <RouterLink :key="$route.path" :to="`/mis-eventos/editar/${event._id}`">
         <CardComponent :title="event.title" :date="event.date" />
       </RouterLink>
     </div>
