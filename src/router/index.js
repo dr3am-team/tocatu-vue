@@ -53,7 +53,7 @@ const router = createRouter({
     },
     {
       path: '/editar/:id',
-      name: 'EventRegister',
+      name: 'EventRegisterEdit',
       // component: () => import('../views/HomeView.vue')
       component: EventRegisterView
     }
