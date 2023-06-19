@@ -20,7 +20,7 @@ export default {
     const { user } = storeToRefs(store)
     return { user }
   },
-  mounted() {
+  beforeMount() {
     this.getEventDetails()
   },
 
