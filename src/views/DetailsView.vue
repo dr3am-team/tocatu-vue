@@ -1,23 +1,26 @@
 <template>
-  <DetailedCardComponent
-    imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
-    :title="this.event.title"
-    description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam tempora voluptatem delectus! Aspernatur, omnis,
+  <div class="details-view-container">
+    <DetailedCardComponent
+      imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
+      :title="this.event.title"
+      description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam tempora voluptatem delectus! Aspernatur, omnis,
         illum explicabo atque unde harum illo ratione voluptatum in aperiam autem? Eos expedita explicabo assumenda
         aperiam."
-  />
-  <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
-  <ButtonComponent label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
-  <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
+    />
+    <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
+    <ButtonComponent label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+    <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
+  </div>
 </template>
 <script>
 import eventsService from '../service/eventsService.js'
 import DetailedCardComponent from '../components/DetailedCardComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
-import axios from 'axios'
 import { useLoginStore } from '../stores/login'
 import { storeToRefs } from 'pinia'
 import bandsService from '../service/bandsService'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 export default {
   components: { DetailedCardComponent, ButtonComponent },
   mounted() {
@@ -43,15 +46,32 @@ export default {
         console.log(error)
       }
     },
+
     async joinToEvent() {
       try {
-        await eventsService.editEvent(this.event._id, { bandId: this.user.band._id })
-        await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
+        const eventResponse = await eventsService.editEvent(this.event._id, { bandId: this.user.band._id })
+        const bandResponse = await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
+
+        if (eventResponse.status === 200 && bandResponse.status === 200) {
+          toast.success('Te uniste correctamente al evento!', { position: 'bottom-right' })
+        } else {
+          toast.error('Hubo un problema. Intentalo de nuevo', { position: 'bottom-right' })
+        }
       } catch (error) {
         console.log(error)
+        toast.error('Hubo un problema. Intentalo de nuevo', { position: 'bottom-right' })
       }
     }
   }
 }
 </script>
-<style></style>
+<style>
+.details-view-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 1000px;
+  margin: 50px auto;
+}
+</style>
