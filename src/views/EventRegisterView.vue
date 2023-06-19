@@ -3,8 +3,7 @@
   <div class="super-container">
     <div class="container">
       <InputComponent label="Nombre del Evento" type="text" v-model="event.title" />
-      <InputComponent label="Fecha" type="date" v-model="event.date" />
-      <InputComponent label="Hora" type="time" v-model="event.time" />
+      <InputComponent label="Fecha y Hora" type="datetime-local" v-model="event.date" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
       <InputComponent label="Flyer" type="file" fileTypes="image/*" @update:modelValue="handleFlyerUpdate" />
 
@@ -19,7 +18,9 @@
           placeholder="Descripción del evento"
         ></textarea>
       </label>
-      <ButtonComponent label="Crear" @click.prevent="register" />
+
+      <div v-if="editing"><ButtonComponent label="Editar" @click.prevent="register" /></div>
+      <div v-else><ButtonComponent label="Crear" @click.prevent="updateEvent" /></div>
       <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
     <button @click="notify">Notify !</button>
@@ -29,15 +30,15 @@
 
 <script>
 import { storeToRefs } from 'pinia'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 import { useLoginStore } from '../stores/login'
 import InputComponent from '../components/InputComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
-import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
 import eventsService from '../service/eventsService.js'
-import { toast } from 'vue3-toastify'
-import 'vue3-toastify/dist/index.css'
+import { handleDateTime } from '../utils/handleDateTime.js'
 
 export default {
   setup() {
@@ -50,6 +51,11 @@ export default {
   mounted() {
     if (!this.user.permissions.find((e) => e === 'bar')) {
       this.$router.push('/login')
+    }
+
+    if (this.$route.params.id) {
+      this.updateEvent()
+      this.editing = true
     }
   },
   components: { InputComponent, ButtonComponent, NavbarComponent, FooterComponent },
@@ -64,13 +70,12 @@ export default {
         date: '',
         flyer: ''
       },
+      editing: false,
       creationMessage: ''
     }
   },
   methods: {
     async register() {
-      // const MANDATORY_PROPS = ['time', 'price', 'date', 'description', 'title', 'capacity']
-
       const { username } = this.user.bar
       this.event.address = this.user.bar.address
       this.event.capacity = this.user.bar.capacity
@@ -81,11 +86,7 @@ export default {
       if (this.checkEmptyFields(this.event)) {
         const eventCreated = await eventsService.addEvent(this.event, username)
         if (eventCreated.status === 200) {
-          //TODO Reemplazar por Toasfity
-          this.creationMessage = 'Evento creado correctamente'
-          setTimeout(() => {
-            this.creationMessage = ''
-          }, 3000)
+          toast.success('Evento creado correctamente!', { position: 'bottom-right' })
         }
 
         this.clearEventData()
@@ -106,6 +107,14 @@ export default {
     handleFlyerUpdate(files) {
       const [file] = files
       this.event.flyer = file.name
+    },
+    async updateEvent() {
+      const event = await eventsService.getEventById(this.$route.params.id)
+      this.event.title = event.title
+      this.event.price = event.price
+      this.event.date = handleDateTime(event.date, 'date')
+      this.event.flyer = event.flyer
+      this.event.description = event.description
     }
   }
 }

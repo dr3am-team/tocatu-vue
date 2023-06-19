@@ -36,7 +36,7 @@ export default {
 .wrapper {
   display: grid;
   place-content: center;
-  height: 100vh;
+  //height: 100vh;
   .detailed-card {
     display: flex;
     justify-content: center;

@@ -6,7 +6,7 @@
       :value="modelValue"
       @input="handleInput"
       :placeholder="placeholder"
-      :min="type === 'date' ? this.date : null"
+      :min="type === 'datetime-local' ? this.date : null"
       :accept="type === 'file' ? fileTypes : null"
     />
   </label>
