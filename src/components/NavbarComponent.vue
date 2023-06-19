@@ -2,12 +2,12 @@
   <nav class="navbar-container">
     <ul class="link-list">
       <li>
-        <RouterLink to="/"><img src="../assets/img/tocatuLogo.png" alt="Logo" /></RouterLink>
+        <RouterLink :key="$route.path" to="/"><img src="../assets/img/tocatuLogo.png" alt="Logo" /></RouterLink>
         <span>Tocatu</span>
       </li>
       <div class="navbar-links">
         <li v-for="(link, index) in computedNavLinks" :key="index">
-          <RouterLink :to="link.route">{{ link.text }}</RouterLink>
+          <RouterLink :key="link.route" :to="link.route">{{ link.text }}</RouterLink>
         </li>
         <li v-if="isLogin">
           <a @click="logout">Logout</a>

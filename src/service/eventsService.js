@@ -46,7 +46,8 @@ export default {
     try {
       const response = await apiClient.put(`/${eventId}`, data)
       return response
-    } catch {
+    } catch (error) {
+      console.error(error.message)
       throw 'error adding event'
     }
   },

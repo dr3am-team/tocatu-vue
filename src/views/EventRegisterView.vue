@@ -19,8 +19,8 @@
         ></textarea>
       </label>
 
-      <div v-if="editing"><ButtonComponent label="Editar" @click.prevent="register" /></div>
-      <div v-else><ButtonComponent label="Crear" @click.prevent="updateEvent" /></div>
+      <div v-if="!editing"><ButtonComponent label="Crear" @click.prevent="register" /></div>
+      <div v-else><ButtonComponent label="Editar" @click.prevent="updateEvent" /></div>
       <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
     <button @click="notify">Notify !</button>
@@ -46,18 +46,32 @@ export default {
     const { user } = storeToRefs(store)
     return { user }
   },
+  //https://i.kym-cdn.com/entries/icons/original/000/008/342/ihave.jpg
+  beforeRouteEnter(to, from, next) {
+    if (to.matched[0].path !== from.matched[0].path) {
+      next((vm) => {
+        vm.clearEventData()
+        vm.editing = false
+        if (to.fullPath.includes('editar')) {
+          vm.editing = true
+        }
+      })
+    } else {
+      next()
+    }
+  },
 
-  //Devuelve te manda al login si no hay permisos (se ejecuta al montarse el componente)
-  mounted() {
+  beforeMount() {
     if (!this.user.permissions.find((e) => e === 'bar')) {
       this.$router.push('/login')
     }
 
     if (this.$route.params.id) {
-      this.updateEvent()
+      this.getEventData()
       this.editing = true
     }
   },
+
   components: { InputComponent, ButtonComponent, NavbarComponent, FooterComponent },
   data() {
     return {
@@ -71,7 +85,8 @@ export default {
         flyer: ''
       },
       editing: false,
-      creationMessage: ''
+      creationMessage: '',
+      id: this.$route.params.id
     }
   },
   methods: {
@@ -97,10 +112,6 @@ export default {
       this.event = {}
     },
 
-    notify() {
-      toast.info('hello', { rtl: true })
-    },
-
     checkEmptyFields(event) {
       return !!(event.date && event.price && event.description && event.title)
     },
@@ -108,13 +119,19 @@ export default {
       const [file] = files
       this.event.flyer = file.name
     },
-    async updateEvent() {
+    async getEventData() {
       const event = await eventsService.getEventById(this.$route.params.id)
       this.event.title = event.title
       this.event.price = event.price
       this.event.date = handleDateTime(event.date, 'date')
       this.event.flyer = event.flyer
       this.event.description = event.description
+    },
+    async updateEvent() {
+      const eventUpdated = await eventsService.editEvent(this.id, this.event)
+      if (eventUpdated.status === 200) {
+        toast.success('Evento editado correctamente!', { position: 'bottom-right' })
+      }
     }
   }
 }
