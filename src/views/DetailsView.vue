@@ -8,7 +8,7 @@
         aperiam."
     />
     <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
-    <ButtonComponent v-if="checkJoinButton()" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+    <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
     <!-- FALTA VALIDAR CON LOGOUT STORE, ES SIMPLEMENTE PRUEBA -->
   </div>
 </template>
@@ -25,6 +25,7 @@ export default {
   components: { DetailedCardComponent, ButtonComponent },
   mounted() {
     this.getEventDetails()
+    this.checkJoinButton()
   },
   setup() {
     const store = useLoginStore()
@@ -34,7 +35,8 @@ export default {
   },
   data() {
     return {
-      event: {}
+      event: {},
+      showButton: true
     }
   },
 
@@ -42,6 +44,7 @@ export default {
     async getEventDetails() {
       try {
         this.event = await eventsService.getEventById(this.$route.params.id)
+        console.log(this.event)
       } catch (error) {
         console.log(error)
       }
@@ -54,6 +57,7 @@ export default {
 
         if (eventResponse.status === 200 && bandResponse.status === 200) {
           toast.success('Te uniste correctamente al evento!', { position: 'bottom-right' })
+          this.checkJoinButton()
         } else {
           toast.error('Hubo un problema. Intentalo de nuevo', { position: 'bottom-right' })
         }
@@ -62,12 +66,17 @@ export default {
         toast.error('Hubo un problema. Intentalo de nuevo', { position: 'bottom-right' })
       }
     },
-    checkJoinButton() {
-      console.log(this.event.bandId)
+    async checkJoinButton() {
+      await this.getEventDetails()
       if (this.event.bandId) {
-        return false
+        this.showButton = false
+        return
       }
-      return true
+      if (this.havePermissions('band')) {
+        this.showButton = true
+        return
+      }
+      this.showButton = false
     }
   }
 }
