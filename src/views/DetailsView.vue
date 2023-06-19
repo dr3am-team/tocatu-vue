@@ -97,12 +97,14 @@ export default {
     },
     async checkSpectateButton() {
       await this.getEventDetails()
-      if ((this.event.bandId && this.havePermissions('viewer')) || this.havePermissions('bar')) {
+      if (this.event.bandId && (this.havePermissions('viewer') || this.havePermissions('bar'))) {
         if (!this.spectatorAlreadyInEvent()) {
           this.showSpectateButton = true
         } else {
           this.showSpectateButton = false
         }
+      } else {
+        this.showSpectateButton = false
       }
     },
     spectatorAlreadyInEvent() {
