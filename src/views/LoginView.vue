@@ -17,13 +17,14 @@
 import { useLoginStore } from '../stores/login'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
-import axios from 'axios'
 import barsService from '../service/barsService.js'
 import FooterComponent from '../components/FooterComponent.vue'
 import SelectorComponent from '../components/SelectorComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import bandsService from '../service/bandsService.js'
 import usersService from '../service/usersService.js'
+import { toast } from 'vue3-toastify'
+import 'vue3-toastify/dist/index.css'
 
 export default {
   components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent, SelectorComponent },
@@ -46,42 +47,20 @@ export default {
   },
   methods: {
     async login() {
-      const { username, password } = this.user
-      console.log(this.user)
-
-      if (this.typeSelected == 'bar') {
-        try {
-          const bar = await barsService.loginBar(this.user)
-          if (bar) {
-            this.loginStore({ bar, permissions: [bar.userType] })
-            this.$router.push('/')
-          }
-        } catch (error) {
-          //TODO Reemplazar por Toasfity
-          this.failedLogin = error.response.data.message
-        }
+      const apiCalls = {
+        bar: async () => await barsService.loginBar(this.user),
+        band: async () => await bandsService.loginBand(this.user),
+        viewer: async () => await usersService.loginUser(this.user)
       }
-      if (this.typeSelected == 'band') {
-        try {
-          const band = await bandsService.loginBand(this.user)
-          if (band) {
-            this.loginStore({ band, permissions: [band.userType] })
-            this.$router.push('/')
-          }
-        } catch (error) {
-          this.failedLogin = error.response.data.message
+      let response
+      try {
+        response = await apiCalls[this.typeSelected]()
+        if (response) {
+          this.loginStore({ [this.typeSelected]: response, permissions: [response.userType] })
+          this.$router.push('/')
         }
-      }
-      if (this.typeSelected == 'viewer') {
-        try {
-          const user = await usersService.loginUser(this.user)
-          if (user) {
-            this.loginStore({ user, permissions: [user.userType] })
-            this.$router.push('/')
-          }
-        } catch (error) {
-          this.failedLogin = error.response.data.message
-        }
+      } catch (error) {
+        toast.error(`${error.response.data.message}`, { position: 'bottom-right' })
       }
     },
     handleKeyPress() {
