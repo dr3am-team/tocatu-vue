@@ -11,6 +11,7 @@
         </li>
         <li v-if="isLogin">
           <a @click="logout">Logout</a>
+          <RouterLink :key="$route.path" :to="`/perfil/editar/${this.user._id}`">Editar</RouterLink>
           <div v-if="isLogin">Bienvenido, {{ user.username }}</div>
         </li>
       </div>

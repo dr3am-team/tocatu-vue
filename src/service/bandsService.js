@@ -32,9 +32,9 @@ export default {
       throw 'error adding band'
     }
   },
-  async editBand(bandId, eventId) {
+  async editBand(bandId, data) {
     try {
-      const response = await apiClient.put(`/${bandId}`, eventId)
+      const response = await apiClient.put(`/${bandId}`, data)
       return response
     } catch {
       throw 'error editing band'
