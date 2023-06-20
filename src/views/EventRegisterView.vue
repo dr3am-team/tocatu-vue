@@ -158,7 +158,7 @@ export default {
     async deleteEvent() {
       const eventDeleted = await eventsService.deleteEvent(this.id)
       if (eventDeleted.status === 200) {
-        toast.success('Evento eliminado correctamente!', { position: 'bottom-right' })
+        this.$router.push('/')
       }
     }
   }
