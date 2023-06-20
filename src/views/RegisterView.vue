@@ -52,12 +52,6 @@ import bandsService from '../service/bandsService'
 
 export default {
   components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent, NavbarComponent },
-  // async mounted() {
-  //    const usersLocalStorage = JSON.parse(window.localStorage.getItem('usuarios'))
-  //    this.users = usersLocalStorage ?? [] //nullish coalesing
-  //   const usersMem = await usersService.cargarUsuarios()
-  //   this.users = usersMem ?? []
-  // },
   setup() {},
   data() {
     return {

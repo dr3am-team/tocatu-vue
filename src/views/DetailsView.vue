@@ -62,8 +62,8 @@ export default {
 
     async joinToEvent() {
       try {
-        const eventResponse = await eventsService.editEvent(this.event._id, { bandId: this.user.band._id })
-        const bandResponse = await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
+        const eventResponse = await eventsService.editEvent(this.event._id, { bandId: this.user._id })
+        const bandResponse = await bandsService.editBand(this.user._id, { eventsSubscribed: this.event._id })
 
         if (eventResponse.status === 200 && bandResponse.status === 200) {
           toast.success('Te uniste correctamente al evento!', { position: 'bottom-right' })
@@ -93,9 +93,9 @@ export default {
       let data = {}
       try {
         if (this.havePermissions('viewer')) {
-          data = { viewersId: this.user.viewer._id }
+          data = { viewersId: this.user._id }
           const eventResponse = await eventsService.editEvent(this.event._id, data)
-          const viewerResponse = await usersService.editUser(this.user.viewer._id, { eventsSubscribed: this.event._id })
+          const viewerResponse = await usersService.editUser(this.user._id, { eventsSubscribed: this.event._id })
           console.log(viewerResponse)
         }
 
@@ -115,7 +115,7 @@ export default {
       }
     },
     spectatorAlreadyInEvent() {
-      const userLogged = this.user.bar?._id || this.user.viewer?._id
+      const userLogged = this.user._id
       if (this.event.viewersId.includes(userLogged)) {
         return true
       }

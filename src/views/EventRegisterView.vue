@@ -19,11 +19,10 @@
         ></textarea>
       </label>
 
-      <div v-if="!editing"><ButtonComponent label="Crear" @click.prevent="register" /></div>
+      <div v-if="!editing"><ButtonComponent label="Crear" @click.prevent="createEvent" /></div>
       <div v-else><ButtonComponent label="Editar" @click.prevent="updateEvent" /></div>
       <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
-    <button @click="notify">Notify !</button>
     <FooterComponent></FooterComponent>
   </div>
 </template>
@@ -49,7 +48,7 @@ export default {
   },
   //https://i.kym-cdn.com/entries/icons/original/000/008/342/ihave.jpg
   beforeRouteEnter(to, from, next) {
-    if (to.matched[0].path !== from.matched[0].path) {
+    if (to?.matched[0]?.path !== from?.matched[0]?.path) {
       next((vm) => {
         vm.clearEventData()
         vm.editing = false
@@ -91,15 +90,15 @@ export default {
     }
   },
   methods: {
-    async register() {
-      const { username } = this.user.bar
-      this.event.address = this.user.bar.address
-      this.event.capacity = this.user.bar.capacity
-      this.event.barName = this.user.bar.name
+    async createEvent() {
+      const { username } = this.user
+      this.event.address = this.user.address
+      this.event.capacity = this.user.capacity
+      this.event.barName = this.user.name
       // const formData = new FormData()
       // formData.append('flyer', this.event.flyer)
 
-      const isSameDate = await this.searchEventsOnSameDay(this.user.bar._id, this.event.date)
+      const isSameDate = await this.searchEventsOnSameDay(this.user._id, this.event.date)
 
       if (this.checkEmptyFields(this.event)) {
         if (!isSameDate) {

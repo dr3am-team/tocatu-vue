@@ -7,7 +7,6 @@
       <InputComponent type="text" v-model="user.username" label="Usuario" @keyup.enter="handleKeyPress" />
       <InputComponent type="password" v-model="user.password" label="Contraseña" @keyup.enter="handleKeyPress" />
       <ButtonComponent label="Login" @click="login" />
-      <p class="login-error" v-if="failedLogin">{{ failedLogin }}</p>
     </div>
     <FooterComponent></FooterComponent>
   </div>
@@ -15,6 +14,7 @@
 
 <script>
 import { useLoginStore } from '../stores/login'
+import { storeToRefs } from 'pinia'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import barsService from '../service/barsService.js'
@@ -25,7 +25,6 @@ import bandsService from '../service/bandsService.js'
 import usersService from '../service/usersService.js'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
-
 export default {
   components: { ButtonComponent, InputComponent, NavbarComponent, FooterComponent, SelectorComponent },
   setup() {
@@ -56,7 +55,7 @@ export default {
       try {
         response = await apiCalls[this.typeSelected]()
         if (response) {
-          this.loginStore({ [this.typeSelected]: response, permissions: [response.userType] })
+          this.loginStore({ ...response, permissions: [response.userType] })
           this.$router.push('/')
         }
       } catch (error) {
@@ -79,14 +78,6 @@ export default {
   flex-direction: column;
   margin: 20px auto;
   width: 600px;
-
-  .login-error {
-    border: 1px solid red;
-    padding: 10px;
-    margin-top: 10px;
-    color: red;
-    font-weight: bold;
-  }
 }
 .super-container {
   display: flex;

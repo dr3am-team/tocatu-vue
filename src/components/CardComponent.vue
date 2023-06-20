@@ -47,13 +47,14 @@ export default {
 <style scoped lang="scss">
 .card {
   /* Styles for the card container */
-  width: 300px;
+  max-width: 300px;
   cursor: pointer;
   border: 2px solid var(--prussian-blue);
-  border-radius: 4px;
+  border-radius: 5px;
   padding: 16px;
   transition: box-shadow 100ms ease-in-out;
-  margin: 0 auto;
+  margin: 10px 0px;
+  margin-right: 15px;
   &:hover {
     box-shadow: 0 2px 4px var(--prussian-blue);
   }
