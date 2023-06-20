@@ -7,6 +7,7 @@
       @input="handleInput"
       :placeholder="placeholder"
       :min="type === 'datetime-local' ? this.date : null"
+      :max="type === 'datetime-local' ? this.max : null"
       :accept="type === 'file' ? fileTypes : null"
     />
   </label>
@@ -38,7 +39,8 @@ export default {
   },
   data() {
     return {
-      date: dayjs().format('YYYY-MM-DD')
+      date: dayjs().format('YYYY-MM-DDTHH:mm'),
+      max: `${dayjs().year()}-12-31T00:00`
     }
   },
 
