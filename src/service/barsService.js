@@ -27,10 +27,10 @@ export default {
   async addBar(bar) {
     try {
       const barCreated = await apiClient.post('/', bar)
-
       return barCreated
-    } catch {
-      throw 'error adding bar'
+    } catch (error) {
+      console.error(error)
+      throw error + 'error creating bar'
     }
   },
   async editBar(id, data) {

@@ -28,8 +28,9 @@ export default {
     try {
       const bandCreated = await apiClient.post('/', band)
       return bandCreated
-    } catch {
-      throw 'error adding band'
+    } catch (error) {
+      console.error(error)
+      throw error + 'error adding band'
     }
   },
   async editBand(bandId, data) {

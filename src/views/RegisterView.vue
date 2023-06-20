@@ -91,28 +91,33 @@ export default {
     }
   },
   methods: {
+    //TODO - Feedback
     async register() {
       this.generalData.userType = this.typeSelected
+
       const data = {
         ...this.generalData,
         ...(this.typeSelected == 'band' && { ...this.band }),
         ...(this.typeSelected == 'bar' && { ...this.bar })
       }
-      try {
-        let response
-        if (this.generalData.userType == 'bar') {
-          response = await barsService.addBar(data)
-        } else if (this.generalData.userType == 'band') {
-          response = await bandsService.addBand(data)
-        } else if (this.generalData.userType == 'viewer') {
-          response = await usersService.addUser(data)
-        }
 
-        if (response.status == 200) {
-          this.$router.push('/login')
+      const apiCalls = {
+        bar: async () => await barsService.addBar(data),
+        band: async () => await bandsService.addBand(data),
+        viewer: async () => await usersService.addUser(data)
+      }
+      let response
+      if (this.generalData.userType) {
+        try {
+          response = await apiCalls[this.generalData.userType]()
+          if (response.status == 200) {
+            this.$router.push('/login')
+          }
+        } catch (error) {
+          toast.error(`Asegúrese de haber completado todos los campos requeridos`, { position: 'bottom-right' })
         }
-      } catch (error) {
-        console.log('Error creating' + this.generalData.userType + error)
+      } else {
+        toast.error(`Debe seleccionar el tipo de usuario a crear`, { position: 'bottom-right' })
       }
     },
     select(e) {

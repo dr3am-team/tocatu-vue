@@ -20,8 +20,9 @@ export default {
     try {
       const userCreated = await apiClient.post('/', user)
       return userCreated
-    } catch {
-      throw 'error adding user'
+    } catch (error) {
+      console.log(error)
+      throw error + 'Error creating user'
     }
   },
   async getUserById(_id) {
