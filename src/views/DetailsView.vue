@@ -3,12 +3,16 @@
     <DetailedCardComponent
       imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
       :title="this.event.title"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam tempora voluptatem delectus! Aspernatur, omnis,
-        illum explicabo atque unde harum illo ratione voluptatum in aperiam autem? Eos expedita explicabo assumenda
-        aperiam."
+      :description="this.event.description"
     />
     <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
     <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
+    <div v-if="eventWithBand">
+      <!-- Ordenar esto -->
+      Fecha{{ new Date(this.event.date).toLocaleString() }} Estilo de la banda{{ this.band.style }} Nombre de la banda{{
+        this.band.name
+      }}
+    </div>
   </div>
 </template>
 <script>
@@ -27,6 +31,8 @@ export default {
     this.getEventDetails()
     this.checkJoinButton()
     this.checkSpectateButton()
+    this.getBandDetails()
+    this.eventHasBand()
   },
   setup() {
     const store = useLoginStore()
@@ -38,7 +44,9 @@ export default {
     return {
       event: {},
       showButton: false,
-      showSpectateButton: false
+      showSpectateButton: false,
+      band: {},
+      eventWithBand: false
     }
   },
 
@@ -110,6 +118,23 @@ export default {
       const userLogged = this.user.bar?._id || this.user.viewer?._id
       if (this.event.viewersId.includes(userLogged)) {
         return true
+      }
+    },
+    async getBandDetails() {
+      await this.getEventDetails()
+      if (this.event.bandId) {
+        try {
+          this.band = await bandsService.getBandById(this.event.bandId)
+          console.log(this.band)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    },
+    async eventHasBand() {
+      await this.getEventDetails()
+      if (this.event.bandId) {
+        this.eventWithBand = true
       }
     }
   }
