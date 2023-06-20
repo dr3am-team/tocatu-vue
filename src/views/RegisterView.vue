@@ -25,7 +25,7 @@
         <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" @keyup.enter="handleKeyPress" />
         <!-- <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" @keyup.enter="handleKeyPress" /> -->
         <SelectorComponent
-          :array="styles"
+          :array="musicStyles"
           v-model="band.style"
           label="Selecciona un estilo"
           @selected="handleSelected"
@@ -56,6 +56,7 @@ import usersService from '../service/usersService'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import barsService from '../service/barsService'
 import bandsService from '../service/bandsService'
+import musicStyles from '../utils/musicStyles.json'
 
 export default {
   components: { InputComponent, ButtonComponent, SelectorComponent, FooterComponent, NavbarComponent },
@@ -70,6 +71,7 @@ export default {
       this.typeSelected = this.user.userType
       this.editing = true
     }
+    return { musicStyles }
   },
   data() {
     return {
