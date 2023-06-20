@@ -1,0 +1,42 @@
+[
+  {
+    "label": "Rock",
+    "value": "rock"
+  },
+  {
+    "label": "Pop",
+    "value": "pop"
+  },
+  {
+    "label": "Hip Hop",
+    "value": "hiphop"
+  },
+  {
+    "label": "Electronic",
+    "value": "electronic"
+  },
+  {
+    "label": "Jazz",
+    "value": "jazz"
+  },
+  {
+    "label": "Country",
+    "value": "country"
+  },
+  {
+    "label": "Reggae",
+    "value": "reggae"
+  },
+  {
+    "label": "Classical",
+    "value": "classical"
+  },
+  {
+    "label": "R&B",
+    "value": "rnb"
+  },
+  {
+    "label": "Metal",
+    "value": "metal"
+  }
+]
