@@ -6,7 +6,7 @@
         :title="event.title"
         :description="event.description"
       />
-      <div class="event-details">
+      <div v-if="eventWithBand" class="event-details">
         <p class="event-details-text">Fecha: {{ new Date(event.date).toLocaleString() }}</p>
         <p class="event-details-text">Estilo de la banda: {{ band.style }}</p>
         <p class="event-details-text">Nombre de la banda: {{ band.name }}</p>
