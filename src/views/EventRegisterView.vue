@@ -155,7 +155,12 @@ export default {
         toast.success('Evento editado correctamente!', { position: 'bottom-right' })
       }
     },
-    async deleteEvent() {}
+    async deleteEvent() {
+      const eventDeleted = await eventsService.deleteEvent(this.id)
+      if (eventDeleted.status === 200) {
+        this.$router.push('/')
+      }
+    }
   }
 }
 </script>
