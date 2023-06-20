@@ -14,7 +14,6 @@
 <script>
 export default {
   name: 'DetailedCardComponent',
-  components: {},
   props: {
     imageUrl: {
       type: String,
