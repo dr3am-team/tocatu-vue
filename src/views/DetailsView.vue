@@ -37,8 +37,7 @@ export default {
     return {
       event: {},
       showButton: false,
-      showSpectateButton: false,
-      eventEdited: {}
+      showSpectateButton: false
     }
   },
 
@@ -84,20 +83,18 @@ export default {
       //UNIR Y TRAER ID DE USER UNIDO
       let data = {}
       try {
-        if (this.havePermissions('bar')) {
-          data = { viewersId: this.user.bar._id }
-        } else if (this.havePermissions('viewer')) {
+        if (this.havePermissions('viewer')) {
           data = { viewersId: this.user.viewer._id }
         }
         const eventResponse = await eventsService.editEvent(this.event._id, data)
-        this.eventEdited = eventResponse.data
+
         this.checkSpectateButton()
         // const bandResponse = await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
       } catch (error) {}
     },
     async checkSpectateButton() {
       await this.getEventDetails()
-      if (this.event.bandId && (this.havePermissions('viewer') || this.havePermissions('bar'))) {
+      if (this.event.bandId && this.havePermissions('viewer')) {
         if (!this.spectatorAlreadyInEvent()) {
           this.showSpectateButton = true
         } else {
