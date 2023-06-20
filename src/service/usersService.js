@@ -19,7 +19,6 @@ export default {
   async addUser(user) {
     try {
       const userCreated = await apiClient.post('/', user)
-      console.log(userCreated)
       return userCreated
     } catch {
       throw 'error adding user'

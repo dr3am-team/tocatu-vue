@@ -27,13 +27,13 @@ export default {
   async addBar(bar) {
     try {
       const barCreated = await apiClient.post('/', bar)
-      console.log(barCreated)
+
       return barCreated
     } catch {
       throw 'error adding bar'
     }
   },
-  async editBar(user) {
+  async editBar(id, bar) {
     try {
       await apiClient.put('/', bar)
     } catch {
@@ -45,7 +45,7 @@ export default {
       const barFound = await apiClient.post('/login', bar)
       return barFound.data
     } catch (error) {
-      throw error
+      throw 'error adding bar' + error.message
     }
   }
 }

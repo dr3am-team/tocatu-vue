@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <section class="event-section">
+    <section v-if="!!confirmedEvents.length" class="event-section">
       <h1>Eventos Confirmados</h1>
       <div class="card-container">
         <div v-for="confirmed in confirmedEvents" :key="confirmed._id">
@@ -11,7 +11,7 @@
       </div>
     </section>
     <hr v-if="!!pendingEvents.length" style="" />
-    <section v-if="barOrBand" class="event-section">
+    <section v-if="barOrBand && !!pendingEvents.length" class="event-section">
       <h1>Eventos No Confirmados</h1>
       <div class="card-container">
         <div v-for="pending in pendingEvents" :key="pending._id">
@@ -35,7 +35,6 @@ export default {
     const store = useLoginStore()
     const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES
     const { havePermissions, logoutStore } = store // ESTO TRAE FUNCIONES
-    console.log()
     return { user, havePermissions, isLogin, logoutStore }
   },
   components: { CardComponent },

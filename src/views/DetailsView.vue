@@ -54,7 +54,6 @@ export default {
     async getEventDetails() {
       try {
         this.event = await eventsService.getEventById(this.$route.params.id)
-        console.log(this.event)
       } catch (error) {
         console.log(error)
       }
@@ -96,7 +95,6 @@ export default {
           data = { viewersId: this.user._id }
           const eventResponse = await eventsService.editEvent(this.event._id, data)
           const viewerResponse = await usersService.editUser(this.user._id, { eventsSubscribed: this.event._id })
-          console.log(viewerResponse)
         }
 
         this.checkSpectateButton()
@@ -125,7 +123,6 @@ export default {
       if (this.event.bandId) {
         try {
           this.band = await bandsService.getBandById(this.event.bandId)
-          console.log(this.band)
         } catch (error) {
           console.log(error)
         }
