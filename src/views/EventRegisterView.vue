@@ -155,7 +155,12 @@ export default {
         toast.success('Evento editado correctamente!', { position: 'bottom-right' })
       }
     },
-    async deleteEvent() {}
+    async deleteEvent() {
+      const eventDeleted = await eventsService.deleteEvent(this.id)
+      if (eventDeleted.status === 200) {
+        toast.success('Evento eliminado correctamente!', { position: 'bottom-right' })
+      }
+    }
   }
 }
 </script>

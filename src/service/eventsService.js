@@ -58,5 +58,13 @@ export default {
     } catch (error) {
       console.error(error.message)
     }
+  },
+  async deleteEvent(id) {
+    try {
+      const eventDeleted = await apiClient.delete(`/${id}`)
+      return eventDeleted
+    } catch (error) {
+      console.error(error)
+    }
   }
 }
