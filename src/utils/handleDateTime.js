@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 /**
  *
  * @param {Date} value
- * @param {String} type Valores posibles: time, date
+ * @param {String} type Valores posibles: time, date, normalizedDate
  * @returns
  */
 export function handleDateTime(value, type) {

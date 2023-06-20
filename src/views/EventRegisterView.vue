@@ -82,7 +82,7 @@ export default {
         capacity: '',
         barName: '',
         description: '',
-        date: '',
+        date: '', //TODO - Validar que el año no pueda ser mayor al año actual
         flyer: ''
       },
       editing: false,
@@ -99,16 +99,22 @@ export default {
       // const formData = new FormData()
       // formData.append('flyer', this.event.flyer)
 
-      if (
-        this.checkEmptyFields(this.event) &&
-        (await !this.searchEventsOnSameDay(this.user.bar._id, this.event.date))
-      ) {
-        console.log('entre a crear evento')
-        const eventCreated = await eventsService.addEvent(this.event, username)
-        if (eventCreated.status === 200) {
-          toast.success('Evento creado correctamente!', { position: 'bottom-right' })
+      const isSameDate = await this.searchEventsOnSameDay(this.user.bar._id, this.event.date)
+
+      if (this.checkEmptyFields(this.event)) {
+        if (!isSameDate) {
+          const eventCreated = await eventsService.addEvent(this.event, username)
+          if (eventCreated.status === 200) {
+            toast.success('Evento creado correctamente!', { position: 'bottom-right' })
+            this.clearEventData()
+          }
+        } else {
+          toast.error(`Ya existe un evento en la misma fehca!${handleDateTime(this.event.date, 'normalizedDate')}`, {
+            position: 'bottom-right'
+          })
         }
-        this.clearEventData()
+      } else {
+        toast.error('Campos incompletos', { position: 'bottom-right' })
       }
     },
 
@@ -116,14 +122,12 @@ export default {
       const res = await barsService.getBarById(_id)
       const barEvents = res.eventId
 
-      const isSameDate = barEvents.some(async (event) => {
-        const eventById = await eventsService.getEventById(event)
-        console.log('EVENT DATE', handleDateTime(eventById.date, 'onlyDate'))
-        console.log('EVENT INPUT', handleDateTime(eventDate, 'onlyDate'))
-        return handleDateTime(eventById.date, 'onlyDate') === handleDateTime(eventDate, 'onlyDate')
+      const isSameDate = barEvents.map(async (event) => {
+        const dates = await eventsService.getEventById(event)
+        return handleDateTime(dates.date, 'onlyDate')
       })
 
-      return isSameDate
+      return (await Promise.all(isSameDate)).some((date) => date === handleDateTime(eventDate, 'onlyDate'))
     },
 
     clearEventData() {
