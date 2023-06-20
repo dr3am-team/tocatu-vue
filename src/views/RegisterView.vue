@@ -37,7 +37,7 @@
         <InputComponent type="number" v-model="bar.capacity" label="Capacidad" />
       </div>
       <div v-if="!editing"><ButtonComponent @click.prevent="register" label="Registrarse" customStyle="20px" /></div>
-      <div v-else><ButtonComponent @click.prevent="updateBar" label="Editar" customStyle="20px" /></div>
+      <div v-else><ButtonComponent @click.prevent="update" label="Editar" customStyle="20px" /></div>
     </form>
     <FooterComponent></FooterComponent>
   </div>
@@ -133,6 +133,22 @@ export default {
       this.bar.address = bar.address
       this.bar.capacity = bar.capacity
     },
+    async getBandData(_id) {
+      const band = await bandsService.getBandById(_id)
+      this.generalData.username = band.username
+      this.generalData.mail = band.mail
+      this.generalData.password = band.password
+      this.generalData.userType = this.user.userType
+      this.band.name = band.name
+      this.band.style = band.style
+    },
+    async getUserData(_id) {
+      const user = await usersService.getUserById(_id)
+      this.generalData.username = user.username
+      this.generalData.mail = user.mail
+      this.generalData.password = user.password
+      this.generalData.userType = this.user.userType
+    },
     getData(userType, _id) {
       if (userType == 'bar') {
         this.getBarData(_id)
@@ -142,11 +158,20 @@ export default {
         this.getUserData(_id)
       }
     },
-    async updateBar() {
-      const barUpdated = await barsService.editBar(this.$route.params.id, { ...this.bar, ...this.generalData })
-      console.log('STATUS', barUpdated.status)
-      if (barUpdated.status === 200) {
-        toast.success('Bar editado correctamente!', { position: 'bottom-right' })
+    async update() {
+      const apiCalls = {
+        bar: async () => await barsService.editBar(this.$route.params.id, { ...this.bar, ...this.generalData }),
+        band: async () => await bandsService.editBand(this.$route.params.id, { ...this.band, ...this.generalData }),
+        viewer: async () => await usersService.editUser(this.$route.params.id, { ...this.viewer, ...this.generalData })
+      }
+      let response
+      try {
+        response = await apiCalls[this.user.userType]()
+        if (response.status === 200) {
+          toast.success(`${this.user.userType} editado correctamente!`, { position: 'bottom-right' })
+        }
+      } catch (error) {
+        toast.error(`${error.response.data.message}`, { position: 'bottom-right' })
       }
     }
   }
