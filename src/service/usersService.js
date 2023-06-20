@@ -25,9 +25,10 @@ export default {
       throw 'error adding user'
     }
   },
-  async editUser(user) {
+  async editUser(userId, eventId) {
     try {
-      await apiClient.put('/', user)
+      const response = await apiClient.put(`/${userId}`, eventId)
+      return response
     } catch {
       throw 'error adding user'
     }

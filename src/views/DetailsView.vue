@@ -20,6 +20,7 @@ import { storeToRefs } from 'pinia'
 import bandsService from '../service/bandsService'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import usersService from '../service/usersService.js'
 export default {
   components: { DetailedCardComponent, ButtonComponent },
   beforeMount() {
@@ -85,11 +86,12 @@ export default {
       try {
         if (this.havePermissions('viewer')) {
           data = { viewersId: this.user.viewer._id }
+          const eventResponse = await eventsService.editEvent(this.event._id, data)
+          const viewerResponse = await usersService.editUser(this.user.viewer._id, { eventsSubscribed: this.event._id })
+          console.log(viewerResponse)
         }
-        const eventResponse = await eventsService.editEvent(this.event._id, data)
 
         this.checkSpectateButton()
-        // const bandResponse = await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
       } catch (error) {}
     },
     async checkSpectateButton() {
