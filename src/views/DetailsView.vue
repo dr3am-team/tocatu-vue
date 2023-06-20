@@ -2,16 +2,15 @@
   <div class="details-view-container">
     <DetailedCardComponent
       imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
-      :title="this.event.title"
-      :description="this.event.description"
+      :title="event.title"
+      :description="event.description"
     />
     <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
     <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
-    <div v-if="eventWithBand">
-      <!-- Ordenar esto -->
-      Fecha{{ new Date(this.event.date).toLocaleString() }} Estilo de la banda{{ this.band.style }} Nombre de la banda{{
-        this.band.name
-      }}
+    <div v-if="eventWithBand" class="event-details">
+      <p class="event-details-text">Fecha: {{ new Date(event.date).toLocaleString() }}</p>
+      <p class="event-details-text">Estilo de la banda: {{ band.style }}</p>
+      <p class="event-details-text">Nombre de la banda: {{ band.name }}</p>
     </div>
   </div>
 </template>
@@ -148,5 +147,13 @@ export default {
   align-items: flex-end;
   width: 1000px;
   margin: 50px auto;
+}
+
+.event-details {
+  margin-top: 20px;
+}
+
+.event-details-text {
+  margin: 5px 0;
 }
 </style>
