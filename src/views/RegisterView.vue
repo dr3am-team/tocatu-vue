@@ -63,7 +63,7 @@ export default {
   setup() {
     const store = useLoginStore()
     const { user } = storeToRefs(store)
-    return { user }
+    return { user, musicStyles }
   },
   beforeMount() {
     if (this.$route.params.id) {
@@ -71,7 +71,6 @@ export default {
       this.typeSelected = this.user.userType
       this.editing = true
     }
-    return { musicStyles }
   },
   data() {
     return {
