@@ -94,6 +94,16 @@ export default {
     async register() {
       this.generalData.userType = this.typeSelected
 
+      //TODO - No permitir enviar usernames con espacios y/o mayusculas, caracteres especiales, etc
+      //TODO - No permitir enviar mail con espacios y/o mayusculas, caract. especiales, etc
+      /*
+       ...{
+          username: this.generalData.username.toLowerCase().replace(/\s/g, ''),
+          mail: this.generalData.mail.toLowerCase().replace(/\s/g, ''),
+          password: this.generalData.password,
+          userType: this.generalData.userType
+        },
+      */
       const data = {
         ...this.generalData,
         ...(this.typeSelected == 'band' && { ...this.band }),
