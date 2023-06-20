@@ -38,6 +38,7 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import FooterComponent from '../components/FooterComponent.vue'
 import eventsService from '../service/eventsService.js'
+import barsService from '../service/barsService.js'
 import { handleDateTime } from '../utils/handleDateTime.js'
 
 export default {
@@ -98,14 +99,31 @@ export default {
       // const formData = new FormData()
       // formData.append('flyer', this.event.flyer)
 
-      if (this.checkEmptyFields(this.event)) {
+      if (
+        this.checkEmptyFields(this.event) &&
+        (await !this.searchEventsOnSameDay(this.user.bar._id, this.event.date))
+      ) {
+        console.log('entre a crear evento')
         const eventCreated = await eventsService.addEvent(this.event, username)
         if (eventCreated.status === 200) {
           toast.success('Evento creado correctamente!', { position: 'bottom-right' })
         }
-
         this.clearEventData()
       }
+    },
+
+    async searchEventsOnSameDay(_id, eventDate) {
+      const res = await barsService.getBarById(_id)
+      const barEvents = res.eventId
+
+      const isSameDate = barEvents.some(async (event) => {
+        const eventById = await eventsService.getEventById(event)
+        console.log('EVENT DATE', handleDateTime(eventById.date, 'onlyDate'))
+        console.log('EVENT INPUT', handleDateTime(eventDate, 'onlyDate'))
+        return handleDateTime(eventById.date, 'onlyDate') === handleDateTime(eventDate, 'onlyDate')
+      })
+
+      return isSameDate
     },
 
     clearEventData() {
