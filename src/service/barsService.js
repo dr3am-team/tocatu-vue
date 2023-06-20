@@ -16,6 +16,14 @@ export default {
       throw 'error de conexion en cargar'
     }
   },
+  async getBarById(_id) {
+    try {
+      const response = await apiClient.get(`/${_id}`)
+      return response.data
+    } catch (error) {
+      console.error(error.message)
+    }
+  },
   async addBar(bar) {
     try {
       const barCreated = await apiClient.post('/', bar)
