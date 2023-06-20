@@ -8,9 +8,9 @@ const apiClient = axios.create({
 })
 
 export default {
-  async getEvents() {
+  async getEvents(route = '/') {
     try {
-      const response = await apiClient.get('/')
+      const response = await apiClient.get(route)
       return response.data
     } catch (error) {
       console.error(error.message)
