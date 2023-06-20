@@ -21,6 +21,7 @@
 
       <div v-if="!editing"><ButtonComponent label="Crear" @click.prevent="createEvent" /></div>
       <div v-else><ButtonComponent label="Editar" @click.prevent="updateEvent" /></div>
+      <div v-if="editing"><ButtonComponent label="Eliminar" @click.prevent="deleteEvent" /></div>
       <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
     <FooterComponent></FooterComponent>
@@ -153,7 +154,8 @@ export default {
       if (eventUpdated.status === 200) {
         toast.success('Evento editado correctamente!', { position: 'bottom-right' })
       }
-    }
+    },
+    async deleteEvent() {}
   }
 }
 </script>
