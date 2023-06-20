@@ -11,6 +11,7 @@
         </li>
         <li v-if="isLogin">
           <a @click="logout">Logout</a>
+          <div v-if="isLogin">Bienvenido, {{ user.username }}</div>
         </li>
       </div>
     </ul>

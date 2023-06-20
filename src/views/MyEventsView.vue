@@ -32,7 +32,8 @@ export default {
 
   methods: {
     async getEventDetails() {
-      const promises = this?.user?.bar?.eventIds?.map(async (id) => {
+      const promises = this?.user?.eventIds?.map(async (id) => {
+        //TODO - Replace for API CALL
         return await eventsService.getEventById(id)
       })
       if (promises) {

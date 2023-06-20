@@ -55,7 +55,7 @@ export default {
       try {
         response = await apiCalls[this.typeSelected]()
         if (response) {
-          this.loginStore({ [this.typeSelected]: response, permissions: [response.userType] })
+          this.loginStore({ ...response, permissions: [response.userType] })
           this.$router.push('/')
         }
       } catch (error) {

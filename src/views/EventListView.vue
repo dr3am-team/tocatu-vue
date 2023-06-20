@@ -1,10 +1,26 @@
 <template>
-  <div class="card-container">
-    <div v-for="event in events" :key="event._id">
-      <RouterLink :to="`/detalle/${event._id}`"
-        ><CardComponent :image-url="event.flyer" :title="event.title" :date="event.date"
-      /></RouterLink>
-    </div>
+  <div class="container">
+    <section class="event-section">
+      <h1>Eventos Confirmados</h1>
+      <div class="card-container">
+        <div v-for="confirmed in confirmedEvents" :key="confirmed._id">
+          <RouterLink :to="`/detalle/${confirmed._id}`"
+            ><CardComponent :image-url="confirmed.flyer" :title="confirmed.title" :date="confirmed.date"
+          /></RouterLink>
+        </div>
+      </div>
+    </section>
+    <hr v-if="!!pendingEvents.length" style="" />
+    <section v-if="barOrBand" class="event-section">
+      <h1>Eventos No Confirmados</h1>
+      <div class="card-container">
+        <div v-for="pending in pendingEvents" :key="pending._id">
+          <RouterLink :to="`/detalle/${pending._id}`"
+            ><CardComponent :image-url="pending.flyer" :title="pending.title" :date="pending.date"
+          /></RouterLink>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -19,43 +35,50 @@ export default {
     const store = useLoginStore()
     const { user, isLogin } = storeToRefs(store) // ESTO TRAE PROPIEDADES
     const { havePermissions, logoutStore } = store // ESTO TRAE FUNCIONES
+    console.log()
     return { user, havePermissions, isLogin, logoutStore }
   },
   components: { CardComponent },
   created() {
     this.getEvents()
   },
-  methods: {
-    async getEvents() {
-      if (this.havePermissions('bar')) {
-        this.events = await eventsService.getEvents()
-        //TODO Separar visualmente cuales tienen banda y cuales no
-      }
-
-      if (this.havePermissions('band')) {
-        this.events = await eventsService.getEvents('/?filter=bandId&exists=false')
-      }
-
-      if (this.havePermissions('viewer')) {
-        this.events = await eventsService.getEvents('/?filter=bandId&exists=true')
-      }
-    }
-  },
   data() {
     return {
-      events: []
+      events: [],
+      confirmedEvents: [],
+      pendingEvents: [],
+      barOrBand: this.havePermissions('bar') || this.havePermissions('band')
+    }
+  },
+  methods: {
+    async getEvents() {
+      const events = await eventsService.getEvents()
+      this.confirmedEvents = events.filter((f) => f.bandId !== undefined)
+      this.pendingEvents = this.barOrBand ? events.filter((f) => f.bandId === undefined) : []
     }
   }
 }
 </script>
 
-<style scoped>
-.card-container {
-  overflow: hidden;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
-  overflow: auto;
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  hr {
+    border: 2px solid var(--prussian-blue);
+    width: 75%;
+    margin: 10px auto;
+  }
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .event-section {
+    margin: 10px;
+  }
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <NavbarComponent></NavbarComponent>
-    <EventViewList></EventViewList>
-  </div>
-  <div class="footer">
+  <div class="container">
+    <div>
+      <NavbarComponent></NavbarComponent>
+      <EventViewList></EventViewList>
+    </div>
     <FooterComponent></FooterComponent>
   </div>
 </template>
@@ -27,4 +27,10 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped lang="scss">
+.container {
+  min-height: calc(100vh - 70px);
+  display: flex;
+  flex-direction: column;
+}
+</style>

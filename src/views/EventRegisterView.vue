@@ -91,14 +91,14 @@ export default {
   },
   methods: {
     async createEvent() {
-      const { username } = this.user.bar
-      this.event.address = this.user.bar.address
-      this.event.capacity = this.user.bar.capacity
-      this.event.barName = this.user.bar.name
+      const { username } = this.user
+      this.event.address = this.user.address
+      this.event.capacity = this.user.capacity
+      this.event.barName = this.user.name
       // const formData = new FormData()
       // formData.append('flyer', this.event.flyer)
 
-      const isSameDate = await this.searchEventsOnSameDay(this.user.bar._id, this.event.date)
+      const isSameDate = await this.searchEventsOnSameDay(this.user._id, this.event.date)
 
       if (this.checkEmptyFields(this.event)) {
         if (!isSameDate) {
