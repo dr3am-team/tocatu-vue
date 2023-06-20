@@ -91,7 +91,6 @@ export default {
     }
   },
   methods: {
-    //TODO - Feedback
     async register() {
       this.generalData.userType = this.typeSelected
 
