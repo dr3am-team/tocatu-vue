@@ -10,6 +10,7 @@
         <p class="event-details-text">Fecha: {{ new Date(event.date).toLocaleString() }}</p>
         <p class="event-details-text">Estilo de la banda: {{ band.style }}</p>
         <p class="event-details-text">Nombre de la banda: {{ band.name }}</p>
+        <p class="event-details-text">Direccion del evento: {{ event.address }}</p>
       </div>
     </div>
     <div class="button-container">
