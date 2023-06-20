@@ -55,6 +55,11 @@ const router = createRouter({
       path: '/mis-eventos/editar/:id',
       name: 'EventRegisterEdit',
       component: () => import('../views/EventRegisterView.vue')
+    },
+    {
+      path: '/perfil/editar/:id',
+      name: 'ProfileEdit',
+      component: () => import('../views/RegisterView.vue')
     }
   ]
 })

@@ -33,9 +33,10 @@ export default {
       throw 'error adding bar'
     }
   },
-  async editBar(id, bar) {
+  async editBar(id, data) {
     try {
-      await apiClient.put('/', bar)
+      const res = await apiClient.put(`/${id}`, data)
+      return res
     } catch {
       throw 'error adding bar'
     }
