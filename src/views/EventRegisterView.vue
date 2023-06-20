@@ -23,8 +23,8 @@
       <div v-else><ButtonComponent label="Editar" @click.prevent="updateEvent" /></div>
       <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
-    <FooterComponent></FooterComponent>
   </div>
+  <FooterComponent />
 </template>
 
 <script>
@@ -179,9 +179,9 @@ export default {
   }
 }
 .super-container {
-  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 3em;
 }
 </style>

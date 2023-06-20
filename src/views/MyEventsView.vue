@@ -1,4 +1,5 @@
 <template>
+  <NavbarComponent />
   <section class="card-container" v-if="events.length > 0">
     <div v-for="event in events" :key="event._id">
       <RouterLink :key="$route.path" :to="`/mis-eventos/editar/${event._id}`">
@@ -7,14 +8,17 @@
     </div>
   </section>
   <div v-else>No hay eventos creados</div>
+  <FooterComponent />
 </template>
 <script>
-import { storeToRefs } from 'pinia'
-import { useLoginStore } from '../stores/login'
-import eventsService from '../service/eventsService'
-import CardComponent from '../components/CardComponent.vue'
+  import NavbarComponent from '../components/NavbarComponent.vue'
+  import FooterComponent from '../components/FooterComponent.vue'
+  import { storeToRefs } from 'pinia'
+  import { useLoginStore } from '../stores/login'
+  import eventsService from '../service/eventsService'
+  import CardComponent from '../components/CardComponent.vue'
 export default {
-  components: { CardComponent },
+  components: { CardComponent, NavbarComponent, FooterComponent },
   setup() {
     const store = useLoginStore()
     const { user } = storeToRefs(store)

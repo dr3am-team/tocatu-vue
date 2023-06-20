@@ -1,24 +1,29 @@
 <template>
-  <div class="details-view-container">
-    <DetailedCardComponent
-      imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
-      :title="this.event.title"
-      :description="this.event.description"
-    />
-    <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
-    <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
-    <div v-if="eventWithBand">
-      <!-- Ordenar esto -->
-      Fecha{{ new Date(this.event.date).toLocaleString() }} Estilo de la banda{{ this.band.style }} Nombre de la banda{{
-        this.band.name
-      }}
+  <!--  -->
+  <NavbarComponent />
+  <div class="event-detail-container">
+    <div class="event-details">
+      <EventDetailsComponent :event="event" />
+    </div>
+    <div class="bands" v-if="eventHasBands">
+      <!-- TODO - Detalles de cada banda con un componente = BandDetailsComponent -->
+      <h1>Participan</h1>
     </div>
   </div>
+  <div class="buttons-container">
+    <ButtonComponent v-if="true" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+    <!-- //TODO - v-if=showButton -->
+    <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
+  </div>
+  <FooterComponent />
 </template>
+
 <script>
 import eventsService from '../service/eventsService.js'
-import DetailedCardComponent from '../components/DetailedCardComponent.vue'
+import EventDetailsComponent from '../components/EventDetailsComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
+import NavbarComponent from '../components/NavbarComponent.vue'
+import FooterComponent from '../components/FooterComponent.vue'
 import { useLoginStore } from '../stores/login'
 import { storeToRefs } from 'pinia'
 import bandsService from '../service/bandsService'
@@ -26,7 +31,7 @@ import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import usersService from '../service/usersService.js'
 export default {
-  components: { DetailedCardComponent, ButtonComponent },
+  components: { NavbarComponent, FooterComponent, EventDetailsComponent, ButtonComponent },
   beforeMount() {
     this.getEventDetails()
     this.checkJoinButton()
@@ -46,7 +51,7 @@ export default {
       showButton: false,
       showSpectateButton: false,
       band: {},
-      eventWithBand: false
+      eventHasBands: false
     }
   },
 
@@ -54,7 +59,6 @@ export default {
     async getEventDetails() {
       try {
         this.event = await eventsService.getEventById(this.$route.params.id)
-        console.log(this.event)
       } catch (error) {
         console.log(error)
       }
@@ -134,19 +138,31 @@ export default {
     async eventHasBand() {
       await this.getEventDetails()
       if (this.event.bandId) {
-        this.eventWithBand = true
+        this.eventHasBands = true
       }
     }
   }
 }
 </script>
 <style>
-.details-view-container {
+.event-detail-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  width: 1000px;
-  margin: 50px auto;
+  
+}
+
+.bands {
+  width: 50%;
+  border-left: solid 2px black;
+  margin-top: 1em;
+}
+
+.event-details{
+  width: 50%;
+}
+
+.buttons-container{
+  width: 50%;
+  margin: 0.5em;
+  text-align: center;
 }
 </style>

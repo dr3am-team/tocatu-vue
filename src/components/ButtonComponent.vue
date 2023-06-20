@@ -32,6 +32,7 @@ export default {
   border: none;
   color: #fff;
   border-radius: 5px;
+  transition: all 0.1s;
 
   &:hover {
     filter: brightness(1.2);
