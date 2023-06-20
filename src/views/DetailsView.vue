@@ -1,16 +1,20 @@
 <template>
   <div class="details-view-container">
-    <DetailedCardComponent
-      imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
-      :title="event.title"
-      :description="event.description"
-    />
-    <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
-    <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
-    <div v-if="eventWithBand" class="event-details">
-      <p class="event-details-text">Fecha: {{ new Date(event.date).toLocaleString() }}</p>
-      <p class="event-details-text">Estilo de la banda: {{ band.style }}</p>
-      <p class="event-details-text">Nombre de la banda: {{ band.name }}</p>
+    <div class="card-container">
+      <DetailedCardComponent
+        imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
+        :title="event.title"
+        :description="event.description"
+      />
+      <div class="event-details">
+        <p class="event-details-text">Fecha: {{ new Date(event.date).toLocaleString() }}</p>
+        <p class="event-details-text">Estilo de la banda: {{ band.style }}</p>
+        <p class="event-details-text">Nombre de la banda: {{ band.name }}</p>
+      </div>
+    </div>
+    <div class="button-container">
+      <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+      <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
     </div>
   </div>
 </template>
