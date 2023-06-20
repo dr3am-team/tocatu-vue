@@ -37,6 +37,7 @@ import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import FooterComponent from '../components/FooterComponent.vue'
 import eventsService from '../service/eventsService.js'
+import barsService from '../service/barsService.js'
 import { handleDateTime } from '../utils/handleDateTime.js'
 
 export default {
@@ -80,7 +81,7 @@ export default {
         capacity: '',
         barName: '',
         description: '',
-        date: '',
+        date: '', //TODO - Validar que el año no pueda ser mayor al año actual
         flyer: ''
       },
       editing: false,
@@ -97,14 +98,35 @@ export default {
       // const formData = new FormData()
       // formData.append('flyer', this.event.flyer)
 
-      if (this.checkEmptyFields(this.event)) {
-        const eventCreated = await eventsService.addEvent(this.event, username)
-        if (eventCreated.status === 200) {
-          toast.success('Evento creado correctamente!', { position: 'bottom-right' })
-        }
+      const isSameDate = await this.searchEventsOnSameDay(this.user.bar._id, this.event.date)
 
-        this.clearEventData()
+      if (this.checkEmptyFields(this.event)) {
+        if (!isSameDate) {
+          const eventCreated = await eventsService.addEvent(this.event, username)
+          if (eventCreated.status === 200) {
+            toast.success('Evento creado correctamente!', { position: 'bottom-right' })
+            this.clearEventData()
+          }
+        } else {
+          toast.error(`Ya existe un evento en la misma fehca!${handleDateTime(this.event.date, 'normalizedDate')}`, {
+            position: 'bottom-right'
+          })
+        }
+      } else {
+        toast.error('Campos incompletos', { position: 'bottom-right' })
       }
+    },
+
+    async searchEventsOnSameDay(_id, eventDate) {
+      const res = await barsService.getBarById(_id)
+      const barEvents = res.eventId
+
+      const isSameDate = barEvents.map(async (event) => {
+        const dates = await eventsService.getEventById(event)
+        return handleDateTime(dates.date, 'onlyDate')
+      })
+
+      return (await Promise.all(isSameDate)).some((date) => date === handleDateTime(eventDate, 'onlyDate'))
     },
 
     clearEventData() {

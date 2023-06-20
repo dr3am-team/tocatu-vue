@@ -8,6 +8,14 @@ const apiClient = axios.create({
 })
 
 export default {
+  async getBandById(_id) {
+    try {
+      const response = await apiClient.get(`/${_id}`)
+      return response.data
+    } catch (error) {
+      console.error(error.message)
+    }
+  },
   async getBands() {
     try {
       const response = await apiClient.get('/')

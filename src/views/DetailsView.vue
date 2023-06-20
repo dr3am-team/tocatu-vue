@@ -3,12 +3,16 @@
     <DetailedCardComponent
       imageUrl="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
       :title="this.event.title"
-      description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam tempora voluptatem delectus! Aspernatur, omnis,
-        illum explicabo atque unde harum illo ratione voluptatum in aperiam autem? Eos expedita explicabo assumenda
-        aperiam."
+      :description="this.event.description"
     />
     <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
     <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
+    <div v-if="eventWithBand">
+      <!-- Ordenar esto -->
+      Fecha{{ new Date(this.event.date).toLocaleString() }} Estilo de la banda{{ this.band.style }} Nombre de la banda{{
+        this.band.name
+      }}
+    </div>
   </div>
 </template>
 <script>
@@ -20,12 +24,15 @@ import { storeToRefs } from 'pinia'
 import bandsService from '../service/bandsService'
 import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
+import usersService from '../service/usersService.js'
 export default {
   components: { DetailedCardComponent, ButtonComponent },
   beforeMount() {
     this.getEventDetails()
     this.checkJoinButton()
     this.checkSpectateButton()
+    this.getBandDetails()
+    this.eventHasBand()
   },
   setup() {
     const store = useLoginStore()
@@ -38,7 +45,8 @@ export default {
       event: {},
       showButton: false,
       showSpectateButton: false,
-      eventEdited: {}
+      band: {},
+      eventWithBand: false
     }
   },
 
@@ -84,31 +92,49 @@ export default {
       //UNIR Y TRAER ID DE USER UNIDO
       let data = {}
       try {
-        if (this.havePermissions('bar')) {
-          data = { viewersId: this.user.bar._id }
-        } else if (this.havePermissions('viewer')) {
+        if (this.havePermissions('viewer')) {
           data = { viewersId: this.user.viewer._id }
+          const eventResponse = await eventsService.editEvent(this.event._id, data)
+          const viewerResponse = await usersService.editUser(this.user.viewer._id, { eventsSubscribed: this.event._id })
+          console.log(viewerResponse)
         }
-        const eventResponse = await eventsService.editEvent(this.event._id, data)
-        this.eventEdited = eventResponse.data
+
         this.checkSpectateButton()
-        // const bandResponse = await bandsService.editBand(this.user.band._id, { eventsSubscribed: this.event._id })
       } catch (error) {}
     },
     async checkSpectateButton() {
       await this.getEventDetails()
-      if ((this.event.bandId && this.havePermissions('viewer')) || this.havePermissions('bar')) {
+      if (this.event.bandId && this.havePermissions('viewer')) {
         if (!this.spectatorAlreadyInEvent()) {
           this.showSpectateButton = true
         } else {
           this.showSpectateButton = false
         }
+      } else {
+        this.showSpectateButton = false
       }
     },
     spectatorAlreadyInEvent() {
       const userLogged = this.user.bar?._id || this.user.viewer?._id
       if (this.event.viewersId.includes(userLogged)) {
         return true
+      }
+    },
+    async getBandDetails() {
+      await this.getEventDetails()
+      if (this.event.bandId) {
+        try {
+          this.band = await bandsService.getBandById(this.event.bandId)
+          console.log(this.band)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    },
+    async eventHasBand() {
+      await this.getEventDetails()
+      if (this.event.bandId) {
+        this.eventWithBand = true
       }
     }
   }
