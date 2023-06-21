@@ -2,8 +2,9 @@
   <nav class="navbar-container">
     <ul class="link-list">
       <li>
-        <RouterLink :key="$route.path" to="/"><img src="../assets/img/tocatuLogo.png" alt="Logo" /></RouterLink>
-        <span>Tocatu</span>
+        <RouterLink class="logo" :key="$route.path" to="/"
+          ><img src="../assets/img/tocatuLogo.png" alt="Logo" /><span>Tocatu</span></RouterLink
+        >
       </li>
       <div class="navbar-links">
         <li v-for="(link, index) in computedNavLinks" :key="index">
@@ -78,6 +79,11 @@ export default {
   background-color: var(--cerulean);
   color: var(--white);
   padding: 1rem;
+
+  .logo {
+    display: flex;
+    align-items: center;
+  }
 
   .link-list {
     list-style: none;
