@@ -5,7 +5,7 @@
       <InputComponent label="Nombre del Evento" type="text" v-model="event.title" />
       <InputComponent label="Fecha y Hora" type="datetime-local" v-model="event.date" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
-      <InputComponent label="Flyer" type="file" fileTypes="image/*" @update:modelValue="handleFlyerUpdate" />
+      <!-- <InputComponent label="Flyer" type="file" fileTypes="image/*" @update:modelValue="handleFlyerUpdate" /> -->
 
       <label class="label" for="descripcion">
         Descripción del Evento
@@ -82,8 +82,8 @@ export default {
         capacity: '',
         barName: '',
         description: '',
-        date: '', //TODO - Validar que el año no pueda ser mayor al año actual
-        flyer: ''
+        date: ''
+        // flyer: ''
       },
       editing: false,
       creationMessage: '',

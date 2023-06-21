@@ -3,6 +3,7 @@
 
   <div class="super-container">
     <div class="container">
+      <h1>Inicie sesión</h1>
       <SelectorComponent :array="accountType" v-model="typeSelected" label="Tipo de usuario" @selected="select" />
       <InputComponent type="text" v-model="user.username" label="Usuario" @keyup.enter="handleKeyPress" />
       <InputComponent type="password" v-model="user.password" label="Contraseña" @keyup.enter="handleKeyPress" />
@@ -78,6 +79,10 @@ export default {
   flex-direction: column;
   margin: 20px auto;
   width: 600px;
+
+  h1 {
+    text-align: center;
+  }
 }
 .super-container {
   display: flex;

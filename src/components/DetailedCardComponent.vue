@@ -38,7 +38,7 @@
         </div>
         <h4>Disponibilidad:</h4>
         <p class="capacity">
-          Lugares disponibles: <b>{{ calculateSpotsAvailable() }}</b>
+          Lugares disponibles: <b>{{ this.calculateSpotsAvailable() }}</b>
         </p>
         <p class="capacity">
           Capacidad máxima: <b>{{ event.capacity }}</b> espectadores.
@@ -76,9 +76,17 @@ export default {
   },
   methods: {
     calculateSpotsAvailable() {
+      console.log(this.event?.capacity - this.event?.viewersId?.length)
       return this.event?.capacity - this.event?.viewersId?.length
     }
   }
+
+  // computed: {
+  //   spotsAvailable: function calculateSpotsAvailable() {
+  //     console.log(this.event?.capacity - this.event?.viewersId?.length)
+  //     return this.event?.capacity - this.event?.viewersId?.length
+  //   }
+  // }
 }
 </script>
 <style lang="scss" scoped>
@@ -101,7 +109,7 @@ export default {
       text-align: center;
     }
     hr {
-      margin: 0 2em;
+      // margin: 0 2em;
     }
     .info-container {
       margin: 1em;
@@ -116,7 +124,7 @@ export default {
           flex-direction: column;
           width: 50%;
           h4 {
-            text-align: center;
+            // text-align: center;
           }
           p {
             margin: 1em 0;
@@ -125,7 +133,7 @@ export default {
             display: flex;
             justify-content: space-between;
             p {
-              margin: 0.5em 1em;
+              // margin: 0.5em 1em;
             }
           }
         }

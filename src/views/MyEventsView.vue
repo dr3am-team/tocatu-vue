@@ -1,13 +1,15 @@
 <template>
   <NavbarComponent />
-  <section class="card-container" v-if="events.length > 0">
-    <div v-for="event in events" :key="event._id">
-      <RouterLink :key="$route.path" :to="`/mis-eventos/editar/${event._id}`">
-        <CardComponent :title="event.title" :date="event.date" />
-      </RouterLink>
-    </div>
-  </section>
-  <div v-else>No hay eventos creados</div>
+  <div class="container">
+    <section class="card-container" v-if="events.length > 0">
+      <div v-for="event in events" :key="event._id">
+        <RouterLink :key="$route.path" :to="`/mis-eventos/editar/${event._id}`">
+          <CardComponent :title="event.title" :date="event.date" />
+        </RouterLink>
+      </div>
+    </section>
+    <div v-else>No hay eventos creados</div>
+  </div>
   <FooterComponent />
 </template>
 <script>
@@ -49,6 +51,13 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+.container {
+  display: flex;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 .card-container {
   overflow: hidden;
   padding: 20px;

@@ -66,7 +66,8 @@ export default {
   },
   beforeMount() {
     //UGLY AF BUT WORKS <3
-    if (!this.user.permissions.find((e) => e === 'bar' || e === 'viewer' || e === 'band')) {
+    if (!this.user.permissions.find((e) => e === 'bar' || e === 'viewer' || e === 'band') && !!this.$route.params.id) {
+      console.log(this.$route.params.id)
       this.$router.push('/login')
     }
     if (this.$route.params.id) {

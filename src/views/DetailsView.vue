@@ -159,7 +159,7 @@ h1 {
 }
 
 .event-details {
-  width: 50%;
+  /* width: 50%; */
 }
 
 .buttons-container {

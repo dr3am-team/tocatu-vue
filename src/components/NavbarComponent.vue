@@ -11,9 +11,9 @@
           <RouterLink :key="link.route" :to="link.route">{{ link.text }}</RouterLink>
         </li>
         <li v-if="isLogin">
-          <a @click="logout">Logout</a>
           <RouterLink :key="$route.path" :to="`/perfil/editar/${this.user._id}`">Mi Perfil</RouterLink>
-          <div class="username" v-if="isLogin">¡Hola!, {{ user.username }}</div>
+          <a @click="logout">Logout</a>
+          <!-- <div class="username" v-if="isLogin">¡Hola!, {{ username }}</div> -->
         </li>
       </div>
     </ul>
@@ -44,7 +44,7 @@ export default {
           ]
         },
         {
-          check: !this.isLogin && this.$route.path === '/',
+          check: !this.isLogin,
           value: [
             { route: '/registrarse', text: 'Registrarse' },
             { route: '/login', text: 'Login' }
