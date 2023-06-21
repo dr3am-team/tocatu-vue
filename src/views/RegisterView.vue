@@ -23,7 +23,6 @@
 
       <div v-if="typeSelected == 'band'" class="container">
         <InputComponent type="text" v-model="band.name" label="Nombre de tu banda" @keyup.enter="handleKeyPress" />
-        <!-- <InputComponent type="text" v-model="band.style" label="Estilo de tu banda" @keyup.enter="handleKeyPress" /> -->
         <SelectorComponent
           :array="musicStyles"
           v-model="band.style"
@@ -66,6 +65,10 @@ export default {
     return { user, musicStyles }
   },
   beforeMount() {
+    //UGLY AF BUT WORKS <3
+    if (!this.user.permissions.find((e) => e === 'bar' || e === 'viewer' || e === 'band')) {
+      this.$router.push('/login')
+    }
     if (this.$route.params.id) {
       this.getData(this.user.userType, this.$route.params.id)
       this.typeSelected = this.user.userType

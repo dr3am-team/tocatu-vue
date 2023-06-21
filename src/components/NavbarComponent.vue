@@ -12,8 +12,8 @@
         </li>
         <li v-if="isLogin">
           <a @click="logout">Logout</a>
-          <RouterLink :key="$route.path" :to="`/perfil/editar/${this.user._id}`">Editar</RouterLink>
-          <div v-if="isLogin">Bienvenido, {{ user.username }}</div>
+          <RouterLink :key="$route.path" :to="`/perfil/editar/${this.user._id}`">Mi Perfil</RouterLink>
+          <div class="username" v-if="isLogin">¡Hola!, {{ user.username }}</div>
         </li>
       </div>
     </ul>
@@ -95,6 +95,11 @@ export default {
       display: flex;
       align-items: center;
 
+      .username {
+        margin-right: 1rem;
+        font-weight: lighter;
+      }
+
       span {
         margin-left: 10px;
         font-weight: bold;
@@ -105,7 +110,7 @@ export default {
         color: #fff;
         text-decoration: none;
         font-weight: bold;
-        margin: 0px 5px;
+        margin-right: 1rem;
         cursor: pointer;
       }
 
