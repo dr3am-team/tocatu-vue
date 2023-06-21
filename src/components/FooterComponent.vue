@@ -1,11 +1,15 @@
 <template>
   <footer>
-    <p>{{ footerText }}</p>
-    <div class="follow-us">
-      <h2>Seguinos</h2>
-      <a href="https://www.linkedin.com/in/flerner/"><i class="fab fa-linkedin"></i></a>
-      <a href="https://www.instagram.com/tocatuvue/"><i class="fab fa-instagram"></i></a>
-      <a href="https://es-la.facebook.com/tocatu"><i class="fab fa-facebook"></i></a>
+    <div>
+      <p>{{ footerText }}</p>
+    </div>
+    <div>
+      <h4>Encontranos en:</h4>
+      <div class="social-networks">
+        <a href="https://www.linkedin.com/in/flerner/"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.instagram.com/tocatuvue/"><i class="fab fa-instagram"></i></a>
+        <a href="https://es-la.facebook.com/tocatu"><i class="fab fa-facebook"></i></a>
+      </div>
     </div>
   </footer>
 </template>
@@ -32,14 +36,20 @@ footer {
   background-color: var(--prussian-blue);
   padding: 10px 25px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   color: white;
+  min-height: 90px;
 }
 
 i {
-  margin-right: 30px;
-  font-size: 20px;
+  margin: 0.3em 0.5em;
+  font-size: 2em;
   color: white;
+  transition: all 0.2s;
+}
+
+i:hover{
+  transform: scale(1.2);
 }
 </style>

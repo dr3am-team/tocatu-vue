@@ -24,7 +24,7 @@
       <div v-if="editing"><ButtonComponent label="Eliminar" @click.prevent="deleteEvent" /></div>
       <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
-    <FooterComponent></FooterComponent>
+    <FooterComponent />
   </div>
 </template>
 
@@ -186,9 +186,9 @@ export default {
   }
 }
 .super-container {
-  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 3em;
 }
 </style>
