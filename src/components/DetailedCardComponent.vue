@@ -162,6 +162,8 @@ export default {
     p {
       // margin: 1em;
       text-align: justify;
+      word-break: break-all;
+      text-align: left;
     }
   }
 }
