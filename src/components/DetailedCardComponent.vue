@@ -76,7 +76,6 @@ export default {
   },
   methods: {
     calculateSpotsAvailable() {
-      console.log(this.event?.capacity - this.event?.viewersId?.length)
       return this.event?.capacity - this.event?.viewersId?.length
     }
   }
@@ -154,12 +153,14 @@ export default {
 }
 .description-container {
   display: flex;
-  margin: 2em;
+  // margin: 2em;
+  width: 600px;
+  margin-top: 20px;
   .description {
     display: flex;
     flex-direction: column;
     p {
-      margin: 1em;
+      // margin: 1em;
       text-align: justify;
     }
   }

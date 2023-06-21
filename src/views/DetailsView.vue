@@ -142,13 +142,16 @@ export default {
   }
 }
 </script>
-<style>
+<style lang="scss" scoped>
 .event-detail-container {
   display: flex;
+  /* agregado */
+  justify-content: center;
+  margin-top: 25px;
 }
 
 .bands {
-  width: 50%;
+  /* width: 50%; */
   border-left: solid 2px black;
   margin-top: 1em;
   padding: 0 3em;
