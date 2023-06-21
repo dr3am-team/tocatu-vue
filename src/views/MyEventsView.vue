@@ -17,6 +17,8 @@
   import { useLoginStore } from '../stores/login'
   import eventsService from '../service/eventsService'
   import CardComponent from '../components/CardComponent.vue'
+  import barsService from '../service/barsService'
+
 export default {
   components: { CardComponent, NavbarComponent, FooterComponent },
   setup() {
@@ -36,8 +38,8 @@ export default {
 
   methods: {
     async getEventDetails() {
-      const promises = this?.user?.eventIds?.map(async (id) => {
-        //TODO - Replace for API CALL
+      const { eventId } = await barsService.getBarById(this.user._id)
+      const promises = eventId.map(async (id) => {
         return await eventsService.getEventById(id)
       })
       if (promises) {

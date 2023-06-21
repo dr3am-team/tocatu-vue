@@ -12,8 +12,7 @@
       </div>
     </div>
     <div class="buttons-container">
-      <ButtonComponent v-if="true" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
-      <!-- //TODO - v-if=showButton -->
+      <ButtonComponent v-if="showButton" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
       <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
     </div>
   </div>
