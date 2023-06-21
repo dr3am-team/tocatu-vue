@@ -36,7 +36,11 @@
             <h2>Entrada: <br />${{ event.price }}</h2>
           </div>
         </div>
-        <p>
+        <h4>Disponibilidad:</h4>
+        <p class="capacity">
+          Lugares disponibles: <b>{{ calculateSpotsAvailable() }}</b>
+        </p> 
+        <p class="capacity">
           Capacidad máxima: <b>{{ event.capacity }}</b> espectadores.
         </p>
       </div>
@@ -68,6 +72,11 @@ export default {
     return {
       date: dayjs(this.event.date).format('DD/MM/YYYY'),
       time: dayjs(this.event.date).format('HH:mm')
+    }
+  },
+  methods:{
+    calculateSpotsAvailable() {
+      return this.event?.capacity - this.event?.viewersId?.length
     }
   }
 }
@@ -102,6 +111,10 @@ export default {
 
     .info-container {
       margin: 1em;
+
+      .capacity{
+        margin: 1em 0 ;
+      }
 
       .where-when-price {
         display: flex;
@@ -149,7 +162,6 @@ export default {
 
 .description-container {
   display: flex;
-  justify-content: center;
   margin: 2em;
 
   .description {

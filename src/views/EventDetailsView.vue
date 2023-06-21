@@ -1,19 +1,21 @@
 <template>
   <!--  -->
-  <NavbarComponent />
-  <div class="event-detail-container">
-    <div class="event-details">
-      <EventDetailsComponent :event="event" />
+  <div>
+    <NavbarComponent />
+    <div class="event-detail-container">
+      <div class="event-details">
+        <EventDetailsComponent :event="event" />
+      </div>
+      <div class="bands" v-if="eventHasBands">
+        <h1>Participan:</h1>
+        <BandDetailComponent :band="this.band" />
+      </div>
     </div>
-    <div class="bands" v-if="eventHasBands">
-      <!-- TODO - Detalles de cada banda con un componente = BandDetailsComponent -->
-      <h1>Participan</h1>
+    <div class="buttons-container">
+      <ButtonComponent v-if="true" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
+      <!-- //TODO - v-if=showButton -->
+      <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
     </div>
-  </div>
-  <div class="buttons-container">
-    <ButtonComponent v-if="true" label="Unirse a Evento" @click="joinToEvent"></ButtonComponent>
-    <!-- //TODO - v-if=showButton -->
-    <ButtonComponent v-if="showSpectateButton" label="¡Quiero ir a verlo!" @click="spectateEvent"></ButtonComponent>
   </div>
   <FooterComponent />
 </template>
@@ -21,6 +23,7 @@
 <script>
 import eventsService from '../service/eventsService.js'
 import EventDetailsComponent from '../components/EventDetailsComponent.vue'
+import BandDetailComponent from '../components/BandDetailComponent.vue'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import NavbarComponent from '../components/NavbarComponent.vue'
 import FooterComponent from '../components/FooterComponent.vue'
@@ -31,7 +34,7 @@ import { toast } from 'vue3-toastify'
 import 'vue3-toastify/dist/index.css'
 import usersService from '../service/usersService.js'
 export default {
-  components: { NavbarComponent, FooterComponent, EventDetailsComponent, ButtonComponent },
+  components: { NavbarComponent, FooterComponent, BandDetailComponent, EventDetailsComponent, ButtonComponent },
   beforeMount() {
     this.getEventDetails()
     this.checkJoinButton()
@@ -129,7 +132,6 @@ export default {
       if (this.event.bandId) {
         try {
           this.band = await bandsService.getBandById(this.event.bandId)
-          console.log(this.band)
         } catch (error) {
           console.log(error)
         }
@@ -147,20 +149,24 @@ export default {
 <style>
 .event-detail-container {
   display: flex;
-  
 }
 
 .bands {
   width: 50%;
   border-left: solid 2px black;
   margin-top: 1em;
+  padding: 0 3em;
 }
 
-.event-details{
+h1 {
+  margin: 1em 0;
+}
+
+.event-details {
   width: 50%;
 }
 
-.buttons-container{
+.buttons-container {
   width: 50%;
   margin: 0.5em;
   text-align: center;
