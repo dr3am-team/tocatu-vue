@@ -1,5 +1,6 @@
 <template>
   <NavbarComponent />
+  <h1>Mis Eventos</h1>
   <div class="container">
     <section class="card-container" v-if="events.length > 0">
       <div v-for="event in events" :key="event._id">
@@ -51,6 +52,10 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+h1 {
+  text-align: center;
+  margin-top: 25px;
+}
 .container {
   display: flex;
   min-height: 100vh;

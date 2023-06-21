@@ -77,11 +77,11 @@ export default {
 .container {
   display: flex;
   flex-direction: column;
-  margin: 20px auto;
   width: 600px;
-
+  margin: 0 auto;
   h1 {
     text-align: center;
+    margin: 25px 0px;
   }
 }
 .super-container {

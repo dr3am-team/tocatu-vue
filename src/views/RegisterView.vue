@@ -1,5 +1,8 @@
 <template>
-  <NavbarComponent></NavbarComponent>
+  <NavbarComponent />
+  <h1 v-if="editing">Mi Perfil</h1>
+  <h1 v-else>Registro</h1>
+
   <div class="super-container">
     <form class="container">
       <InputComponent
@@ -198,6 +201,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+h1 {
+  text-align: center;
+  margin: 25px 0px;
+}
 .container {
   font-size: 16px;
   display: flex;

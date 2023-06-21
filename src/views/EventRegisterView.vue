@@ -1,5 +1,6 @@
 <template>
   <NavbarComponent />
+  <h1>Creación de eventos</h1>
   <div class="super-container">
     <div class="container">
       <InputComponent label="Nombre del Evento" type="text" v-model="event.title" />
@@ -166,6 +167,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+h1 {
+  text-align: center;
+  margin-top: 20px;
+}
 .container {
   width: 600px;
   margin: 25px auto;
