@@ -59,7 +59,7 @@ export default {
           this.$router.push('/')
         }
       } catch (error) {
-        toast.error(`${error.response.data.message}`, { position: 'bottom-right' })
+        toast.error(`Verifique su usuario o contraseña`, { position: 'bottom-right' })
       }
     },
     handleKeyPress() {

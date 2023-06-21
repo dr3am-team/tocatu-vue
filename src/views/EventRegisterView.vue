@@ -168,7 +168,7 @@ export default {
 <style scoped lang="scss">
 .container {
   width: 600px;
-  margin: 0 auto;
+  margin: 25px auto;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -186,9 +186,9 @@ export default {
   }
 }
 .super-container {
+  min-height: calc(100vh - 70px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 3em;
 }
 </style>
