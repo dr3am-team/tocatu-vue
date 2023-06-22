@@ -1,11 +1,11 @@
 <template>
   <div class="card">
-    <!-- <img :src="imageUrl" alt="Image" class="image" /> -->
-    <img
+    <img :src="imageUrl" alt="Image" class="image" />
+    <!-- <img
       src="https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg"
       alt="Image"
       class="image"
-    />
+    /> -->
     <div class="content">
       <div>
         <h3 class="title">{{ title }}</h3>
@@ -27,9 +27,9 @@ export default {
   props: {
     imageUrl: {
       type: String,
-      required: true,
-      default:
-        'https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg'
+      required: true
+      // default:
+      //   'https://images.pexels.com/photos/976866/pexels-photo-976866.jpeg?cs=srgb&dl=pexels-josh-sorenson-976866.jpg&fm=jpg'
     },
     title: {
       type: String,
