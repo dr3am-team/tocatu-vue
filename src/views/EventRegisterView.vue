@@ -100,9 +100,7 @@ export default {
       this.event.barName = this.user.name
       const formData = new FormData()
       formData.append('flyer', this.image)
-      // this.event.flyer = formData
-      //const isSameDate = await this.searchEventsOnSameDay(this.user._id, this.event.date)
-      const isSameDate = false
+      const isSameDate = await this.searchEventsOnSameDay(this.user._id, this.event.date)
       if (this.checkEmptyFields(this.event)) {
         if (!isSameDate) {
           const eventCreated = await eventsService.addEvent(this.event, username)
@@ -128,7 +126,10 @@ export default {
 
       const isSameDate = barEvents.map(async (event) => {
         const dates = await eventsService.getEventById(event)
-        return handleDateTime(dates.date, 'onlyDate')
+        console.log(dates)
+        if (dates) {
+          return handleDateTime(dates.date, 'onlyDate')
+        }
       })
 
       return (await Promise.all(isSameDate)).some((date) => date === handleDateTime(eventDate, 'onlyDate'))
