@@ -1,11 +1,13 @@
 <template>
   <div class="detailed-card">
     <!-- TODO - usar la imagen del evento -->
-    <img
+    <img :src="`http://localhost:8080/public/${event.flyer}`" alt="Image" class="image" />
+
+    <!-- <img
       class="image"
       src="https://images.unsplash.com/photo-1526478806334-5fd488fcaabc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1516&q=80"
       alt="Image"
-    />
+    /> -->
 
     <div class="content-container">
       <h1 class="title">{{ event.title }}</h1>
