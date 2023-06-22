@@ -5,7 +5,10 @@
       <div class="card-container">
         <div v-for="confirmed in confirmedEvents" :key="confirmed._id">
           <RouterLink :to="`/detalle/${confirmed._id}`"
-            ><CardComponent :image-url="confirmed.flyer" :title="confirmed.title" :date="confirmed.date"
+            ><CardComponent
+              :imageUrl="`http://localhost:8080/public/${confirmed.flyer}`"
+              :title="confirmed.title"
+              :date="confirmed.date"
           /></RouterLink>
         </div>
       </div>
@@ -16,7 +19,10 @@
       <div class="card-container">
         <div v-for="pending in pendingEvents" :key="pending._id">
           <RouterLink :to="`/detalle/${pending._id}`"
-            ><CardComponent :image-url="pending.flyer" :title="pending.title" :date="pending.date"
+            ><CardComponent
+              :imageUrl="`http://localhost:8080/public/${pending.flyer}`"
+              :title="pending.title"
+              :date="pending.date"
           /></RouterLink>
         </div>
       </div>

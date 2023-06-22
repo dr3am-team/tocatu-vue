@@ -6,7 +6,7 @@
       <InputComponent label="Nombre del Evento" type="text" v-model="event.title" />
       <InputComponent label="Fecha y Hora" type="datetime-local" v-model="event.date" />
       <InputComponent label="Precio" type="number" v-model="event.price" />
-      <!-- <InputComponent label="Flyer" type="file" fileTypes="image/*" @update:modelValue="handleFlyerUpdate" /> -->
+      <InputComponent label="Flyer" type="file" fileTypes="image/*" @update:modelValue="handleFlyerUpdate" />
 
       <label class="label" for="descripcion">
         Descripción del Evento
@@ -88,6 +88,7 @@ export default {
       },
       editing: false,
       creationMessage: '',
+      image: '',
       id: this.$route.params.id
     }
   },
@@ -97,14 +98,14 @@ export default {
       this.event.address = this.user.address
       this.event.capacity = this.user.capacity
       this.event.barName = this.user.name
-      // const formData = new FormData()
-      // formData.append('flyer', this.event.flyer)
-
+      const formData = new FormData()
+      formData.append('flyer', this.image)
       const isSameDate = await this.searchEventsOnSameDay(this.user._id, this.event.date)
-
       if (this.checkEmptyFields(this.event)) {
         if (!isSameDate) {
           const eventCreated = await eventsService.addEvent(this.event, username)
+          const imageUploaded = await eventsService.uploadImage(formData, eventCreated.data._id)
+          console.log(imageUploaded)
           if (eventCreated.status === 200) {
             toast.success('Evento creado correctamente!', { position: 'bottom-right' })
             this.clearEventData()
@@ -125,7 +126,10 @@ export default {
 
       const isSameDate = barEvents.map(async (event) => {
         const dates = await eventsService.getEventById(event)
-        return handleDateTime(dates.date, 'onlyDate')
+        console.log(dates)
+        if (dates) {
+          return handleDateTime(dates.date, 'onlyDate')
+        }
       })
 
       return (await Promise.all(isSameDate)).some((date) => date === handleDateTime(eventDate, 'onlyDate'))
@@ -140,7 +144,7 @@ export default {
     },
     handleFlyerUpdate(files) {
       const [file] = files
-      this.event.flyer = file.name
+      this.image = file
     },
     async getEventData() {
       const event = await eventsService.getEventById(this.$route.params.id)

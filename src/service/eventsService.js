@@ -1,10 +1,6 @@
 import axios from 'axios'
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080/api/events',
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json'
-  }
+  baseURL: 'http://localhost:8080/api/events'
 })
 
 export default {
@@ -31,9 +27,18 @@ export default {
       console.error(error.message)
     }
   },
+  async uploadImage(formData, _id) {
+    try {
+      console.log(formData)
+      const imageUploaded = await apiClient.post(`/upload/${_id}`, formData, { 'Content-Type': 'multipart/form-data' })
+
+      return imageUploaded
+    } catch (error) {
+      console.error(error.message)
+    }
+  },
   async addEvent(event, username) {
     const data = { event, username }
-
     try {
       const eventCreated = await apiClient.post('/', data)
 
