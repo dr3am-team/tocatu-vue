@@ -34,13 +34,12 @@ export default {
   border-radius: 5px;
   transition: all 0.1s;
 
-
   &:hover {
     filter: brightness(1.2);
   }
 
   &.danger {
-    background: red;
+    background: rgb(194, 89, 89);
   }
 }
 </style>

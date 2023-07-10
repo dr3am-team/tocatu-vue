@@ -1,6 +1,8 @@
 <template>
   <NavbarComponent />
-  <h1>Creación de eventos</h1>
+
+  <h1 v-if="!editing">Creación de eventos</h1>
+  <h1 v-if="editing">Edición de eventos</h1>
   <div class="super-container">
     <div class="container">
       <InputComponent label="Nombre del Evento" type="text" v-model="event.title" />
@@ -22,7 +24,7 @@
 
       <div v-if="!editing"><ButtonComponent label="Crear" @click.prevent="createEvent" /></div>
       <div v-else><ButtonComponent label="Editar" @click.prevent="updateEvent" /></div>
-      <div v-if="editing"><ButtonComponent label="Eliminar" @click.prevent="deleteEvent" /></div>
+      <div v-if="editing"><ButtonComponent label="Eliminar" buttonClass="danger" @click.prevent="deleteEvent" /></div>
       <span v-if="creationMessage">{{ creationMessage }}</span>
     </div>
     <FooterComponent />
@@ -126,7 +128,6 @@ export default {
 
       const isSameDate = barEvents.map(async (event) => {
         const dates = await eventsService.getEventById(event)
-        console.log(dates)
         if (dates) {
           return handleDateTime(dates.date, 'onlyDate')
         }

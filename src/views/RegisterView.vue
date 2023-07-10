@@ -68,7 +68,6 @@ export default {
     return { user, musicStyles }
   },
   beforeMount() {
-    //UGLY AF BUT WORKS <3
     if (!this.user.permissions.find((e) => e === 'bar' || e === 'viewer' || e === 'band') && !!this.$route.params.id) {
       console.log(this.$route.params.id)
       this.$router.push('/login')
@@ -100,17 +99,6 @@ export default {
   methods: {
     async register() {
       this.generalData.userType = this.typeSelected
-
-      //TODO - No permitir enviar usernames con espacios y/o mayusculas, caracteres especiales, etc
-      //TODO - No permitir enviar mail con espacios y/o mayusculas, caract. especiales, etc
-      /*
-       ...{
-          username: this.generalData.username.toLowerCase().replace(/\s/g, ''),
-          mail: this.generalData.mail.toLowerCase().replace(/\s/g, ''),
-          password: this.generalData.password,
-          userType: this.generalData.userType
-        },
-      */
       const data = {
         ...this.generalData,
         ...(this.typeSelected == 'band' && { ...this.band }),

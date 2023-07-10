@@ -15,7 +15,6 @@
 
 <script>
 import { useLoginStore } from '../stores/login'
-import { storeToRefs } from 'pinia'
 import ButtonComponent from '../components/ButtonComponent.vue'
 import InputComponent from '../components/InputComponent.vue'
 import barsService from '../service/barsService.js'

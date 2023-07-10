@@ -13,7 +13,6 @@
         <li v-if="isLogin">
           <RouterLink :key="$route.path" :to="`/perfil/editar/${this.user._id}`">Mi Perfil</RouterLink>
           <a @click="logout">Logout</a>
-          <!-- <div class="username" v-if="isLogin">¡Hola!, {{ username }}</div> -->
         </li>
       </div>
     </ul>
