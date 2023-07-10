@@ -13,7 +13,7 @@
         </div>
       </div>
     </section>
-    <hr v-if="!!pendingEvents.length" style="" />
+    <hr v-if="!!pendingEvents.length && !!confirmedEvents.length" style="" />
     <section v-if="barOrBand && !!pendingEvents.length" class="event-section">
       <h1>Eventos No Confirmados</h1>
       <div class="card-container">
