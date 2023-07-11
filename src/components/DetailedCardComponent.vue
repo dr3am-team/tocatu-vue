@@ -17,11 +17,11 @@
               <div class="when">
                 <p>
                   Fecha: <br />
-                  {{ date }}
+                  {{ setDate() }}
                 </p>
                 <p>
                   Hora: <br />
-                  {{ time }}hs
+                  {{ setTime() }}hs
                 </p>
               </div>
             </div>
@@ -62,15 +62,15 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      date: dayjs(this.event.date).format('DD/MM/YYYY'),
-      time: dayjs(this.event.date).format('HH:mm')
-    }
-  },
   methods: {
     calculateSpotsAvailable() {
       return this.event?.capacity - this.event?.viewersId?.length
+    },
+    setTime() {
+      return dayjs(this.event.date).utc().local().format('HH:mm')
+    },
+    setDate() {
+      return dayjs(this.event.date).utc().local().format('DD/MM/YYYY')
     }
   }
 }
